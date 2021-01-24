@@ -1,0 +1,16 @@
+export { default as Addlisting } from './add-listing-page';
+export { default as Changepassword } from './changepassword-page';
+export { default as Editprofile } from './edit-profile-page';
+export { default as Editproperty } from './edit-realestate-page';
+export { default as Favoriteproperty } from './favorite-realestate-page';
+export { default as Index } from './index-page';
+export { default as Maintance } from './maintance-page';
+export { default as Myproperty } from './my-realestate-page';
+export { default as Notfound } from './notfound-page';
+export { default as Profile } from './profile-page';
+export { default as Propertydetail } from './realestate-detail-page';
+export { default as Resetpassword } from './resetpassword-page';
+export { default as Seachresult } from './seach-result-page';
+export { default as SigninandSignup } from './signin-signup-page';
+export { default as Terms } from './terms-page';
+export { default as Updatestatus } from './update-status-page';

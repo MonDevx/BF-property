@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "bfproperty",
+    "test": "bfproperty"
+  }
+}
