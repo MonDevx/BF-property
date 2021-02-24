@@ -115,6 +115,7 @@ export default function Formseachresult() {
                   id="demo-simple-select-outlined"
                   value={typehouse}
                   onChange={handleChangetypehouse}
+                  label=      {t("typehouse.label")}
                 >
                   <MenuItem value={0}>{t("totaltype.label")}</MenuItem>
                   <MenuItem value={1}>{t("typehouse1.label")}</MenuItem>
@@ -154,6 +155,7 @@ export default function Formseachresult() {
                   id="demo-simple-select-outlined"
                   value={price}
                   onChange={handleChangeprice}
+                  label=    {t("pricebetween.label")}
                 >
                   <MenuItem value={0}>{t("totalprice.label")}</MenuItem>
                   <MenuItem value={1}>{t("pricebetween1.label")}</MenuItem>
@@ -241,7 +243,7 @@ export default function Formseachresult() {
                     id="demo-simple-select-outlined"
                     value={family}
                     onChange={handleChangefamily}
-                    labelWidth={110}
+                    label=   {t("propertysizefamily.label")}
                   >
                     <MenuItem value={0}>{t("totalfamliy.label")}</MenuItem>
                     <MenuItem value={1}>
@@ -304,6 +306,7 @@ export default function Formseachresult() {
                     id="demo-simple-select-outlined"
                     value={sizeproperty}
                     onChange={handleChangesizeproperty}
+                    label=     {t("sizehousebetween.label")}
                   >
                     <MenuItem value={0}>{t("totalsize.label")}</MenuItem>
                     <MenuItem value={1}>

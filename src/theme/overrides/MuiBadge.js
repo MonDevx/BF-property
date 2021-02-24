@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  
-  tooltip: {
-    fontFamily: ['prompt'].join(',')
-  }
+
+  badge: {
+      fontFamily: ["prompt"].join(","),
+    },
 };

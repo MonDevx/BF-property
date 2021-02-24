@@ -3,7 +3,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import React, { useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 const useStyles = makeStyles((theme) => ({
   howtoContent: {

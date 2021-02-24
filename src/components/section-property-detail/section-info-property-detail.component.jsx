@@ -81,6 +81,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: -12,
     marginLeft: -12,
   },
+  bold: {
+    fontWeight: 600
+  }
 }));
 
 function currencyFormat(num) {
@@ -515,10 +518,10 @@ export default function Info(props) {
               />
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="subtitle1">
+              <Typography variant="subtitle2">
                 {t("paymentamount/month.label")}
               </Typography>
-              <Typography variant="subtitle2" style={{ color: "#26ae61" }}>
+              <Typography variant="subtitle1" style={{ color: "#26ae61" }} className={classes.bold}>
                 {currencyFormat(pricemonth)} {t("bath.label")}
               </Typography>
             </Grid>
@@ -562,20 +565,20 @@ export default function Info(props) {
               />
             </Grid>
             <Grid item xs={2}>
-              <Typography variant="subtitle1">
+              <Typography variant="subtitle2">
                 {t("principalpayment.label")}
               </Typography>
-              <Typography variant="subtitle2" color="success">
+              <Typography variant="subtitle1" color="success" className={classes.bold}>
                 {currencyFormat(
                   PMT() - (priceloan * (interest * 0.01) * 30) / 365
                 )}
                 {t("bath.label")}
               </Typography>
 
-              <Typography variant="subtitle1">
+              <Typography variant="subtitle2">
                 {t("interestpayment.label")}
               </Typography>
-              <Typography variant="subtitle2" color="secondary">
+              <Typography variant="subtitle1" color="secondary" className={classes.bold}>
                 {currencyFormat((priceloan * (interest * 0.01) * 30) / 365)}{" "}
                 {t("bath.label")}
               </Typography>

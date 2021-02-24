@@ -7,7 +7,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Listrealestate from "../../list-realestate/list-realestate.component.jsx"
-import SyncLoader from "react-spinners/SyncLoader";
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),

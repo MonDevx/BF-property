@@ -203,7 +203,7 @@ class Listproperty extends React.Component {
     ref.get().then((querySnapshot) => {
       var todos = [];
       querySnapshot.forEach((doc) => {
-        if (doc.data().status != 4) {
+        if (doc.data().status !== 4) {
           let dict = { id: doc.id, ...doc.data() };
           todos.push(dict);
         }

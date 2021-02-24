@@ -45,13 +45,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Formseach() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const [age, setAge] = React.useState(0);
+  const [type, setType] = React.useState(0);
   const [price, setPrice] = React.useState(0);
   const [room, setRoom] = React.useState(0);
   const [provice, setprovice] = React.useState("");
 
-  const handleChangeage = (event) => {
-    setAge(event.target.value);
+  const handleChangeType = (event) => {
+    setType(event.target.value);
   };
   const handleChangeprice = (event) => {
     setPrice(event.target.value);
@@ -87,8 +87,9 @@ export default function Formseach() {
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  value={age}
-                  onChange={handleChangeage}
+                  value={type}
+                  onChange={handleChangeType}
+                  label={t("typehouse.label")}
                 >
                   <MenuItem value={0}>{t("totaltype.label")}</MenuItem>
                   <MenuItem value={1}>{t("typehouse1.label")}</MenuItem>
@@ -125,7 +126,7 @@ export default function Formseach() {
                 to={{
                   pathname: "/seach-result",
                   state: {
-                    type: age,
+                    type: type,
                     province: provice,
                     price: price,
                     room: room,
@@ -167,6 +168,7 @@ export default function Formseach() {
                     id="demo-simple-select-outlined"
                     value={price}
                     onChange={handleChangeprice}
+                    label={t("pricebetween.label")}
                   >
                     <MenuItem value={0}>{t("totalprice.label")}</MenuItem>
                     <MenuItem value={1}>{t("pricebetween1.label")}</MenuItem>

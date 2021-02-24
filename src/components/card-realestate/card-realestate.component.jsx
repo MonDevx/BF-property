@@ -46,10 +46,13 @@ const useStyles = makeStyles((theme) => ({
   cardContent: {
     flexGrow: 1,
   },
+  bold: {
+    fontWeight: 600
+  }
 }));
 function currencyFormat(num) {
   return (
-    "$" +
+    "$ " +
     Number(num)
       .toFixed()
       .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
@@ -104,7 +107,7 @@ function Cardhouse(props) {
                   <CardContent className={classes.cardContent}>
                     <Grid container spacing={1}>
                       <Grid item sm={12}>
-                        <Typography variant="h6">
+                        <Typography variant="h6"   className={classes.bold}>
                           {currentTodo.name.length < 28
                             ? currentTodo.name.replaceAll("-", " ")
                             : currentTodo.name
@@ -121,7 +124,15 @@ function Cardhouse(props) {
                             : t("typehouse3.label")}
                         </Typography>
                       </Grid>
-
+                      <Grid item sm={12}>
+                        <Typography
+                          variant="h6"
+                          color="primary"
+                          style={{ fontWeight: 600 }}
+                        >
+                          {currencyFormat(currentTodo.price)} {t("baht.label")}
+                        </Typography>
+                      </Grid>
                       <Grid item sm={12}>
                         <Typography variant="subtitle2">
                           <RoomIcon fontSize="small" />
@@ -135,7 +146,7 @@ function Cardhouse(props) {
                             currentTodo.province +
                             " " +
                             currentTodo.zipCode
-                          ).length < 52
+                          ).length < 62
                             ? currentTodo.Address +
                               " " +
                               currentTodo.District +
@@ -144,7 +155,7 @@ function Cardhouse(props) {
                               " " +
                               currentTodo.province +
                               " " +
-                              currentTodo.zipCode+
+                              currentTodo.zipCode +
                               "                  "
                             : (
                                 currentTodo.Address +
@@ -156,31 +167,57 @@ function Cardhouse(props) {
                                 currentTodo.province +
                                 " " +
                                 currentTodo.zipCode
-                              ).substring(0, 52) + " ..."}
+                              ).substring(0, 64) + " ..."}
                         </Typography>
                       </Grid>
-                      <Grid item sm={12}>
-                        <Typography variant="h6" color="success">
-                          {currencyFormat(currentTodo.price)} {t("baht.label")}
-                        </Typography>
-                      </Grid>
-                      <Grid item sm={3}>
-                        <Typography variant="subtitle2">
-                          {currentTodo.Numberofbedrooms}
-                          <HotelIcon fontSize="small" />
-                        </Typography>
-                      </Grid>
-                      <Grid item sm={3} >
-                        <Typography variant="subtitle2">
-                          {currentTodo.Numberofbathrooms}
-                          <BathtubIcon fontSize="small" />
-                        </Typography>
-                      </Grid>
-                      <Grid item sm={3}>
-                        <Typography variant="subtitle2">
-                          {currentTodo.Housesize}
-                          <SquareFootIcon fontSize="small" />
-                        </Typography>
+                      <Grid item xs={12}>
+                        <Grid container spacing={1}>
+                          <Grid item>
+                            <Typography variant="subtitle2">
+                              <HotelIcon fontSize="small" />
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography
+                              variant="button"
+                              display="block"
+                              gutterBottom
+                              className={classes.bold}
+                            >
+                              {"0" + currentTodo.Numberofbedrooms}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography variant="subtitle2">
+                              <BathtubIcon fontSize="small" />
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography
+                              variant="button"
+                              display="block"
+                              gutterBottom
+                              className={classes.bold}
+                            >
+                              {"0" + currentTodo.Numberofbathrooms}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography variant="subtitle2">
+                              <SquareFootIcon fontSize="small" />
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography
+                              variant="button"
+                              display="block"
+                              gutterBottom
+                              className={classes.bold}
+                            >
+                              {currentTodo.Housesize}
+                            </Typography>
+                          </Grid>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </CardContent>

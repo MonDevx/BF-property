@@ -7,8 +7,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import FavoriteBorderRoundedIcon from "@material-ui/icons/FavoriteBorderRounded";
-import Widgets from "@material-ui/icons/Widgets";
-import { ColumnToRow, Row, Item } from "@mui-treasury/components/flex";
+import { Item } from "@mui-treasury/components/flex";
 import ReactCountryFlag from "react-country-flag";
 import { useTranslation } from "react-i18next";
 import { connect } from "react-redux";
@@ -123,9 +122,7 @@ function Header(props) {
     <AppBar position="static" className={classes.root} color="inherit">
       <Toolbar className={classes.toolbar}>
         <Item
-          color={"#007bff"}
-          fontSize={35}
-          lineHeight={0}
+     
           component={Link}
           to="/"
         >

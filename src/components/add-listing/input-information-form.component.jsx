@@ -138,10 +138,10 @@ export default function InformationForm(props) {
     ) {
       setFormValues({ ...formValues, [name]: Number(value) });
     } else {
-      if (name == "name") {
+      if (name === "name") {
         setFormValues({
           ...formValues,
-          [name]: value.replace(/\s+|[,\/]/g, "-"),
+          [name]: value.replace(/\s+|[,\\/]/g, "-"),
         });
       } else {
         setFormValues({ ...formValues, [name]: value });
