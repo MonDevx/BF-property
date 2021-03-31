@@ -49,7 +49,7 @@ export default function Editproperty(props) {
   const onupdate = () => {
     try {
       firestore
-        .collection("house")
+        .collection("property")
         .doc(props.id)
         .update(formValues)
         .then(() => {
@@ -72,9 +72,9 @@ export default function Editproperty(props) {
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
           >
-            <Linkmu color="inherit" component={Link} to="/my-house">
+            <Linkmu color="inherit" component={Link} to="/my-property">
               <ListAltIcon className={classes.icon} />
-              {t("myhouse.name.label")}
+              {t("myproperty.name.label")}
             </Linkmu>
             <Typography color="textPrimary">
               <EditIcon className={classes.icon} />

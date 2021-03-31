@@ -130,11 +130,11 @@ export default function InformationForm(props) {
     const { name, value } = event.target;
     if (
       name === "price" ||
-      name === "Housesize" ||
-      name === "Numberofbathrooms" ||
-      name === "Numberoffloors" ||
-      name === "Numberofparkingspace" ||
-      name === "Numberofbedrooms"
+      name === "propertysize" ||
+      name === "numberofbathrooms" ||
+      name === "numberoffloors" ||
+      name === "numberofparkingspace" ||
+      name === "numberofbedrooms"
     ) {
       setFormValues({ ...formValues, [name]: Number(value) });
     } else {
@@ -151,8 +151,8 @@ export default function InformationForm(props) {
   const handleDetailChange = (value) => {
     setFormValues({ ...formValues, detail: value });
   };
-  const handleYearofconstructionChange = (value) => {
-    setFormValues({ ...formValues, Yearofconstruction: value });
+  const handleYearOfConstructionChange = (value) => {
+    setFormValues({ ...formValues, yearofconstruction: value });
   };
 
   const handleInputMap = (lat, lng) => {
@@ -174,6 +174,7 @@ export default function InformationForm(props) {
     const list = [...inputNearbyplaces];
     list[index][name] = value;
     setInputNearbyplaces(list);
+    
   };
 
   const handleRemoveClick = (index) => {
@@ -190,6 +191,7 @@ export default function InformationForm(props) {
   };
   React.useEffect(() => {
     setFormValues({ ...formValues, Nearbyplaces: inputNearbyplaces });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputNearbyplaces]);
   return (
     <React.Fragment>
@@ -265,7 +267,7 @@ export default function InformationForm(props) {
           <Grid item xs={12} sm={4}>
             <TextField
               required
-              name="Housesize"
+              name="propertysize"
               type="number"
               label={
                 formValues.idtype !== 3
@@ -277,7 +279,7 @@ export default function InformationForm(props) {
                   .toString()
                   .slice(0, 3);
               }}
-              value={formValues.Housesize}
+              value={formValues.propertysize}
               onChange={handleChange}
               fullWidth
             />
@@ -289,7 +291,7 @@ export default function InformationForm(props) {
                   ? t("propertysizeprice.label")
                   : t("propertysizepricecondo.label")
               }
-              value={(formValues.price / formValues.Housesize).toFixed(2)}
+              value={(formValues.price / formValues.propertysize).toFixed(2)}
               onChange={handleChange}
               InputProps={{
                 inputComponent: NumberFormatCustom,
@@ -324,10 +326,10 @@ export default function InformationForm(props) {
           </Grid>
           <Grid item xs={6} sm={2}>
             <TextField
-              name="Numberofbedrooms"
+              name="numberofbedrooms"
               label={t("propertybed.label")}
               type="number"
-              value={formValues.Numberofbedrooms}
+              value={formValues.numberofbedrooms}
               onChange={handleChange}
               InputLabelProps={{
                 shrink: true,
@@ -343,10 +345,10 @@ export default function InformationForm(props) {
           </Grid>
           <Grid item xs={6} sm={2}>
             <TextField
-              name="Numberofbathrooms"
+              name="numberofbathrooms"
               label={t("propertybath.label")}
               type="number"
-              value={formValues.Numberofbathrooms}
+              value={formValues.numberofbathrooms}
               onChange={handleChange}
               InputLabelProps={{
                 shrink: true,
@@ -363,22 +365,22 @@ export default function InformationForm(props) {
           <Grid item xs={6} sm={2}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <DatePicker
-                id="Yearofconstruction"
+                id="yearofconstruction"
                 views={["year"]}
                 label={t("propertyyear.label")}
                 minDate={new Date("1900-01-01")}
                 maxDate={new Date()}
-                value={formValues.Yearofconstruction}
-                onChange={handleYearofconstructionChange}
+                value={formValues.yearofconstruction}
+                onChange={handleYearOfConstructionChange}
               />
             </MuiPickersUtilsProvider>
           </Grid>
           <Grid item xs={6} sm={2}>
             <TextField
-              name="Numberofparkingspace"
+              name="numberofparkingspace"
               label={t("propertycar.label")}
               type="number"
-              value={formValues.Numberofparkingspace}
+              value={formValues.numberofparkingspace}
               onChange={handleChange}
               InputLabelProps={{
                 shrink: true,
@@ -394,12 +396,12 @@ export default function InformationForm(props) {
           </Grid>
           <Grid item xs={6} sm={2}>
             <TextField
-              name="Numberoffloors"
+              name="numberoffloors"
               label={
                 formValues.idtype === 3 ? t("propertyfloorscondo.label") : t("propertyfloors.label")
               }
               type="number"
-              value={formValues.Numberoffloors}
+              value={formValues.numberoffloors}
               onChange={handleChange}
               InputLabelProps={{
                 shrink: true,
@@ -484,9 +486,9 @@ export default function InformationForm(props) {
           <Grid item xs={12} sm={6}>
             <TextField
               onChange={handleChange}
-              value={formValues.Landmark}
+              value={formValues.landmark}
               label={t("addressfromLandmark.label")}
-              name="Landmark"
+              name="landmark"
               fullWidth
               inputProps={{
                 maxLength: 100,
@@ -499,9 +501,9 @@ export default function InformationForm(props) {
           <Grid item xs={12} sm={6}>
             <TextField
               onChange={handleChange}
-              value={formValues.Address}
+              value={formValues.address}
               label={t("addressfromadress.label")}
-              name="Address"
+              name="address"
               fullWidth
               inputProps={{
                 maxLength: 100,

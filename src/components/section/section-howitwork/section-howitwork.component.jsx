@@ -2,10 +2,11 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
 import { useTranslation } from "react-i18next";
+import { isWidthUp, withWidth } from "@material-ui/core";
+import { compose } from "redux";
+import { HowItWorkCard } from "../../customs/howitworkcard/howitwork-card.jsx";
 const styles = (theme) => ({
   root: {
     display: "flex",
@@ -30,6 +31,7 @@ const styles = (theme) => ({
     fontSize: 25,
     marginBottom: theme.spacing(5),
     color: theme.palette.common.white,
+    fontWeight: 'bold'
   },
   number: {
     fontSize: 25,
@@ -47,8 +49,31 @@ const styles = (theme) => ({
 });
 
 function Sectionhowitwork(props) {
-  const { classes } = props;
+  const { classes, width } = props;
   const { t } = useTranslation();
+  const howItWork = [
+    {
+      headline: t("sectionhowitwork.headeritem1"),
+      image: "/assets/img/img1.webp",
+      text: t("sectionhowitwork.sub1"),
+      mdDelay: "700",
+      smDelay: "700",
+    },
+    {
+      headline: t("sectionhowitwork.headeritem2"),
+      image: "/assets/img/img2.webp",
+      text: t("sectionhowitwork.sub2"),
+      mdDelay: "300",
+      smDelay: "300",
+    },
+    {
+      headline: t("sectionhowitwork.headeritem3"),
+      image: "/assets/img/img3.webp",
+      text: t("sectionhowitwork.sub3"),
+      mdDelay: "700",
+      smDelay: "700",
+    },
+  ];
   return (
     <section className={classes.root}>
       <Container className={classes.container}>
@@ -62,75 +87,24 @@ function Sectionhowitwork(props) {
         </Typography>
         <div>
           <Grid container spacing={5}>
-            <Grid item xs={12} md={4}>
-              <Card align="center" className={classes.card}>
-                <Typography
-                  variant="subtitle1"
-                  align="center"
-                  className={classes.number}
-                >
-                  1.
-                </Typography>
-                <LazyLoadImage
-                  alt="img1"
-                  src={process.env.PUBLIC_URL + "/assets/img/img1.webp"}
-                  className={classes.image}
-                  effect="blur"
+            {howItWork.map((element, index) => (
+              <Grid
+                item
+                xs={12}
+                md={4}
+                data-aos="zoom-in-up"
+                data-aos-delay={
+                  isWidthUp("md", width) ? element.mdDelay : element.smDelay
+                }
+              >
+                <HowItWorkCard
+                  number={index + 1}
+                  image={element.image}
+                  headline={element.headline}
+                  text={element.text}
                 />
-                <Typography variant="h5" align="center">
-                  {t("sectionhowitwork.headeritem1")}
-                </Typography>
-                <Typography variant="subtitle1" align="center">
-                  {t("sectionhowitwork.sub1")}
-                </Typography>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Card align="center" className={classes.card}>
-                <Typography
-                  variant="subtitle1"
-                  align="center"
-                  className={classes.number}
-                >
-                  2.
-                </Typography>
-                <LazyLoadImage
-                  alt="img2"
-                  src={process.env.PUBLIC_URL + "/assets/img/img3.webp"}
-                  className={classes.image}
-                  effect="blur"
-                />
-                <Typography variant="h5" align="center">
-                  {t("sectionhowitwork.headeritem2")}
-                </Typography>
-                <Typography variant="subtitle1" align="center">
-                  {t("sectionhowitwork.sub2")}
-                </Typography>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Card align="center" className={classes.card}>
-                <Typography
-                  variant="subtitle1"
-                  align="center"
-                  className={classes.number}
-                >
-                  3.
-                </Typography>
-                <LazyLoadImage
-                  alt="img3"
-                  src={process.env.PUBLIC_URL + "/assets/img/img2.webp"}
-                  className={classes.image}
-                  effect="blur"
-                />
-                <Typography variant="h5" align="center">
-                  {t("sectionhowitwork.headeritem3")}
-                </Typography>
-                <Typography variant="subtitle1" align="center">
-                  {t("sectionhowitwork.sub3")}
-                </Typography>
-              </Card>
-            </Grid>
+              </Grid>
+            ))}
           </Grid>
         </div>
       </Container>
@@ -138,4 +112,4 @@ function Sectionhowitwork(props) {
   );
 }
 
-export default withStyles(styles)(Sectionhowitwork);
+export default compose(withStyles(styles), withWidth())(Sectionhowitwork);

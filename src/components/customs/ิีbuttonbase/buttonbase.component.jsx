@@ -5,9 +5,11 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { isWebpSupported } from "react-image-webp/dist/utils";
 import { Link } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   image: {
     position: "relative",
+
     height: 200,
     [theme.breakpoints.down("xs")]: {
       width: "100% !important", // Overrides inline-style
@@ -37,8 +39,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    color: theme.palette.common.white,    
-
+    color: theme.palette.common.white,
   },
   imageSrc: {
     position: "absolute",
@@ -48,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     backgroundSize: "cover",
     backgroundPosition: "center 40%",
-
   },
   imageBackdrop: {
     position: "absolute",
@@ -143,7 +143,6 @@ export default function Buttonbase(props) {
             </ButtonBase>
           ) : (
             <ButtonBase
-
               focusRipple
               key={image.title}
               className={classes.image}
@@ -151,7 +150,6 @@ export default function Buttonbase(props) {
               style={{
                 width: image.width,
                 margin: 5,
-        
               }}
               onClick={() => handleNext(index + 1)}
             >

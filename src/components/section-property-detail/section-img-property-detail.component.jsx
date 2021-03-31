@@ -38,8 +38,8 @@ function Img(props) {
   const url = window.location.href;
   const { t } = useTranslation();
   const options = [
-    props.typehouse !== 3 ? t("imgoutside.label") : t("imgcondooutside.label"),
-    props.typehouse !== 3 ? t("imginside.label") : t("imgcondoinside.label"),
+    props.typeproperty !== 3 ? t("imgoutside.label") : t("imgcondooutside.label"),
+    props.typeproperty !== 3 ? t("imginside.label") : t("imgcondoinside.label"),
   ];
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -59,7 +59,7 @@ function Img(props) {
           .doc(currentUser.id)
           .update({ favorite: favorite })
           .then(() => {
-            alert.success(t("alertaddfavoritehouse"));
+            alert.success(t("alertaddfavoriteproperty"));
           });
       } else {
         favorite.forEach((element, index) => {
@@ -76,7 +76,7 @@ function Img(props) {
             .doc(currentUser.id)
             .update({ favorite: favorite })
             .then(() => {
-              alert.success(t("alertaddfavoritehouse"));
+              alert.success(t("alertaddfavoriteproperty"));
             });
         } else {
           firestore
@@ -84,7 +84,7 @@ function Img(props) {
             .doc(currentUser.id)
             .update({ favorite: favorite })
             .then(() => {
-              alert.success(t("alertdeletefavoritehouse"));
+              alert.success(t("alertdeletefavoriteproperty"));
             });
         }
       }

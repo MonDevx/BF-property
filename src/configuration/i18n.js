@@ -6,7 +6,9 @@ i18n
   .use(Backend)
   .use(initReactI18next)
   .init({
-    lng: 'th',
+    lng: i18n.language ||
+    (typeof window !== 'undefined' && window.localStorage.i18nextLng) ||
+    'th',
     backend: {
       /* translation file path */
       loadPath: '/assets/i18n/{{ns}}/{{lng}}.json'

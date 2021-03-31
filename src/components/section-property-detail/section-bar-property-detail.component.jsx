@@ -40,11 +40,11 @@ export default function Bar(props) {
             <Chip
               icon={<HomeIcon />}
               label={
-                props.typehouse === 1
-                  ? t("typehouse1.label")
-                  : props.typehouse === 2
-                  ? t("typehouse2.label")
-                  : t("typehouse3.label")
+                props.typeproperty === 1
+                  ? t("typeproperty1.label")
+                  : props.typeproperty === 2
+                  ? t("typeproperty2.label")
+                  : t("typeproperty3.label")
               }
             />
           </Grid>

@@ -90,7 +90,7 @@ export default function EditinformationaddressForm(props) {
     const { name, value } = event.target;
     if (
       name === "price" ||
-      name === "Housesize" ||
+      name === "propertysize" ||
       name === "Numberofbathrooms" ||
       name === "Numberoffloors" ||
       name === "Numberofparkingspace" ||
@@ -204,7 +204,7 @@ export default function EditinformationaddressForm(props) {
         <Grid item xs={12} sm={6}>
           <TextField
             onChange={handleChange}
-            value={formValues.Landmark}
+            value={formValues.landmark}
             label={t("addressfromLandmark.label")}
             name="Landmark"
             fullWidth
@@ -222,7 +222,7 @@ export default function EditinformationaddressForm(props) {
         <Grid item xs={12} sm={6}>
           <TextField
             onChange={handleChange}
-            value={formValues.Address}
+            value={formValues.address}
             label={t("addressfromadress.label")}
             name="Address"
             fullWidth

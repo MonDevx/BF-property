@@ -128,7 +128,7 @@ function Checkinformation(props) {
         .then(
           () =>
             (timer.current = setTimeout(() => {
-              Uploadinformation();
+              uploadInformation();
               setLoading(false);
               handleNext();
             }, 5000))
@@ -138,12 +138,12 @@ function Checkinformation(props) {
       alert.error(error.message);
     }
   };
-  const Uploadinformation = () => {
+  const uploadInformation = () => {
     const createdAt = new Date();
     if (props.idtype === 3) {
-      firestore.collection("house").add({
+      firestore.collection("property").add({
         idtype: props.idtype,
-        name: props.name.replace("/"," "),
+        name: props.name.replace("/", " "),
         urlimginside: Urlimginside,
         urlimgoutside: Urlimgoutside,
         firstimg: firstimg,
@@ -151,30 +151,31 @@ function Checkinformation(props) {
         detail: props.detail,
         latitude: props.latitude,
         longitude: props.longitude,
-        Numberofbedrooms: props.Numberofbedrooms,
-        Numberofbathrooms: props.Numberofbathrooms,
-        Yearofconstruction: props.Yearofconstruction.getFullYear(),
-        Numberofparkingspace: props.Numberofparkingspace,
-        Numberoffloors: props.Numberoffloors,
+        numberofbedrooms: props.numberofbedrooms,
+        numberofbathrooms: props.numberofbathrooms,
+        yearofconstruction: props.yearofconstruction.getFullYear(),
+        numberofparkingspace: props.numberofparkingspace,
+        numberoffloors: props.numberoffloors,
         price: props.price,
-        Housesize: props.Housesize,
+        propertysize: props.propertysize,
         email: props.currentUser.email,
         idowner: props.currentUser.id,
         province: props.province,
-        District: props.District,
+        district: props.District,
         projectname: props.projectname,
         building: props.building,
         subDistrict: props.subDistrict,
         zipCode: props.zipCode,
-        Landmark: props.Landmark,
-        Address: props.Address,
+        landmark: props.landmark,
+        address: props.address,
         furniture: props.furniture,
         centralservice: props.centralservice,
-        Nearbyplaces: props.Nearbyplaces,
-        CreateAt: createdAt,
+        nearbyplaces: props.nearbyplaces,
+        createat: createdAt,
+        status: 1,
       });
     } else {
-      firestore.collection("house").add({
+      firestore.collection("property").add({
         idtype: props.idtype,
         name: props.name,
         urlimginside: Urlimginside,
@@ -184,25 +185,26 @@ function Checkinformation(props) {
         detail: props.detail,
         latitude: props.latitude,
         longitude: props.longitude,
-        Numberofbedrooms: props.Numberofbedrooms,
-        Numberofbathrooms: props.Numberofbathrooms,
-        Yearofconstruction: props.Yearofconstruction.getFullYear(),
-        Numberofparkingspace: props.Numberofparkingspace,
-        Numberoffloors: props.Numberoffloors,
+        numberofbedrooms: props.numberofbedrooms,
+        numberofbathrooms: props.numberofbathrooms,
+        yearofconstruction: props.yearofconstruction.getFullYear(),
+        numberofparkingspace: props.numberofparkingspace,
+        numberoffloors: props.numberoffloors,
         price: props.price,
-        Housesize: props.Housesize,
+        propertysize: props.propertysize,
         email: props.currentUser.email,
         idowner: props.currentUser.id,
         province: props.province,
-        District: props.District,
+        district: props.District,
         subDistrict: props.subDistrict,
         zipCode: props.zipCode,
-        Landmark: props.Landmark,
-        Address: props.Address,
+        landmark: props.landmark,
+        address: props.address,
         furniture: props.furniture,
         centralservice: props.centralservice,
-        Nearbyplaces: props.Nearbyplaces,
-        CreateAt: createdAt,
+        nearbyplaces: props.nearbyplaces,
+        createat: createdAt,
+        status: 1,
       });
     }
 
@@ -218,19 +220,19 @@ function Checkinformation(props) {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography variant="h6" gutterBottom>
-            {t("checkhouseinfoheader.label")}
+            {t("checkpropertyinfoheader.label")}
           </Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="subtitle1" gutterBottom>
-            {t("typehouse.label")}
+            {t("typeproperty.label")}
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
             {props.idtype === 0
-              ? t("typehouse1.label")
+              ? t("typeproperty1.label")
               : props.idtype === 2
-              ? t("typehouse2.label")
-              : t("typehouse3.label")}
+              ? t("typeproperty2.label")
+              : t("typeproperty3.label")}
           </Typography>
         </Grid>
         {props.idtype === 3 ? (
@@ -248,7 +250,7 @@ function Checkinformation(props) {
 
         <Grid item xs={3}>
           <Typography variant="subtitle1" gutterBottom>
-            {t("myhouse.label")}
+            {t("myproperty.label")}
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
             {props.name}
@@ -276,7 +278,7 @@ function Checkinformation(props) {
             {t("propertybed.label")}
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-            {props.Numberofbedrooms}
+            {props.numberofbedrooms}
           </Typography>
         </Grid>
         <Grid item xs={2}>
@@ -284,7 +286,7 @@ function Checkinformation(props) {
             {t("propertybath.label")}
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-            {props.Numberofbathrooms}
+            {props.numberofbathrooms}
           </Typography>
         </Grid>
         <Grid item xs={2}>
@@ -292,7 +294,7 @@ function Checkinformation(props) {
             {t("propertyyear.label")}
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-            {props.Yearofconstruction.getFullYear()}
+            {props.yearofconstruction.getFullYear()}
           </Typography>
         </Grid>
         <Grid item xs={2}>
@@ -300,7 +302,7 @@ function Checkinformation(props) {
             {t("propertycar.label")}
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-            {props.Numberofparkingspace}
+            {props.numberofparkingspace}
           </Typography>
         </Grid>
         <Grid item xs={2}>
@@ -308,7 +310,7 @@ function Checkinformation(props) {
             {t("propertyfloors.label")}
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-            {props.Numberoffloors}
+            {props.numberoffloors}
           </Typography>
         </Grid>
         <Grid item xs={2}>
@@ -326,7 +328,7 @@ function Checkinformation(props) {
               : t("propertysizecondo.label")}
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-            {props.Housesize}
+            {props.propertysize}
           </Typography>
         </Grid>
         <Grid item xs={2}>
@@ -336,7 +338,7 @@ function Checkinformation(props) {
               : t("propertysizepricecondo.label")}
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-            {currencyFormat(props.price / props.Housesize)}
+            {currencyFormat(props.price / props.propertysize)}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -382,18 +384,20 @@ function Checkinformation(props) {
             draggable={false}
           />
         </Grid>
-        <Grid item sm={12}>
-          <Typography variant="subtitle1" gutterBottom>
-            {t("nearbyplaces.label")}
-          </Typography>
-          <ChipNearbyPlaces Nearbyplaces={props.Nearbyplaces} />
-        </Grid>
+        {props.Nearbyplaces && (
+          <Grid item sm={12}>
+            <Typography variant="subtitle1" gutterBottom>
+              {t("nearbyplaces.label")}
+            </Typography>
+            <ChipNearbyPlaces nearbyplaces={props.Nearbyplaces} />
+          </Grid>
+        )}
         <Grid item xs={12}>
           <Typography variant="subtitle1" gutterBottom>
             {t("local2.label")}
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-            {props.Address}
+            {props.address}
           </Typography>
         </Grid>
         <Grid item xs={3}>
@@ -433,7 +437,7 @@ function Checkinformation(props) {
             {t("addressfromLandmark.label")}
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-            {props.Landmark}
+            {props.landmark}
           </Typography>
         </Grid>
         <Grid item xs={12}>

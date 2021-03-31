@@ -13,7 +13,7 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [],
+      Property: [],
       isLoading: true,
     };
   }
@@ -24,7 +24,7 @@ class HomePage extends React.Component {
       )
       .then((result) => {
         this.setState({
-          todos: result.data,
+          Property: result.data,
           isLoading: false,
         });
       })
@@ -37,7 +37,7 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const { isLoading, todos } = this.state;
+    const { isLoading, Property } = this.state;
     if (isLoading) {
       return (
         <div>
@@ -56,7 +56,7 @@ class HomePage extends React.Component {
         <div>
           <Sectionmain />
           <main>
-            <Sectionrecommend todos={todos} />
+            <Sectionrecommend property={Property} />
             <Sectionhowto />
             <Sectiontypeproperty />
             <Sectionhowitwork />

@@ -6,7 +6,7 @@ import AddIcon from "@material-ui/icons/Add";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import Listrealestate from "../../list-realestate/list-realestate.component.jsx"
+import Listrealestate from "../../list-realestate/list-realestate.component.jsx";
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -19,23 +19,31 @@ const useStyles = makeStyles((theme) => ({
     margin: `${theme.spacing(1)}px auto 0`,
     backgroundColor: theme.palette.primary.main,
   },
+  headertitle: {
+    fontWeight: "bold",
+  },
 }));
 
 export default function Sectionrecommend(props) {
   const classes = useStyles();
-  const cards = props.todos;
+  const cards = props.property;
   const { t } = useTranslation();
   return (
     <Container className={classes.cardGrid} maxWidth="lg">
-      <Typography variant="h5" align="center">
+      <Typography variant="h5" align="center" className={classes.headertitle}>
         {t("header.recommend.label")}
       </Typography>
-      <Typography variant="h4" align="center" color="primary">
+      <Typography
+        variant="h4"
+        align="center"
+        className={classes.headertitle}
+        color="primary"
+      >
         {t("subheader.recommend.label")}
       </Typography>
       <div className={classes.markedH4Center}></div>
 
-      {cards ?  <Listrealestate todos={cards} /> : <renderLoader />}
+      {cards ? <Listrealestate property={cards} /> : <renderLoader />}
 
       <Button
         size="large"

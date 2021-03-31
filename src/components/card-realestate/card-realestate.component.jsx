@@ -59,42 +59,42 @@ function currencyFormat(num) {
   );
 }
 
-function Cardhouse(props) {
+function CardProperty(props) {
   const { t } = useTranslation();
-  const { currentTodos, currentUser } = props;
+  const { currentProperty, currentUser } = props;
   const [open, setOpen] = React.useState(false);
   var property = [];
   const [deletepropertyvalue, Setdeletepropertyvalue] = React.useState({});
   const handleClickOpen = (id, index) => {
     setOpen(true);
-    property = currentTodos.filter((e) => e.id === id);
+    property = currentProperty.filter((e) => e.id === id);
     Setdeletepropertyvalue(property[0]);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
-
+  
   const classes = useStyles();
   return (
     <React.Fragment>
       {/* End hero unit */}
       <Grid container spacing={3} style={{ marginTop: 15 }}>
-        {currentTodos.map((currentTodo, index) => (
+        {currentProperty.map((detail, index) => (
           <Grid item sm={3} key={index}>
             <Card className={classes.card} aria-label={"property"}>
               <LazyLoad placeholder={<SkletonCard />}>
                 <CardActionArea
                   component={Link}
                   to={{
-                    pathname: "/property-detail/" + currentTodo.name,
+                    pathname: "/property-detail/" + detail.name,
                   }}
                   aria-label={"property"}
                 >
-                  {currentTodo.firstimg ? (
+                  {detail.firstimg ? (
                     <CardMedia
                       className={classes.cardMedia}
-                      image={currentTodo.firstimg}
+                      image={detail.firstimg}
                     />
                   ) : (
                     <Skeleton
@@ -106,22 +106,22 @@ function Cardhouse(props) {
 
                   <CardContent className={classes.cardContent}>
                     <Grid container spacing={1}>
-                      <Grid item sm={12}>
+                      <Grid item xs={12}>
                         <Typography variant="h6"   className={classes.bold}>
-                          {currentTodo.name.length < 28
-                            ? currentTodo.name.replaceAll("-", " ")
-                            : currentTodo.name
+                          {detail.name.length < 28
+                            ? detail.name.replaceAll("-", " ")
+                            : detail.name
                                 .replaceAll("-", " ")
                                 .substring(0, 28) + " ..."}
                         </Typography>
                       </Grid>
-                      <Grid item sm={12}>
+                      <Grid item xs={12}>
                         <Typography variant="subtitle2">
-                          {currentTodo.idtype === 1
-                            ? t("typehouse1.label")
-                            : currentTodo.idtype === 2
-                            ? t("typehouse2.label")
-                            : t("typehouse3.label")}
+                          {detail.idtype === 1
+                            ? t("typeproperty1.label")
+                            : detail.idtype === 2
+                            ? t("typeproperty2.label")
+                            : t("typeproperty3.label")}
                         </Typography>
                       </Grid>
                       <Grid item sm={12}>
@@ -130,43 +130,43 @@ function Cardhouse(props) {
                           color="primary"
                           style={{ fontWeight: 600 }}
                         >
-                          {currencyFormat(currentTodo.price)} {t("baht.label")}
+                          {currencyFormat(detail.price)} {t("baht.label")}
                         </Typography>
                       </Grid>
                       <Grid item sm={12}>
                         <Typography variant="subtitle2">
                           <RoomIcon fontSize="small" />
                           {(
-                            currentTodo.Address +
+                            detail.address +
                             " " +
-                            currentTodo.District +
+                            detail.district +
                             " " +
-                            currentTodo.subDistrict +
+                            detail.subDistrict +
                             " " +
-                            currentTodo.province +
+                            detail.province +
                             " " +
-                            currentTodo.zipCode
+                            detail.zipcode
                           ).length < 62
-                            ? currentTodo.Address +
+                            ? detail.address +
                               " " +
-                              currentTodo.District +
+                              detail.district +
                               " " +
-                              currentTodo.subDistrict +
+                              detail.subDistrict +
                               " " +
-                              currentTodo.province +
+                              detail.province +
                               " " +
-                              currentTodo.zipCode +
+                              detail.zipCode +
                               "                  "
                             : (
-                                currentTodo.Address +
+                                detail.address +
                                 " " +
-                                currentTodo.District +
+                                detail.district +
                                 " " +
-                                currentTodo.subDistrict +
+                                detail.subdistrict +
                                 " " +
-                                currentTodo.province +
+                                detail.province +
                                 " " +
-                                currentTodo.zipCode
+                                detail.zipCode
                               ).substring(0, 64) + " ..."}
                         </Typography>
                       </Grid>
@@ -184,7 +184,7 @@ function Cardhouse(props) {
                               gutterBottom
                               className={classes.bold}
                             >
-                              {"0" + currentTodo.Numberofbedrooms}
+                              {"0" + detail.numberofbedrooms}
                             </Typography>
                           </Grid>
                           <Grid item>
@@ -199,7 +199,7 @@ function Cardhouse(props) {
                               gutterBottom
                               className={classes.bold}
                             >
-                              {"0" + currentTodo.Numberofbathrooms}
+                              {"0" + detail.numberofbathrooms}
                             </Typography>
                           </Grid>
                           <Grid item>
@@ -214,7 +214,7 @@ function Cardhouse(props) {
                               gutterBottom
                               className={classes.bold}
                             >
-                              {currentTodo.Housesize}
+                              {detail.propertysize}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -224,12 +224,12 @@ function Cardhouse(props) {
                 </CardActionArea>
                 <CardActions>
                   <Grid item sm={4}>
-                    <ChipStatus status={currentTodo.status} />
+                    <ChipStatus status={detail.status} />
                   </Grid>
                   <div style={{ marginLeft: "auto" }}>
-                    {window.location.pathname !== "/my-house" ? (
+                    {window.location.pathname !== "/my-property" ? (
                       <IconButton
-                        value={currentTodo.id}
+                        value={detail.id}
                         aria-label="add to favorites"
                         onClick={props.onhandleFavorite}
                         disabled={currentUser ? false : true}
@@ -239,7 +239,7 @@ function Cardhouse(props) {
                           <Tooltip
                             title={
                               currentUser.favorite.find(
-                                (element) => element === currentTodo.id
+                                (element) => element === detail.id
                               ) !== undefined
                                 ? t("deletefavorite.label")
                                 : t("addfavorite.label")
@@ -249,7 +249,7 @@ function Cardhouse(props) {
                             <FavoriteIcon
                               color={
                                 currentUser.favorite.find(
-                                  (element) => element === currentTodo.id
+                                  (element) => element === detail.id
                                 ) !== undefined
                                   ? "error"
                                   : "disabled"
@@ -263,7 +263,7 @@ function Cardhouse(props) {
                     ) : (
                       <React.Fragment>
                         <Tooltip
-                          title={t("updatestaushouse.label")}
+                          title={t("updatestausproperty.label")}
                           aria-label="add"
                         >
                           <IconButton
@@ -271,21 +271,21 @@ function Cardhouse(props) {
                             to={{
                               pathname: "/property-updatestatus",
                               state: {
-                                id: currentTodo.id,
-                                status: currentTodo.status,
+                                id: detail.id,
+                                status: detail.status,
                               },
                             }}
                           >
                             <UpdateIcon />
                           </IconButton>
                         </Tooltip>
-                        <Tooltip title={t("edithouse.label")} aria-label="add">
+                        <Tooltip title={t("editproperty.label")} aria-label="add">
                           <IconButton
                             component={Link}
                             to={{
                               pathname: "/property-edit",
                               state: {
-                                id: currentTodo.id,
+                                id: detail.id,
                               },
                             }}
                           >
@@ -293,13 +293,13 @@ function Cardhouse(props) {
                           </IconButton>
                         </Tooltip>
                         <Tooltip
-                          title={t("deletehouse.label")}
+                          title={t("deleteproperty.label")}
                           aria-label="add"
                         >
                           <IconButton
                             aria-label="detele to favorites"
                             onClick={() =>
-                              handleClickOpen(currentTodo.id, index)
+                              handleClickOpen(detail.id, index)
                             }
                           >
                             <DeleteIcon />
@@ -318,11 +318,11 @@ function Cardhouse(props) {
               aria-describedby="alert-dialog-description"
             >
               <DialogTitle id="alert-dialog-title">
-                {t("deletehouseask.label")}
+                {t("deletepropertyask.label")}
               </DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                  {t("namehouse.label")}
+                  {t("nameproperty.label")}
 
                   {" " + deletepropertyvalue.name}
                 </DialogContentText>
@@ -357,4 +357,4 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
 
-export default connect(mapStateToProps)(Cardhouse);
+export default connect(mapStateToProps)(CardProperty);

@@ -27,7 +27,7 @@ class NotFoundPage extends React.Component {
             <Grid item xs={12}>
               <img
                 alt=""
-                src="./assets/img/undraw_page_not_found_su7k.svg"
+                src="./assets/img/svg/Illustration/undraw_page_not_found_su7k.svg"
                 width="100%"
                 height="250px"
               ></img>

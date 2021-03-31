@@ -215,7 +215,7 @@ export default function Info(props) {
 
             <Grid item xs={12}>
               <Typography variant="h5">
-                {props.typehouse !== 3
+                {props.typeproperty !== 3
                   ? t("propertydetail.label")
                   : "รายละเอียดคอนโด"}
               </Typography>
@@ -250,7 +250,7 @@ export default function Info(props) {
                 {t("propertybed.label")}
               </Typography>
               <Typography variant="subtitle1">
-                {props.Numberofbedrooms}
+                {props.numberofbedrooms}
               </Typography>
             </Grid>
             <Grid item xs={isMobile ? 4 : 3}>
@@ -259,7 +259,7 @@ export default function Info(props) {
                 {t("propertybath.label")}
               </Typography>
               <Typography variant="subtitle1">
-                {props.Numberofbathrooms}
+                {props.numberofbathrooms}
               </Typography>
             </Grid>
             <Grid item xs={isMobile ? 4 : 3}>
@@ -268,7 +268,7 @@ export default function Info(props) {
                 {t("propertyyear.label")}
               </Typography>
               <Typography variant="subtitle1">
-                {props.Yearofconstruction}
+                {props.yearofconstruction}
               </Typography>
             </Grid>
             <Grid item xs={isMobile ? 4 : 3}>
@@ -277,7 +277,7 @@ export default function Info(props) {
                 {t("propertycar.label")}
               </Typography>
               <Typography variant="subtitle1">
-                {props.Numberofparkingspace}
+                {props.numberofparkingspace}
               </Typography>
             </Grid>
             <Grid item xs={isMobile ? 4 : 3}>
@@ -286,13 +286,13 @@ export default function Info(props) {
                 {t("propertyfloors.label")}
               </Typography>
               <Typography variant="subtitle1">
-                {props.Numberoffloors}
+                {props.numberoffloors}
               </Typography>
             </Grid>
             <Grid item xs={isMobile ? 4 : 3}>
               <SquareFootTwoToneIcon className={classes.icon} />
               <Typography variant="subtitle1">
-                {props.typehouse !== 3
+                {props.typeproperty !== 3
                   ? t("propertysizeprice.label")
                   : t("propertysizepricecondo.label")}
               </Typography>
@@ -304,13 +304,13 @@ export default function Info(props) {
             <Grid item xs={isMobile ? 4 : 3}>
               <Crop32TwoToneIcon className={classes.icon} />
               <Typography variant="subtitle1">
-                {props.typehouse !== 3
+                {props.typeproperty !== 3
                   ? t("propertysize.label")
                   : t("propertysizecondo.label")}
               </Typography>
-              <Typography variant="subtitle1">{props.Housesize}</Typography>
+              <Typography variant="subtitle1">{props.propertysize}</Typography>
             </Grid>
-            {props.typehouse === 3 ? (
+            {props.typeproperty === 3 ? (
               <React.Fragment>
                 <Grid item xs={isMobile ? 4 : 3}>
                   <EmojiTransportationIcon className={classes.icon} />
@@ -432,8 +432,8 @@ export default function Info(props) {
           </Grid>
           <Grid item xs={9}>
             <Typography variant="subtitle1">
-              {props.Address + " "}
-              {props.District + " "}
+              {props.address + " "}
+              {props.district + " "}
               {props.subDistrict + " "}
               {props.province + " "}
               {props.zipCode + " "}
@@ -456,9 +456,9 @@ export default function Info(props) {
             <Typography variant="subtitle1">
               {t("nearbyplaces.label")}
             </Typography>
-            <ChipNearbyPlaces Nearbyplaces={props.Nearbyplaces} />
+            <ChipNearbyPlaces nearbyplaces={props.nearbyplaces} />
             <ChipNearbyPlaces
-              Nearbyplaces={props.Nearbyplacesapi}
+              nearbyplaces={props.nearbyplacesapi}
               latitude={props.latitude}
               longitude={props.longitude}
             />

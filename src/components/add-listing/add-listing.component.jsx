@@ -9,7 +9,7 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Checkinformation from "./check-information.component.jsx";
 import InformationForm from "./input-information-form.component.jsx";
-import HousetypeForm from "./input-type-form.component.jsx";
+import PropertyTypeForm from "./input-type-form.component.jsx";
 import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
@@ -58,19 +58,19 @@ export default function Addlisting(props) {
     detail: "",
     latitude: 13.750573,
     longitude: 100.498519,
-    Numberofbedrooms: 0,
-    Numberofbathrooms: 0,
-    Yearofconstruction: new Date(),
-    Numberofparkingspace: 0,
-    Numberoffloors: 0,
+    numberofbedrooms: 0,
+    numberofbathrooms: 0,
+    yearofconstruction: new Date(),
+    numberofparkingspace: 0,
+    numberoffloors: 0,
     price: 0,
-    Housesize: 0,
+    propertysize: 0,
     province: "",
     District: "",
     subDistrict: "",
     zipCode: "",
-    Landmark: "",
-    Address: "",
+    landmark: "",
+    address: "",
     countview: 0,
     centralservice: [
       {
@@ -133,8 +133,8 @@ export default function Addlisting(props) {
         checked: false,
       },
     ],
-    Nearbyplaces: [],
-    CreateAt: new Date(),
+    nearbyplaces: [],
+    createAt: new Date(),
   });
   const handleNext = (newValues) => {
     if (activeStep === 0) {
@@ -159,15 +159,15 @@ export default function Addlisting(props) {
   };
   const { t } = useTranslation();
   const steps = [
-    t("typehouse.label"),
+    t("typeproperty.label"),
     t("forminfoheader.label"),
-    t("checkhouseinfoheader.label"),
+    t("checkpropertyinfoheader.label"),
   ];
 
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <HousetypeForm handleNext={handleNext} />;
+        return <PropertyTypeForm handleNext={handleNext} />;
       case 1:
         return (
           <InformationForm

@@ -83,9 +83,9 @@ class Updatestatusproperty extends React.Component {
                 separator={<NavigateNextIcon fontSize="small" />}
                 aria-label="breadcrumb"
               >
-                <Linkmu color="inherit" component={Link} to="/my-house">
+                <Linkmu color="inherit" component={Link} to="/my-property">
                   <ListAltIcon className={classes.icon} />
-                  {t("myhouse.name.label")}
+                  {t("myproperty.name.label")}
                 </Linkmu>
 
                 <Typography variant="h6">
@@ -101,6 +101,7 @@ class Updatestatusproperty extends React.Component {
                   name="sizefamily"
                   onChange={this.handleChange}
                   value={this.state.status}
+                  label={t("updatestatuspropertybutton.label")}
                 >
                   <MenuItem value={1}>
                     {t("statuspropertytype1.label")}

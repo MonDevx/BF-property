@@ -74,7 +74,7 @@ const Routes = (props) => {
       />
       <Route path={`/resetpassword`} component={ResetpasswordPage} />
       <Route
-        path="/my-house"
+        path="/my-property"
         render={() =>
           props.currentUser ? <MypropertyPage /> : <SigninandSignupPage />
         }

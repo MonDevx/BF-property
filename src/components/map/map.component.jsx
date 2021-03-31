@@ -153,9 +153,7 @@ class SimpleMap extends React.Component {
             />
             {this.state.markers.map((marker, index) => (
               <Marker
-
                 key={index}
-
                 draggable={this.state.draggable}
                 onDragend={this.updatePosition}
                 position={marker.position}

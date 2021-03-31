@@ -55,7 +55,7 @@ export default function EditinformationForm(props) {
 
     if (
       name === "price" ||
-      name === "Housesize" ||
+      name === "propertysize" ||
       name === "Numberofbathrooms" ||
       name === "Numberoffloors" ||
       name === "Numberofparkingspace" ||
@@ -74,7 +74,7 @@ export default function EditinformationForm(props) {
     }
   };
 
-  const handleYearofconstructionChange = (value) => {
+  const handleYearOfConstructionChangeofconstructionChange = (value) => {
     setFormValues({ ...formValues, Yearofconstruction: value });
   };
 
@@ -158,8 +158,8 @@ export default function EditinformationForm(props) {
             <TextField
               required
               fullWidth
-              name="Housesize"
-              value={formValues.Housesize}
+              name="propertysize"
+              value={formValues.propertysize}
               type="number"
               label={
                 formValues.idtype !== 3
@@ -185,7 +185,7 @@ export default function EditinformationForm(props) {
                   ? t("propertysizeprice.label")
                   : t("propertysizepricecondo.label")
               }
-              value={(formValues.price / formValues.Housesize).toFixed(2)}
+              value={(formValues.price / formValues.propertysize).toFixed(2)}
               onChange={handleChange}
               InputProps={{
                 inputComponent: NumberFormatCustom,
@@ -225,7 +225,7 @@ export default function EditinformationForm(props) {
               label={t("propertybed.label")}
               type="number"
               onChange={handleChange}
-              value={formValues.Numberofbedrooms}
+              value={formValues.numberofbedrooms}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -244,7 +244,7 @@ export default function EditinformationForm(props) {
               label={t("propertybath.label")}
               type="number"
               onChange={handleChange}
-              value={formValues.Numberofbathrooms}
+              value={formValues.numberofbathrooms}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -265,8 +265,8 @@ export default function EditinformationForm(props) {
                 label={t("propertyyear.label")}
                 minDate={new Date("1900-01-01")}
                 maxDate={new Date()}
-                value={new Date(formValues.Yearofconstruction + "-01-01")}
-                onChange={handleYearofconstructionChange}
+                value={new Date(formValues.yearofconstruction + "-01-01")}
+                onChange={handleYearOfConstructionChangeofconstructionChange}
               />
             </MuiPickersUtilsProvider>
           </Grid>
@@ -276,7 +276,7 @@ export default function EditinformationForm(props) {
               label={t("propertycar.label")}
               type="number"
               onChange={handleChange}
-              value={formValues.Numberofparkingspace}
+              value={formValues.numberofparkingspace}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -299,7 +299,7 @@ export default function EditinformationForm(props) {
               }
               type="number"
               onChange={handleChange}
-              value={formValues.Numberoffloors}
+              value={formValues.numberoffloors}
               InputLabelProps={{
                 shrink: true,
               }}

@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
+  headertitle:{
+    fontWeight: 'bold'
+  }
 }));
 
 export default function Sectionhowto() {
@@ -42,8 +45,8 @@ export default function Sectionhowto() {
         <Container className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={12}>
-              <Typography variant="h5">{t("howtoheader")}</Typography>
-              <Typography variant="h4" color="primary">
+              <Typography variant="h5" className={classes.headertitle}>{t("howtoheader")}</Typography>
+              <Typography variant="h4" className={classes.headertitle} color="primary">
                 {t("howtosubheader")}
               </Typography>
             </Grid>

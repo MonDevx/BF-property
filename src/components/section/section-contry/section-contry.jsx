@@ -2,13 +2,17 @@ import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import Buttonbase from "../../ิีbuttonbase/buttonbase.component.jsx";
+import Buttonbase from "../../customs/ิีbuttonbase/buttonbase.component.jsx";
+
 import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
+  },
+  headertitle: {
+    fontWeight: "bold",
   },
 }));
 
@@ -52,8 +56,10 @@ export default function Sectioncontry() {
   ];
   return (
     <Container className={classes.cardGrid} maxWidth="lg">
-      <Typography variant="h5">{t("header.label")} </Typography>
-      <Typography variant="h4" color="primary">
+      <Typography variant="h5" className={classes.headertitle}>
+        {t("header.label")}{" "}
+      </Typography>
+      <Typography variant="h4" color="primary" className={classes.headertitle}>
         {t("subheader.label")}
       </Typography>
 

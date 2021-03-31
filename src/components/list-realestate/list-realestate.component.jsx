@@ -1,4 +1,3 @@
-import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Pagination from "@material-ui/lab/Pagination";
@@ -8,17 +7,28 @@ import { firestorage, firestore } from "../../firebase/firebase.utils";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withAlert } from "react-alert";
-import Cardhouse from "../card-realestate/card-realestate.component.jsx";
+import Cardproperty from "../card-realestate/card-realestate.component.jsx";
 import axios from "axios";
 import { auth } from "../../firebase/firebase.utils.js";
+import * as _ from "lodash";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import SortIcon from "@material-ui/icons/Sort";
+import SearchIcon from "@material-ui/icons/Search";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
+import Box from "@material-ui/core/Box";
 class Listproperty extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [],
+      property: [],
+      previousProperty: [],
       currentPage: 1,
-      todosPerPage: 8,
+      propertyPerPage: 8,
+      anchorEl: null,
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -30,7 +40,8 @@ class Listproperty extends React.Component {
   componentWillMount() {
     if (window.location.pathname !== "/seach-result") {
       this.setState({
-        todos: this.props.todos,
+        property: this.props.property,
+        previousProperty: this.props.property,
       });
     }
   }
@@ -100,13 +111,15 @@ class Listproperty extends React.Component {
 
     if (seachkey) {
       if (seachkey === 1 || seachkey === 2) {
-        ref = firestore.collection("house").where("idtype", "==", seachkey);
+        ref = firestore.collection("property").where("idtype", "==", seachkey);
       } else if (seachkey === "view") {
-        ref = firestore.collection("house").orderBy("countview", "desc");
+        ref = firestore.collection("property").orderBy("countview", "desc");
       } else if (seachkey === "new") {
-        ref = firestore.collection("house").orderBy("CreateAt", "desc");
+        ref = firestore.collection("property").orderBy("CreateAt", "desc");
       } else {
-        ref = firestore.collection("house").where("province", "==", seachkey);
+        ref = firestore
+          .collection("property")
+          .where("province", "==", seachkey);
       }
     } else if (
       type === 0 &&
@@ -119,9 +132,9 @@ class Listproperty extends React.Component {
       size === 0 &&
       check === true
     ) {
-      ref = firestore.collection("house");
+      ref = firestore.collection("property");
     } else {
-      ref = firestore.collection("house");
+      ref = firestore.collection("property");
 
       if (type !== 0) {
         ref = ref.where("idtype", "==", type);
@@ -132,7 +145,7 @@ class Listproperty extends React.Component {
       }
 
       if (room !== 0) {
-        ref = ref.where("Numberofbedrooms", "==", room);
+        ref = ref.where("numberofbedrooms", "==", room);
       }
       if (family) {
         if (family !== 0) {
@@ -141,13 +154,13 @@ class Listproperty extends React.Component {
       }
       if (bath) {
         if (bath !== 0) {
-          ref = ref.where("Numberofbathrooms", "==", bath);
+          ref = ref.where("numberofbathrooms", "==", bath);
         }
       }
 
       if (car) {
         if (car !== 0) {
-          ref = ref.where("Numberofparkingspace", "==", car);
+          ref = ref.where("numberofparkingspace", "==", car);
         }
       }
       if (check === false) {
@@ -201,39 +214,42 @@ class Listproperty extends React.Component {
     }
 
     ref.get().then((querySnapshot) => {
-      var todos = [];
+      var property = [];
       querySnapshot.forEach((doc) => {
         if (doc.data().status !== 4) {
           let dict = { id: doc.id, ...doc.data() };
-          todos.push(dict);
+          property.push(dict);
         }
       });
 
-      var todos2 = [];
+      var property2 = [];
 
       if (size !== 0 && size) {
-        for (var i in todos) {
-          if (todos[i].Housesize >= sizemin && todos[i].Housesize <= sizemax) {
-            todos2.push(todos[i]);
+        for (var i in property) {
+          if (
+            property[i].propertysize >= sizemin &&
+            property[i].propertysize <= sizemax
+          ) {
+            property2.push(property[i]);
           }
         }
 
         this.setState({
-          todos: todos2,
+          property: property2,
         });
       } else {
         this.setState({
-          todos: todos,
+          property: property,
         });
       }
 
-      if (this.state.todos.length === 0) {
+      if (this.state.property.length === 0) {
         this.props.alert.error(t("seach.error"));
       } else {
         this.props.alert.success(
           t("seach.listtotal") +
             " " +
-            this.state.todos.length +
+            this.state.property.length +
             " " +
             t("list.label")
         );
@@ -274,18 +290,31 @@ class Listproperty extends React.Component {
     }
   }
   render() {
-    const { todos, currentPage, todosPerPage } = this.state;
+    const { property, currentPage, propertyPerPage, anchorEl } = this.state;
     const { currentUser, alert } = this.props;
-    // Logic for displaying todos
-    const indexOfLastTodo = currentPage * todosPerPage;
-    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
-    const currentTodos = todos.slice(indexOfFirstTodo, indexOfLastTodo);
+    const { name } = "";
+    const indexOfLastTodo = currentPage * propertyPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - propertyPerPage;
+    const currentProperty = property.slice(indexOfFirstTodo, indexOfLastTodo);
     const { t } = this.props;
-    // Logic for displaying page numbers
     const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(todos.length / todosPerPage); i++) {
+
+    for (let i = 1; i <= Math.ceil(property.length / propertyPerPage); i++) {
       pageNumbers.push(i);
     }
+    const handleMenuClose = () => {
+      this.setState({
+        isMenuOpen: false,
+        anchorEl: null,
+      });
+    };
+
+    const handleMenuOpen = (event) => {
+      this.setState({
+        isMenuOpen: true,
+        anchorEl: event.currentTarget,
+      });
+    };
     const updateFavorites = (favorite, event) => {
       auth.currentUser
         .getIdToken(/* forceRefresh */ true)
@@ -306,6 +335,36 @@ class Listproperty extends React.Component {
           alert.error(error);
         });
     };
+    const sortproperty = (event) => {
+      var sortProperty;
+      if (event.target.value === 1) {
+        sortProperty = _.sortBy(property, "price");
+      } else if (event.target.value === 2) {
+        sortProperty = _.sortBy(property, "price").reverse();
+      } else if (event.target.value === 3) {
+        sortProperty = _.sortBy(property, "name");
+      } else {
+        sortProperty = _.sortBy(property, "name").reverse();
+      }
+      this.setState({
+        property: sortProperty,
+      });
+      handleMenuClose();
+    };
+    const findproperty = (event) => {
+      event.persist();
+      if (event.target.value !== "") {
+        this.setState({
+          property: property.filter((item) =>
+            item.name.includes(event.target.value)
+          ),
+        });
+      } else {
+        this.setState((state) => ({
+          property: state.previousProperty,
+        }));
+      }
+    };
     const handleFavorite = (event) => {
       event.persist();
       try {
@@ -314,7 +373,7 @@ class Listproperty extends React.Component {
         if (favorite.length === 0) {
           favorite.push(event.currentTarget.value);
           updateFavorites(favorite);
-          alert.success(t("alertaddfavoritehouse"));
+          alert.success(t("alertaddfavoriteproperty"));
         } else {
           favorite.forEach((element, index) => {
             if (element === event.currentTarget.value) {
@@ -325,20 +384,22 @@ class Listproperty extends React.Component {
           if (check === false) {
             favorite.push(event.currentTarget.value);
             updateFavorites(favorite);
-            alert.success(t("alertaddfavoritehouse"));
+            alert.success(t("alertaddfavoriteproperty"));
           } else {
             updateFavorites(favorite, event);
             if (window.location.pathname === "/my-favorite") {
               this.setState({
-                todos: todos.filter((e) => e.id !== event.currentTarget.value),
+                property: property.filter(
+                  (e) => e.id !== event.currentTarget.value
+                ),
               });
             }
-            alert.success(t("alertdeletefavoritehouse"));
+            alert.success(t("alertdeletefavoriteproperty"));
           }
         }
       } catch (e) {
         if (e) {
-          alert.error("การเพิ่มลงในรายการที่ชอบแล้วเกิดข้อผิดผลาด");
+          alert.error(t("alertaddfavoritepropertyerror"));
         }
         // if (e !== BreakException) throw e;
       }
@@ -366,7 +427,7 @@ class Listproperty extends React.Component {
           });
       });
 
-      var delete_inforef = firestore.collection("house").doc(id);
+      var delete_inforef = firestore.collection("property").doc(id);
       delete_inforef
         .delete()
         .then(function () {})
@@ -374,91 +435,152 @@ class Listproperty extends React.Component {
           console.log("delete error", error);
         });
       this.setState({
-        todos: todos.filter((e) => e.id !== id),
+        property: property.filter((e) => e.id !== id),
       });
-      alert.success(t("alertdeletehouse"));
+      alert.success(t("alertdeleteproperty"));
     };
     return (
-      <Container
-        maxWidth="lg"
+      <Grid
+        container
+        justify="space-between"
+        alignItems="center"
         style={{ paddingTop: "2%", paddingBottom: "2%" }}
       >
-        <Grid item xs={12}>
+        <Grid item xs={6} sm={3}>
           {(() => {
-            if (window.location.pathname === "/my-house") {
+            <React.Fragment></React.Fragment>;
+            if (window.location.pathname === "/my-property") {
               return (
                 <Typography variant="h5">
-                  {t("myhouse.label")} {todos.length} {t("list.label")}
+                  {t("myproperty.label")} {property.length} {t("list.label")}
                 </Typography>
               );
             } else if (window.location.pathname === "/my-favorite") {
               return (
                 <Typography variant="h5">
-                  {t("myfavorite.label")} {todos.length} {t("list.label")}
+                  {t("myfavorite.label")} {property.length} {t("list.label")}
                 </Typography>
               );
             } else if (window.location.pathname === "/seach-result") {
               return (
                 <Typography variant="h5">
-                  {t("seachresult.label")} {todos.length} {t("list.label")}
+                  {t("seachresult.label")} {property.length} {t("list.label")}
                 </Typography>
               );
-            } else {
             }
           })()}
-          {todos.length > 0 ? (
-            <React.Fragment>
-              {window.location.pathname !== "/" ? (
-                <Typography variant="subtitle1">
-                  {t("page.label")} {currentPage} / {pageNumbers.length}
-                </Typography>
-              ) : null}
-
-              <Cardhouse
-                currentTodos={currentTodos}
-                onhandleFavorite={handleFavorite}
-                deleteproperty={deleteproperty}
-              />
-            </React.Fragment>
-          ) : (
-            <Grid
-              container
-              direction="row"
-              justify="center"
-              alignItems="center"
-              style={{
-                padding: window.location.pathname === "/" ? "10%" : "15%",
-              }}
-            >
-              <Typography variant="h5">
-                {t(
-                  window.location.pathname === "/my-house"
-                    ? "myhouseempty.label"
-                    : window.location.pathname === "/seach-result"
-                    ? "seachresultemty.label"
-                    : window.location.pathname === "/"
-                    ? "ไม่มีรายการบ้านแนะนำ"
-                    : "myfavoriteempty.label"
-                )}
-              </Typography>
-            </Grid>
-          )}
-          {window.location.pathname !== "/" ? (
-            <Pagination
-              count={pageNumbers.length}
-              page={currentPage}
-              size="large"
-              id={currentPage}
-              onChange={this.handleClick}
-              showFirstButton={todos.length > 0}
-              showLastButton={todos.length > 0}
-              style={{ paddingTop: "2%" }}
-              hideNextButton={todos.length === 0}
-              hidePrevButton={todos.length === 0}
-            />
+          {property.length > 0 &&window.location.pathname !== "/"? (
+            <Typography variant="subtitle1">
+              {t("page.label")} {currentPage} / {pageNumbers.length}
+            </Typography>
           ) : null}
         </Grid>
-      </Container>
+
+        <Box display="flex" flexDirection="row-reverse" alignItems="center">
+  
+          {window.location.pathname !== "/" ? (
+            <Box p={2}>
+              <div>
+                <Button
+                  onClick={handleMenuOpen}
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  startIcon={<SortIcon />}
+                >
+                  {t("sort.label")}
+                </Button>
+
+                <Menu
+                  id="simple-menu"
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                  anchorEl={anchorEl}
+                  getContentAnchorEl={null}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  transformOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                  <MenuItem value={1} onClick={sortproperty}>
+                    {t("sortmenu1.label")}
+                  </MenuItem>
+                  <MenuItem value={2} onClick={sortproperty}>
+                    {t("sortmenu2.label")}
+                  </MenuItem>
+                  <MenuItem value={3} onClick={sortproperty}>
+                    {t("sortmenu3.label")}
+                  </MenuItem>
+                  <MenuItem value={4} onClick={sortproperty}>
+                    {t("sortmenu4.label")}
+                  </MenuItem>
+                </Menu>
+              </div>
+            </Box>
+          ) : null}
+                  {window.location.pathname === "/my-property" ? (
+            <Box p={3}>
+              <TextField
+                id="outlined-basic"
+                label={t("seachinput.label")}
+                variant="outlined"
+                onChange={findproperty}
+                value={name}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
+          ) : null}
+        </Box>
+        {property.length > 0 ? (
+          <React.Fragment>
+            <Cardproperty
+              currentProperty={currentProperty}
+              onhandleFavorite={handleFavorite}
+              deleteproperty={deleteproperty}
+            />
+          </React.Fragment>
+        ) : (
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            style={{
+              padding: window.location.pathname === "/" ? "10%" : "15%",
+            }}
+          >
+            <Typography variant="h5">
+              {t(
+                window.location.pathname === "/my-property"
+                  ? "mypropertyempty.label"
+                  : window.location.pathname === "/seach-result"
+                  ? "seachresultemty.label"
+                  : window.location.pathname === "/"
+                  ? "ไม่มีรายการบ้านแนะนำ"
+                  : "myfavoriteempty.label"
+              )}
+            </Typography>
+          </Grid>
+        )}
+        {window.location.pathname !== "/" ? (
+          <Pagination
+            count={pageNumbers.length}
+            page={currentPage}
+            size="large"
+            id={currentPage}
+            onChange={this.handleClick}
+            showFirstButton={property.length > 0}
+            showLastButton={property.length > 0}
+            style={{ paddingTop: "2%" }}
+            hideNextButton={property.length === 0}
+            hidePrevButton={property.length === 0}
+          />
+        ) : null}
+      </Grid>
     );
   }
 }

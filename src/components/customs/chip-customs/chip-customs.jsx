@@ -11,27 +11,27 @@ export const ChipNearbyPlaces = (props) => {
   return (
     <React.Fragment>
 
-      {props.Nearbyplaces.map((Nearbyplace, index) =>
-        Nearbyplace.LocationName !== "" ? (
+      {props.nearbyplaces.map((nearbyplace, index) =>
+       nearbyplace.LocationName !== "" ? (
           <Chip
             icon={<NearMeIcon />}
             color="primary"
             label={
               (props.latitude && props.longitude
-                ? Nearbyplace.name.length < 26
-                  ? Nearbyplace.name
-                  : Nearbyplace.name.substring(0, 26) + " ..."
-                : Nearbyplace.LocationName.length < 26
-                ? Nearbyplace.LocationName
-                : Nearbyplace.LocationName.substring(0, 26) + " ...") +
+                ?nearbyplace.name.length < 26
+                  ?nearbyplace.name
+                  :nearbyplace.name.substring(0, 26) + " ..."
+                :nearbyplace.LocationName.length < 26
+                ?nearbyplace.LocationName
+                :nearbyplace.LocationName.substring(0, 26) + " ...") +
               " " +
               "(" +
               (props.latitude && props.longitude
                 ? getDistance(
                     { latitude: props.latitude, longitude: props.longitude },
-                    { latitude: Nearbyplace.lat, longitude: Nearbyplace.lon }
+                    { latitude:nearbyplace.lat, longitude:nearbyplace.lon }
                   ) / 1000
-                : Nearbyplace.Distance / 1000
+                :nearbyplace.Distance / 1000
               ).toFixed(2) +
               " " +
               t("kilometer.label") +

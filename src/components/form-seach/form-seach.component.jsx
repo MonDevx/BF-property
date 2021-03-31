@@ -6,27 +6,19 @@ import Collapse from "@material-ui/core/Collapse";
 import Container from "@material-ui/core/Container";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import clsx from "clsx";
 import React from "react";
 import { Link } from "react-router-dom";
 import data from "../../json/province.json";
 import { useTranslation } from "react-i18next";
 const provicejson = data;
 const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
@@ -39,12 +31,16 @@ const useStyles = makeStyles((theme) => ({
   },
   seachbox: {
     marginTop: theme.spacing(15),
+    
+  },
+  card: {
+    padding: theme.spacing(1.5),
+
   },
 }));
 
 export default function Formseach() {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
   const [type, setType] = React.useState(0);
   const [price, setPrice] = React.useState(0);
   const [room, setRoom] = React.useState(0);
@@ -59,9 +55,7 @@ export default function Formseach() {
   const handleChangeroom = (event) => {
     setRoom(Number(event.target.value));
   };
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+
   const onchangeprovice = (value) => {
     if (value !== null) {
       setprovice(value.name);
@@ -72,9 +66,15 @@ export default function Formseach() {
   const { t } = useTranslation();
   return (
     <Container maxWidth="md" className={classes.seachbox}>
-      <Card>
+      <Card className={classes.card}>
         <CardActions>
-          <Grid container spacing={4}>
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="center"
+            spacing={2}
+          >
             <Grid item xs={12} sm={3}>
               <FormControl
                 variant="outlined"
@@ -82,23 +82,23 @@ export default function Formseach() {
                 fullWidth
               >
                 <InputLabel id="demo-simple-select-outlined-label">
-                  {t("typehouse.label")}
+                  {t("typeproperty.label")}
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
                   value={type}
                   onChange={handleChangeType}
-                  label={t("typehouse.label")}
+                  label={t("typeproperty.label")}
                 >
                   <MenuItem value={0}>{t("totaltype.label")}</MenuItem>
-                  <MenuItem value={1}>{t("typehouse1.label")}</MenuItem>
-                  <MenuItem value={2}>{t("typehouse2.label")}</MenuItem>
-                  <MenuItem value={3}>{t("typehouse3.label")}</MenuItem>
+                  <MenuItem value={1}>{t("typeproperty1.label")}</MenuItem>
+                  <MenuItem value={2}>{t("typeproperty2.label")}</MenuItem>
+                  <MenuItem value={3}>{t("typeproperty3.label")}</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={5}>
               <Autocomplete
                 id="combo-box-demo"
                 options={provicejson}
@@ -112,16 +112,14 @@ export default function Formseach() {
                     variant="outlined"
                   />
                 )}
-                className={classes.formControl}
               />
             </Grid>
             <Grid item xs={12} sm={3}>
               <Button
                 fullWidth
                 variant="contained"
-                size="large"
                 color="primary"
-                style={{ padding: "6%", margin: "6%" }}
+                style={{ padding: "6%" }}
                 component={Link}
                 to={{
                   pathname: "/seach-result",
@@ -143,63 +141,48 @@ export default function Formseach() {
                 {t("seach.label")}
               </Button>
             </Grid>
-          </Grid>
-          <IconButton
-            className={clsx(classes.expand, classes.margin, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={3}>
-                <FormControl variant="outlined" fullWidth>
-                  <InputLabel id="demo-simple-select-outlined-label">
-                    {t("pricebetween.label")}
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    value={price}
-                    onChange={handleChangeprice}
-                    label={t("pricebetween.label")}
-                  >
-                    <MenuItem value={0}>{t("totalprice.label")}</MenuItem>
-                    <MenuItem value={1}>{t("pricebetween1.label")}</MenuItem>
-                    <MenuItem value={2}>{t("pricebetween2.label")}</MenuItem>
-                    <MenuItem value={3}>{t("pricebetween3.label")}</MenuItem>
-                    <MenuItem value={4}>{t("pricebetween4.label")}</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={3}>
-                <TextField
-                  variant="outlined"
-                  label={t("propertybed.label")}
-                  type="number"
-                  value={room}
-                  onChange={handleChangeroom}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  onInput={(e) => {
-                    e.target.value = Math.max(0, parseInt(e.target.value))
-                      .toString()
-                      .slice(0, 1);
-                  }}
-                  inputProps={{ min: "0", max: "9", step: "1" }}
-                  fullWidth
-                />
-              </Grid>
+
+            <Grid item xs={12} sm={3}>
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel id="demo-simple-select-outlined-label">
+                  {t("pricebetween.label")}
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={price}
+                  onChange={handleChangeprice}
+                  label={t("pricebetween.label")}
+                >
+                  <MenuItem value={0}>{t("totalprice.label")}</MenuItem>
+                  <MenuItem value={1}>{t("pricebetween1.label")}</MenuItem>
+                  <MenuItem value={2}>{t("pricebetween2.label")}</MenuItem>
+                  <MenuItem value={3}>{t("pricebetween3.label")}</MenuItem>
+                  <MenuItem value={4}>{t("pricebetween4.label")}</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
-          </CardContent>
-        </Collapse>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                variant="outlined"
+                label={t("propertybed.label")}
+                type="number"
+                value={room}
+                onChange={handleChangeroom}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onInput={(e) => {
+                  e.target.value = Math.max(0, parseInt(e.target.value))
+                    .toString()
+                    .slice(0, 1);
+                }}
+                inputProps={{ min: "0", max: "9", step: "1" }}
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+        </CardActions>
       </Card>
     </Container>
   );

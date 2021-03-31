@@ -9,9 +9,8 @@ import { connect } from "react-redux";
 import { Route } from "react-router-dom";
 import "./App.css";
 import AlertTemplate from "./components/alert/alert.component.jsx";
-
 import { compose } from "redux";
-
+import Pace from "./components/customs/pace/pace.js";
 import "./configuration/i18n";
 import {
   auth,
@@ -64,7 +63,7 @@ class App extends React.Component {
       this.setState({
         maintenancestatus: snapshot.val(),
       });
-      if (snapshot.val() === 1) {
+      if (snapshot.val()  === 1) {
         this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
           this.setState({ currentUser: userAuth });
           if (userAuth) {
@@ -92,8 +91,9 @@ class App extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
+         <Pace color={theme.palette.primary.main} />
         <AlertProvider template={AlertTemplate} {...options}>
-          {this.state.maintenancestatus === 1 ? (
+          {this.state.maintenancestatus  === 1 ? (
             <Suspense
               fallback={
                 <div align="center" style={{ margin: "21.80%" }}>

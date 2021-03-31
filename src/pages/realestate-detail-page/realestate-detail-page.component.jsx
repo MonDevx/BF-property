@@ -7,12 +7,12 @@ import Bar from "../../components/section-property-detail/section-bar-property-d
 import LoaderSpinners from "../../components/loader-spinners/loader-spinners.jsx";
 import { getInitialProps } from "react-i18next";
 
-class PropertyDetailpage extends React.Component {
+class propertyDetailpage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [],
-      Nearbyplacesapi: [],
+      property: [],
+      nearbyplacesapi: [],
       isLoading: true,
       id: null,
     };
@@ -26,7 +26,7 @@ class PropertyDetailpage extends React.Component {
 
         this.setState(
           {
-            todos: result1.data.data,
+            property: result1.data.data,
             id: result1.data.id,
 
           },
@@ -36,14 +36,14 @@ class PropertyDetailpage extends React.Component {
               url: `https://api.longdo.com/POIService/json/search`,
               params: {
                 key: process.env.REACT_APP_LONGDO_KEY,
-                lon: this.state.todos.longitude,
-                lat: this.state.todos.latitude,
+                lon: this.state.property.longitude,
+                lat: this.state.property.latitude,
                 limit: "5",
               },
             })
               .then((result2) => {
                 this.setState({
-                  Nearbyplacesapi: result2.data.data,
+                  nearbyplacesapi: result2.data.data,
                   isLoading: false,
                 });
               })
@@ -59,7 +59,7 @@ class PropertyDetailpage extends React.Component {
   }
 
   render() {
-    const { isLoading, todos, id } = this.state;
+    const { isLoading, property, id } = this.state;
     if (isLoading) {
       return (
         <div style={{ margin: "100%" }}>
@@ -68,7 +68,7 @@ class PropertyDetailpage extends React.Component {
       );
     }
 
-    const timeStampDate = todos.CreateAt;
+    const timeStampDate = property.createat;
     const dateInMillis = timeStampDate._seconds * 1000;
 
     var date = new Date(dateInMillis).toLocaleDateString(
@@ -78,48 +78,48 @@ class PropertyDetailpage extends React.Component {
     return (
       <div>
         <React.Fragment>
-          <Bar typehouse={todos.idtype} status={todos.status} time={date} />
+          <Bar typeproperty={property.idtype} status={property.status} time={date} />
           <Img
-            name={todos.name}
-            typehouse={todos.idtype}
+            name={property.name}
+            typeproperty={property.idtype}
             id={id}
-            urloutside={todos.urlimgoutside}
-            urlinside={todos.urlimginside}
-            price={Number(todos.price)}
+            urloutside={property.urlimgoutside}
+            urlinside={property.urlimginside}
+            price={Number(property.price)}
           />
           <Info
-            typehouse={todos.idtype}
-            name={todos.name}
-            emailowner={todos.email}
-            detail={todos.detail}
-            sizefamily={todos.sizefamily}
-            Airconditioner={todos.Airconditioner}
-            Housesize={todos.Housesize}
-            price={todos.price}
-            pricesize={todos.price / todos.Housesize}
-            Numberofbathrooms={todos.Numberofbathrooms}
-            Numberofbedrooms={todos.Numberofbedrooms}
-            Numberoffloors={todos.Numberoffloors}
-            Numberofparkingspace={todos.Numberofparkingspace}
-            Yearofconstruction={todos.Yearofconstruction}
-            latitude={todos.latitude}
-            longitude={todos.longitude}
-            Address={todos.Address}
-            District={todos.District}
-            subDistrict={todos.subDistrict}
-            province={todos.province}
-            zipCode={todos.zipCode}
-            furniture={todos.furniture}
-            centralservice={todos.centralservice}
-            Landmark={todos.Landmark}
-            building={todos.building}
-            projectname={todos.projectname}
-            Nearbyplaces={todos.Nearbyplaces}
-            Nearbyplacesapi={this.state.Nearbyplacesapi}
+            typeproperty={property.idtype}
+            name={property.name}
+            emailowner={property.email}
+            detail={property.detail}
+            sizefamily={property.sizefamily}
+            airconditioner={property.airconditioner}
+            propertysize={property.propertysize}
+            price={property.price}
+            pricesize={property.price / property.propertysize}
+            numberofbathrooms={property.numberofbathrooms}
+            numberofbedrooms={property.numberofbedrooms}
+            numberoffloors={property.numberoffloors}
+            numberofparkingspace={property.numberofparkingspace}
+            yearofconstruction={property.yearofconstruction}
+            latitude={property.latitude}
+            longitude={property.longitude}
+            address={property.address}
+            district={property.district}
+            subDistrict={property.subDistrict}
+            province={property.province}
+            zipCode={property.zipCode}
+            furniture={property.furniture}
+            centralservice={property.centralservice}
+            landmark={property.landmark}
+            building={property.building}
+            projectname={property.projectname}
+            nearbyplaces={property.nearbyplaces}
+            nearbyplacesapi={this.state.nearbyplacesapi}
           />
         </React.Fragment>
       </div>
     );
   }
 }
-export default withAlert()(PropertyDetailpage);
+export default withAlert()(propertyDetailpage);

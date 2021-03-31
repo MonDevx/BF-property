@@ -25,10 +25,6 @@ import { Link } from "react-router-dom";
 import data from "../../json/province.json";
 const provicejson = data;
 const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-  },
-
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
@@ -41,13 +37,17 @@ const useStyles = makeStyles((theme) => ({
   },
   seachbox: {
     marginTop: theme.spacing(2),
+    
+  },
+  card: {
+    padding: theme.spacing(1.5),
   },
 }));
 
 export default function Formseachresult() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const [typehouse, settypehouse] = React.useState(0);
+  const [typeproperty, settypeproperty] = React.useState(0);
   const [price, setPrice] = React.useState(0);
   const [family, setFamily] = React.useState(0);
   const [bath, setBath] = React.useState(0);
@@ -59,8 +59,8 @@ export default function Formseachresult() {
     checkedA: true,
   });
 
-  const handleChangetypehouse = (event) => {
-    settypehouse(event.target.value);
+  const handleChangetypeproperty = (event) => {
+    settypeproperty(event.target.value);
   };
   const handleChangeprice = (event) => {
     setPrice(event.target.value);
@@ -98,9 +98,15 @@ export default function Formseachresult() {
   const { t } = useTranslation();
   return (
     <Container maxWidth="lg" className={classes.seachbox}>
-      <Card>
+      <Card className={classes.card}>
         <CardActions>
-          <Grid container spacing={4}>
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="center"
+            spacing={2}
+          >
             <Grid item xs={12} sm={2}>
               <FormControl
                 variant="outlined"
@@ -108,19 +114,19 @@ export default function Formseachresult() {
                 className={classes.formControl}
               >
                 <InputLabel id="demo-simple-select-outlined-label">
-                  {t("typehouse.label")}
+                  {t("typeproperty.label")}
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  value={typehouse}
-                  onChange={handleChangetypehouse}
-                  label=      {t("typehouse.label")}
+                  value={typeproperty}
+                  onChange={handleChangetypeproperty}
+                  label={t("typeproperty.label")}
                 >
                   <MenuItem value={0}>{t("totaltype.label")}</MenuItem>
-                  <MenuItem value={1}>{t("typehouse1.label")}</MenuItem>
-                  <MenuItem value={2}>{t("typehouse2.label")}</MenuItem>
-                  <MenuItem value={3}>{t("typehouse3.label")}</MenuItem>
+                  <MenuItem value={1}>{t("typeproperty1.label")}</MenuItem>
+                  <MenuItem value={2}>{t("typeproperty2.label")}</MenuItem>
+                  <MenuItem value={3}>{t("typeproperty3.label")}</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -155,7 +161,7 @@ export default function Formseachresult() {
                   id="demo-simple-select-outlined"
                   value={price}
                   onChange={handleChangeprice}
-                  label=    {t("pricebetween.label")}
+                  label={t("pricebetween.label")}
                 >
                   <MenuItem value={0}>{t("totalprice.label")}</MenuItem>
                   <MenuItem value={1}>{t("pricebetween1.label")}</MenuItem>
@@ -191,7 +197,7 @@ export default function Formseachresult() {
                 />
               </FormControl>
             </Grid>
-            <Grid item sm={3}>
+            <Grid item xs={12} sm={3}>
               <Button
                 fullWidth
                 variant="contained"
@@ -203,7 +209,7 @@ export default function Formseachresult() {
                 to={{
                   pathname: "/seach-result",
                   state: {
-                    type: typehouse,
+                    type: typeproperty,
                     province: provice,
                     price: price,
                     room: room,
@@ -231,8 +237,14 @@ export default function Formseachresult() {
           </IconButton>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Grid container spacing={3}>
+          <CardContent >
+            <Grid
+              container
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+              spacing={2}
+            >
               <Grid item xs={12} sm={2}>
                 <FormControl variant="outlined" fullWidth>
                   <InputLabel id="demo-simple-select-outlined-label">
@@ -243,7 +255,7 @@ export default function Formseachresult() {
                     id="demo-simple-select-outlined"
                     value={family}
                     onChange={handleChangefamily}
-                    label=   {t("propertysizefamily.label")}
+                    label={t("propertysizefamily.label")}
                   >
                     <MenuItem value={0}>{t("totalfamliy.label")}</MenuItem>
                     <MenuItem value={1}>
@@ -299,27 +311,27 @@ export default function Formseachresult() {
               <Grid item xs={12} sm={2}>
                 <FormControl variant="outlined">
                   <InputLabel id="demo-simple-select-outlined-label">
-                    {t("sizehousebetween.label")}
+                    {t("sizepropertybetween.label")}
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
                     value={sizeproperty}
                     onChange={handleChangesizeproperty}
-                    label=     {t("sizehousebetween.label")}
+                    label={t("sizepropertybetween.label")}
                   >
                     <MenuItem value={0}>{t("totalsize.label")}</MenuItem>
                     <MenuItem value={1}>
-                      {t("sizehousebetween1.label")}
+                      {t("sizepropertybetween1.label")}
                     </MenuItem>
                     <MenuItem value={2}>
-                      {t("sizehousebetween2.label")}
+                      {t("sizepropertybetween2.label")}
                     </MenuItem>
                     <MenuItem value={3}>
-                      {t("sizehousebetween3.label")}
+                      {t("sizepropertybetween3.label")}
                     </MenuItem>
                     <MenuItem value={4}>
-                      {t("sizehousebetween4.label")}
+                      {t("sizepropertybetween4.label")}
                     </MenuItem>
                   </Select>
                 </FormControl>

@@ -22,6 +22,7 @@ const styles = (theme) => ({
   },
   texthead: {
     color: theme.palette.common.white,
+    fontWeight: 'bold'
   },
   textsub: {
     color: theme.palette.common.white,
@@ -116,12 +117,12 @@ class Footer extends React.Component {
               <Chip
                 variant="default"
                 size="small"
-                label={t("typehouse1.label")}
+                label={t("typeproperty1.label")}
               />
               <Chip
                 variant="default"
                 size="small"
-                label={t("typehouse2.label")}
+                label={t("typeproperty2.label")}
               />
               <Chip variant="default" size="small" label={t("footer.tag1")} />
               <Chip variant="default" size="small" label={t("footer.tag2")} />

@@ -23,18 +23,19 @@ const styles = (theme) => ({
       padding: theme.spacing(10),
     },
   },
-
+  headertitle: {
+    fontWeight: "bold",
+  },
 });
-
 
 class Resetpassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        email:""
+      email: "",
     };
   }
- 
+
   handleSubmit = async (event) => {
     event.preventDefault();
     const { t } = this.props;
@@ -42,16 +43,15 @@ class Resetpassword extends React.Component {
     auth
       .sendPasswordResetEmail(this.state.email)
       .then(() => {
-        this.props.alert.success(t('alertresetpasswordemailsuccess'));
+        this.props.alert.success(t("alertresetpasswordemailsuccess"));
       })
       .catch((error) => {
-
-          this.props.alert.error(error);
+        this.props.alert.error(error);
       });
   };
 
   handleChange = (event) => {
-    this.setState({ email : event.target.value});
+    this.setState({ email: event.target.value });
   };
 
   render() {
@@ -63,10 +63,7 @@ class Resetpassword extends React.Component {
         maxWidth="md"
         style={{ paddingTop: "4%", paddingBottom: "4%" }}
       >
-        <Paper
-     elevation={3}
-          className={classes.paper}
-        >
+        <Paper elevation={3} className={classes.paper}>
           <ValidatorForm
             ref="form"
             onSubmit={this.handleSubmit}
@@ -74,38 +71,60 @@ class Resetpassword extends React.Component {
               this.props.alert.error(t("updateinfoerror2.label"))
             }
           >
-            <Grid container spacing={3}>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              spacing={5}
+            >
               <Grid item xs={6}>
-                <Typography variant="h4">{t('forgetpasswordform.label')}</Typography>
+                <img
+                  alt=""
+                  src="./assets/img/svg/Illustration/undraw_my_password_d6kg.svg"
+                  width="100%"
+                  height="300px"
+                ></img>
               </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h6">{t('newpasswordrequired.label')}</Typography>
-              </Grid>
-              
               <Grid item xs={6}>
-              <TextValidator
-              label={t('email.label')}
-              onChange={this.handleChange}
-              name="email"
-              value={email}
-              variant="outlined"
-              fullWidth
-              validators={['required', 'isEmail']}
-              errorMessages={[t('emailrequired.label'), t('emailisEmail.label')]}
-          />
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <Typography variant="h2" className={classes.headertitle}>
+                      {t("forgetpasswordform.label")}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant="h6">
+                      {t("newpasswordrequired.label")}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextValidator
+                      label={t("email.label")}
+                      onChange={this.handleChange}
+                      name="email"
+                      value={email}
+                      variant="outlined"
+                      fullWidth
+                      validators={["required", "isEmail"]}
+                      errorMessages={[
+                        t("emailrequired.label"),
+                        t("emailisEmail.label"),
+                      ]}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                    >
+                      {t("resetpasswordbutton")}
+                    </Button>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item xs={4}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-                size="large"
-                style={{ backgroundColor: "#55aa54",marginTop:'3.5%' }}
-              >
-              {t('resetpasswordbutton')}
-              </Button>
-            </Grid>
             </Grid>
           </ValidatorForm>
         </Paper>
@@ -114,5 +133,8 @@ class Resetpassword extends React.Component {
   }
 }
 
-
-export default compose(withTranslation(),withStyles(styles), withAlert())(Resetpassword);
+export default compose(
+  withTranslation(),
+  withStyles(styles),
+  withAlert()
+)(Resetpassword);

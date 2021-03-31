@@ -10,7 +10,7 @@ class FavoritePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [],
+      property: [],
       isLoading: true,
     };
 
@@ -28,7 +28,7 @@ class FavoritePage extends React.Component {
     })
       .then((result) => {
         this.setState({
-          todos: result.data,
+          property: result.data,
           isLoading: false,
         });
       })
@@ -44,7 +44,7 @@ class FavoritePage extends React.Component {
 
 
   render() {
-    const { isLoading, todos } = this.state;
+    const { isLoading, property } = this.state;
     if (isLoading) {
       return <div style={{margin: '50%'}}><LoaderSpinners /></div>;
     }
@@ -53,7 +53,7 @@ class FavoritePage extends React.Component {
         maxWidth="lg"
         style={{ paddingTop: "2%", paddingBottom: "2%" }}
       >
-        <Listrealestate todos={todos} />
+        <Listrealestate property={property} />
       </Container>
     );
   }
