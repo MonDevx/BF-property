@@ -5,8 +5,6 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import FavoriteBorderRoundedIcon from "@material-ui/icons/FavoriteBorderRounded";
 import NavigationDrawer from "../../components/customs/ืnavigationdrawer/navigationdrawer.js";
 import ReactCountryFlag from "react-country-flag";
 import { useTranslation } from "react-i18next";
@@ -17,14 +15,22 @@ import Tooltip from "@material-ui/core/Tooltip";
 import React, { useState, useCallback } from "react";
 import Badge from "@material-ui/core/Badge";
 import Avatar from "@material-ui/core/Avatar";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import withStyles from "@material-ui/core/styles/withStyles";
 import { Detector } from "react-detect-offline";
-import ListAltIcon from "@material-ui/icons/ListAlt";
-import AccountBoxOutlinedIcon from "@material-ui/icons/AccountBoxOutlined";
-import { Hidden } from "@material-ui/core";
+import Hidden from "@material-ui/core/Hidden";
 import MenuIcon from "@material-ui/icons/Menu";
-import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
-import LibraryAddOutlinedIcon from "@material-ui/icons/LibraryAddOutlined";
+import {
+  AiOutlineAppstoreAdd,
+  AiOutlineHome,
+  AiOutlineUser,
+  AiOutlineUnorderedList,
+  AiOutlineLogout,
+  AiOutlineHeart,
+} from "react-icons/ai";
+import { FcMoneyTransfer } from "react-icons/fc";
+import { setI18n } from "../../redux/i18n/i18n.actions";
+import { setCurrency } from "../../redux/currency/currency.actions";
 const StyledBadge = withStyles((theme) => ({
   badge: {
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
@@ -93,40 +99,53 @@ const useStyles = makeStyles((theme) => ({
 function Header(props) {
   const { t, i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState(false);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [anchorE2, setAnchorE2] = React.useState(false);
+  const [anchorE3, setAnchorE3] = React.useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(
+    i18n.language === "gb" ? 0 : i18n.language === "th" ? 1 : 2
+  );
+  const [selectedIndexCurrency, setSelectedIndexCurrency] = React.useState(
+    props.currency === "gb" ? 0 : props.currency === "th" ? 1 : 2
+  );
+
   const options = [
     t("menu.lang.en.label"),
     t("menu.lang.th.label"),
     t("menu.lang.ch.label"),
   ];
+  const optionsCurrency = [t("dollar.label"), t("bath.label"), t("yuan.label")];
   const langoptions = ["gb", "th", "cn"];
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
     i18n.changeLanguage(langoptions[index]);
-
-    setAnchorEl(null);
+    props.setI18n(langoptions[index]);
   };
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleMenu = (event) => {
-    setAnchorE2(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const handleClose2 = () => {
-    setAnchorE2(null);
+  const handleMenuItemClickCurrency = (event, index) => {
+    props.setCurrency(langoptions[index]);
+    setSelectedIndexCurrency(index);
+    setAnchorE3(null);
   };
   const signout = () => {
     setAnchorE2(null);
     auth.signOut().then(() => {
       window.location.reload();
     });
-    console.log("work");
+  };
+  const handleClick = (event) => {
+    if (event.currentTarget.id === "lang-menu") {
+      setAnchorEl(event.currentTarget);
+    } else if (event.currentTarget.id === "account-menu") {
+      setAnchorE2(event.currentTarget);
+    } else {
+      setAnchorE3(event.currentTarget);
+    }
+  };
+
+  const handleClose = (event) => {
+    setAnchorEl(null);
+    setAnchorE2(null);
+    setAnchorE3(null);
   };
 
   const classes = useStyles();
@@ -140,46 +159,53 @@ function Header(props) {
   }, [setIsMobileDrawerOpen]);
   const menuItems = [
     {
-      status:  true ,
+      status: true,
       link: "/",
       name: t("firstpage.name.label"),
-      icon: <HomeOutlinedIcon className="text-white" />,
+      icon: <AiOutlineHome className="text-white" className={classes.icon} />,
     },
     {
       status: props.currentUser ? true : false,
       link: "/profile",
       name: t("myaccount.name.label"),
-      icon: <AccountBoxOutlinedIcon className="text-white" />,
+      icon: <AiOutlineUser className="text-white" className={classes.icon} />,
     },
     {
-      status:  true ,
+      status: true,
       link: "/add-listing",
       name: t("addinglist.name.label"),
-      icon: <LibraryAddOutlinedIcon className="text-white" />,
+      icon: (
+        <AiOutlineAppstoreAdd className="text-white" className={classes.icon} />
+      ),
     },
     {
-       status:  true ,
+      status: true,
       link: "/my-favorite",
       name: t("favoritebutton"),
-      icon: <FavoriteBorderRoundedIcon className="text-white" />,
+      icon: <AiOutlineHeart className="text-white" className={classes.icon} />,
     },
     {
-     status: props.currentUser ? true : false,
+      status: props.currentUser ? true : false,
       link: "/my-property",
       name: t("myproperty.name.label"),
-      icon: <ListAltIcon className="text-white" />,
+      icon: (
+        <AiOutlineUnorderedList
+          className="text-white"
+          className={classes.icon}
+        />
+      ),
     },
     {
-      status: props.currentUser ? false :  true,
+      status: props.currentUser ? false : true,
       link: "/signin",
       name: t("login.label"),
-      icon: <ExitToAppIcon className="text-white" />,
+      icon: <AiOutlineLogout className="text-white" className={classes.icon} />,
     },
     {
       status: props.currentUser ? true : false,
       name: t("signout.name.label"),
       onClick: signout,
-      icon: <ExitToAppIcon className="text-white" />,
+      icon: <AiOutlineLogout className="text-white" className={classes.icon} />,
     },
   ];
   return (
@@ -214,7 +240,7 @@ function Header(props) {
                 className={classes.item}
                 aria-label="ลงประกาศขายบ้าน"
               >
-                 {t("firstpage.name.label")}
+                {t("firstpage.name.label")}
               </Button>
               <Button
                 variant="text"
@@ -245,7 +271,7 @@ function Header(props) {
                         overlap="circle"
                         color="error"
                       >
-                        <FavoriteBorderRoundedIcon
+                        <AiOutlineHeart
                           style={{ fontSize: 27 }}
                           color="inherit"
                         />
@@ -256,10 +282,11 @@ function Header(props) {
                     <IconButton
                       aria-controls="simple-menu"
                       aria-haspopup="true"
-                      onClick={handleMenu}
+                      onClick={handleClick}
                       size="small"
                       className={classes.item}
                       aria-label="Avatar"
+                      id="account-menu"
                     >
                       <Detector
                         render={({ online }) => (
@@ -282,10 +309,10 @@ function Header(props) {
                     </IconButton>
                   </Tooltip>
                   <Menu
-                    id="lock"
+                    id="account-menu"
                     anchorEl={anchorE2}
                     open={Boolean(anchorE2)}
-                    onClose={handleClose2}
+                    onClose={handleClose}
                     anchorOrigin={{
                       vertical: "top",
                       horizontal: "center",
@@ -301,7 +328,7 @@ function Header(props) {
                       to="/profile"
                       onClick={() => setAnchorE2(null)}
                     >
-                      <AccountBoxOutlinedIcon className={classes.icon} />
+                      <AiOutlineUser className={classes.icon} />
                       <Typography variant="inherit" noWrap>
                         {t("myaccount.name.label")}
                       </Typography>
@@ -311,13 +338,13 @@ function Header(props) {
                       to="/my-property"
                       onClick={() => setAnchorE2(null)}
                     >
-                      <ListAltIcon className={classes.icon} />
+                      <AiOutlineUnorderedList className={classes.icon} />
                       <Typography variant="inherit" noWrap>
                         {t("myproperty.name.label")}
                       </Typography>
                     </MenuItem>
                     <MenuItem onClick={() => signout()}>
-                      <ExitToAppIcon className={classes.icon} />
+                      <AiOutlineLogout className={classes.icon} />
                       <Typography variant="inherit" noWrap>
                         {t("signout.name.label")}
                       </Typography>
@@ -335,10 +362,60 @@ function Header(props) {
                   {t("login.label")}
                 </Button>
               )}
+              <Tooltip title={t("tiptoolcurrency.label")}>
+                <Button
+                  id="currency-menu"
+                  aria-controls={
+                    Boolean(anchorE3) ? "menu-list-grow" : undefined
+                  }
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                  className={classes.item}
+                  startIcon={
+                    <FcMoneyTransfer
+                      style={{
+                        width: "1.3em",
+                        height: "1.3em",
+                      }}
+                    />
+                  }
+                >
+                  {optionsCurrency[selectedIndexCurrency]}
+                </Button>
+              </Tooltip>
+              <Menu
+                id="currency-menu"
+                anchorEl={anchorE3}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+                open={Boolean(anchorE3)}
+                onClose={handleClose}
+              >
+                {optionsCurrency.map((option, index) => (
+                  <MenuItem
+                    id="currency-menu"
+                    key={option}
+                    selected={index === selectedIndexCurrency}
+                    onClick={(event) =>
+                      handleMenuItemClickCurrency(event, index)
+                    }
+                  >
+                    {option}
+                  </MenuItem>
+                ))}
+              </Menu>
               <Tooltip title={t("langbutton")}>
                 <Button
+                  id="lang-menu"
                   aria-controls={
-                    Boolean(anchorEl) ? "menu-list-grow" : undefined
+                    Boolean(anchorE3) ? "menu-list-grow" : undefined
                   }
                   aria-haspopup="true"
                   onClick={handleClick}
@@ -348,8 +425,8 @@ function Header(props) {
                     countryCode={i18n.language}
                     svg
                     style={{
-                      width: "2em",
-                      height: "2em",
+                      width: "1.7em",
+                      height: "1.7em",
                     }}
                     className={classes.item}
                     alt="flags"
@@ -359,7 +436,7 @@ function Header(props) {
                 </Button>
               </Tooltip>
               <Menu
-                id="lock-menu"
+                id="lang-menu"
                 anchorEl={anchorEl}
                 anchorOrigin={{
                   vertical: "top",
@@ -375,6 +452,7 @@ function Header(props) {
               >
                 {options.map((option, index) => (
                   <MenuItem
+                    id="lang-menu"
                     key={option}
                     selected={index === selectedIndex}
                     onClick={(event) => handleMenuItemClick(event, index)}
@@ -410,5 +488,10 @@ function Header(props) {
 
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  currency: state.currency.currency,
 });
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => ({
+  setI18n: (lang) => dispatch(setI18n(lang)),
+  setCurrency: (currency) => dispatch(setCurrency(currency)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

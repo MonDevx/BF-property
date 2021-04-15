@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
   heroContent: {
     backgroundImage: `url(${
       isWebpSupported()
-        ?process.env.PUBLIC_URL +  "/assets/img/webp/section/section-main-img.webp"
-        :process.env.PUBLIC_URL +  "/assets/img/section/section-main-img.jpg"
+        ? "./assets/img/webp/section/section-main-img.webp"
+        : "./assets/img/section/section-main-img.jpg"
     })`,
     backgroundPosition: "center",
     backgroundSize: "cover",
@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     color: theme.palette.common.white,
-    
   },
 }));
 
@@ -53,21 +52,11 @@ export default function Sectionrecommend() {
       <div className={classes.heroContent}>
         <div className={classes.content}>
           <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              className={classes.text}
-        
-            >
-            {t("mainheader.label")}
+            <Typography variant="h2" align="center" className={classes.text}>
+              {t("mainheader.label")}
             </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              className={classes.text}
-            >
-            {t("mainsubheader.label")}
+            <Typography variant="h3" align="center" className={classes.text}>
+              {t("mainsubheader.label")}
             </Typography>
           </Container>
           <Formseach />

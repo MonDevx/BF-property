@@ -21,33 +21,32 @@ export default function Sectioncontry() {
   const { t } = useTranslation();
   const images = [
     {
-      urljpg: process.env.PUBLIC_URL + "./assets/img/contry/bangkok.jpg",
-      urlwebp: process.env.PUBLIC_URL + "/assets/img/webp/contry/bangkok.webp",
+      urljpg: "./assets/img/contry/bangkok.jpg",
+      urlwebp: "./assets/img/webp/contry/bangkok.webp",
       title: t("contry1.label"),
       value: "กรุงเทพมหานคร",
       width: "98.5%",
       credit: "Photo by Andreas Brücker on Unsplash",
     },
     {
-      urljpg: process.env.PUBLIC_URL + "/assets/img/contry/chiangmai.jpg",
-      urlwebp:
-        process.env.PUBLIC_URL + "/assets/img/webp/contry/chiangmai.webp",
+      urljpg: "./assets/img/contry/chiangmai.jpg",
+      urlwebp: "./assets/img/webp/contry/chiangmai.webp",
       title: t("contry2.label"),
       value: "เชียงใหม่",
       width: "40%",
       credit: "Photo by Alex Harmuth on Unsplash",
     },
     {
-      urljpg: process.env.PUBLIC_URL + "/assets/img/contry/rayong.jpg",
-      urlwebp: process.env.PUBLIC_URL + "/assets/img/webp/contry/rayong.webp",
+      urljpg: "./assets/img/contry/rayong.jpg",
+      urlwebp: "./assets/img/webp/contry/rayong.webp",
       title: t("contry3.label"),
       value: "ระยอง",
       width: "27%",
       credit: "Photo by Blackie BKK on Unsplash",
     },
     {
-      urljpg: process.env.PUBLIC_URL + "/assets/img/contry/chonburi.jpg",
-      urlwebp: process.env.PUBLIC_URL + "/assets/img/webp/contry/chonburi.webp",
+      urljpg: "./assets/img/contry/chonburi.jpg",
+      urlwebp: "./assets/img/webp/contry/chonburi.webp",
       title: t("contry4.label"),
       value: "ชลบุรี",
       width: "30%",

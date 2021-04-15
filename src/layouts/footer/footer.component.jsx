@@ -2,7 +2,7 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 import EmailIcon from "@material-ui/icons/Email";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
@@ -17,12 +17,12 @@ import Chip from "@material-ui/core/Chip";
 const styles = (theme) => ({
   footer: {
     background:
-    "linear-gradient(165.96deg, rgba(35, 56, 135, 0.95) 29.9%, rgba(8, 172, 145, 0.95) 104.77%)",
+      "linear-gradient(165.96deg, rgba(35, 56, 135, 0.95) 29.9%, rgba(8, 172, 145, 0.95) 104.77%)",
     padding: theme.spacing(5),
   },
   texthead: {
     color: theme.palette.common.white,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   textsub: {
     color: theme.palette.common.white,
@@ -92,7 +92,6 @@ class Footer extends React.Component {
       })
       .catch((err) => {
         this.props.alert.error("การกดรับการแจ้งเตือนข่าวสารเกิดข้อผิดผลาด");
-        console.log(err);
         this.setState({ disable: false });
       });
   };
@@ -107,7 +106,7 @@ class Footer extends React.Component {
           <Grid container spacing={4}>
             <Grid item xs>
               <Typography
-                variant="h6"
+                variant="h5"
                 color="primary"
                 gutterBottom
                 className={classes.texthead}
@@ -127,16 +126,12 @@ class Footer extends React.Component {
               <Chip variant="default" size="small" label={t("footer.tag1")} />
               <Chip variant="default" size="small" label={t("footer.tag2")} />
               <Chip variant="default" size="small" label={t("footer.tag3")} />
-              <Chip
-                variant="default"
-                size="small"
-                label={t("footer.tag4")}
-              />
+              <Chip variant="default" size="small" label={t("footer.tag4")} />
               <Chip variant="default" size="small" label={t("footer.tag5")} />
             </Grid>
             <Grid item xs>
               <Typography
-                variant="h6"
+                variant="h5"
                 color="primary"
                 gutterBottom
                 className={classes.texthead}
@@ -163,7 +158,7 @@ class Footer extends React.Component {
             </Grid>
             <Grid item xs>
               <Typography
-                variant="h6"
+                variant="h5"
                 color="primary"
                 gutterBottom
                 className={classes.texthead}
@@ -200,7 +195,7 @@ class Footer extends React.Component {
 
             <Grid item xs>
               <Typography
-                variant="h6"
+                variant="h5"
                 color="primary"
                 gutterBottom
                 className={classes.texthead}

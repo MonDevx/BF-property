@@ -5,10 +5,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import HomeIcon from "@material-ui/icons/Home";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import {ChipStatus} from "../customs/chip-customs/chip-customs"
+import {ChipStatus} from "../customs/chip-customs/chip-customs.jsx"
+
 const useStyles = makeStyles((theme) => ({
   toolbarSecondary: {
     backgroundColor: "#3B3E4B",
@@ -38,7 +38,7 @@ export default function Bar(props) {
         >
           <Grid item>
             <Chip
-              icon={<HomeIcon />}
+    
               label={
                 props.typeproperty === 1
                   ? t("typeproperty1.label")

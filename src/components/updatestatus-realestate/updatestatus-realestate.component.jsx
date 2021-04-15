@@ -17,9 +17,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import { Link } from "react-router-dom";
 import Linkmu from "@material-ui/core/Link";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import ListAltIcon from "@material-ui/icons/ListAlt";
-import UpdateIcon from "@material-ui/icons/Update";
+import { isMobile } from "react-device-detect";
+import { AiOutlineHome, AiOutlineFieldTime } from "react-icons/ai";
 const styles = (theme) => ({
   paper: {
     display: "flex",
@@ -32,6 +31,9 @@ const styles = (theme) => ({
       marginBottom: theme.spacing(6),
       padding: theme.spacing(10),
     },
+  },
+  link: {
+    display: "flex",
   },
   icon: {
     marginRight: theme.spacing(0.5),
@@ -53,7 +55,7 @@ class Updatestatusproperty extends React.Component {
     event.preventDefault();
 
     firestore
-      .collection("house")
+      .collection("property")
       .doc(this.state.id)
       .update({ status: this.state.status })
       .then(() => {
@@ -77,31 +79,35 @@ class Updatestatusproperty extends React.Component {
         style={{ paddingTop: "4%", paddingBottom: "4%" }}
       >
         <Paper elevation={3} className={classes.paper}>
-          <Grid container spacing={3}>
-            <Grid item xs={9}>
-              <Breadcrumbs
-                separator={<NavigateNextIcon fontSize="small" />}
-                aria-label="breadcrumb"
-              >
-                <Linkmu color="inherit" component={Link} to="/my-property">
-                  <ListAltIcon className={classes.icon} />
+          <Grid container direction="row" alignItems="center" spacing={3}>
+            <Grid item xs={12}>
+              <Breadcrumbs separator="›" aria-label="breadcrumb">
+                <Linkmu
+                  color="inherit"
+                  component={Link}
+                  to="/my-property"
+                  className={classes.link}
+                >
+                  <AiOutlineHome className={classes.icon} />
                   {t("myproperty.name.label")}
                 </Linkmu>
 
-                <Typography variant="h6">
-                  <UpdateIcon className={classes.icon} />
+                <Typography color="textPrimary" className={classes.link}>
+                  <AiOutlineFieldTime className={classes.icon} />
                   {t("updatestatuspropertybutton.label")}
                 </Typography>
               </Breadcrumbs>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={isMobile ? 6 : 4}>
               <FormControl variant="outlined" fullWidth>
-              <InputLabel id="demo-simple-select-helper-label">{t("updatestatusproperty.label")}</InputLabel>
+                <InputLabel id="demo-simple-select-helper-label">
+                  {t("updatestatusproperty.label")}
+                </InputLabel>
                 <Select
                   name="sizefamily"
                   onChange={this.handleChange}
                   value={this.state.status}
-                  label={t("updatestatuspropertybutton.label")}
+                  label={t("updatestatusproperty.label")}
                 >
                   <MenuItem value={1}>
                     {t("statuspropertytype1.label")}
@@ -113,20 +119,19 @@ class Updatestatusproperty extends React.Component {
                     {t("statuspropertytype3.label")}
                   </MenuItem>
                   <MenuItem value={4}>
-                    {"ให้เห็นเฉพาะส่วนตัว"}
+                    {t("statuspropertytype4.label")}
                   </MenuItem>
                 </Select>
               </FormControl>
             </Grid>
 
-            <Grid item xs={3}>
+            <Grid item xs={isMobile ? 6 : 3}>
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
                 fullWidth
                 size="large"
-                style={{ backgroundColor: "#55aa54", marginTop: "3.5%" }}
                 onClick={this.handleSubmit}
               >
                 {t("updatestatuspropertybutton.label")}

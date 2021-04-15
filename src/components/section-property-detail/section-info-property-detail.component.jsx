@@ -6,17 +6,9 @@ import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import BathtubTwoToneIcon from "@material-ui/icons/BathtubTwoTone";
-import Crop32TwoToneIcon from "@material-ui/icons/Crop32TwoTone";
-import FormatListNumberedRtlTwoToneIcon from "@material-ui/icons/FormatListNumberedRtlTwoTone";
-import GroupIcon from "@material-ui/icons/Group";
-import LocalParkingTwoToneIcon from "@material-ui/icons/LocalParkingTwoTone";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import MapIcon from "@material-ui/icons/Map";
-import QueryBuilderTwoToneIcon from "@material-ui/icons/QueryBuilderTwoTone";
 import SendIcon from "@material-ui/icons/Send";
-import SingleBedTwoToneIcon from "@material-ui/icons/SingleBedTwoTone";
-import SquareFootTwoToneIcon from "@material-ui/icons/SquareFootTwoTone";
 import axios from "axios";
 import React from "react";
 import { useAlert } from "react-alert";
@@ -25,7 +17,9 @@ import SimpleMap from "../map/map.component.jsx";
 import { useTranslation } from "react-i18next";
 import Slider from "@material-ui/core/Slider";
 import TextField from "@material-ui/core/TextField";
-import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import Card from "@material-ui/core/Card";
 import NumberFormat from "react-number-format";
 import EmojiTransportationIcon from "@material-ui/icons/EmojiTransportation";
@@ -34,8 +28,18 @@ import {
   ChipCentralServiceAndFurniture,
 } from "../customs/chip-customs/chip-customs.jsx";
 import Paper from "@material-ui/core/Paper";
-import { isMobile } from "react-device-detect";
+import { BrowserView, MobileView, isMobile } from "react-device-detect";
 
+import {
+  BiBath,
+  BiBed,
+  BiCar,
+  BiTimeFive,
+  BiArea,
+  BiListOl,
+  BiGroup,
+  BiGrid,
+} from "react-icons/bi";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(5),
@@ -82,8 +86,11 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: -12,
   },
   bold: {
-    fontWeight: 600
-  }
+    fontWeight: 600,
+  },
+  slider: {
+    width: 210,
+  },
 }));
 
 function currencyFormat(num) {
@@ -126,6 +133,15 @@ export default function Info(props) {
   const [pricedeposit, setpricedeposit] = React.useState(props.price);
   const [priceloan, setpriceloan] = React.useState(props.price * (85 / 100));
   const [pricemonth, setpricemonth] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const deposithandleChange = (event) => {
     setpricedeposit(event.target.value);
@@ -209,11 +225,9 @@ export default function Info(props) {
   return (
     <div className={classes.root}>
       <Container maxWidth="lg">
-        <Grid container xs={12} spacing={2}>
-
+        <Grid container xs={12}>
           <Grid container xs={isMobile ? 12 : 9}>
-
-            <Grid item xs={12}>
+            <Grid item xs={isMobile ? 6 : 12}>
               <Typography variant="h5">
                 {props.typeproperty !== 3
                   ? t("propertydetail.label")
@@ -231,8 +245,19 @@ export default function Info(props) {
                 <MapIcon />
               </IconButton>
             </Grid>
+            <MobileView>
+              <Grid item xs={6}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleClickOpen}
+                >
+                  ติดต่อ
+                </Button>
+              </Grid>
+            </MobileView>
             <Grid item xs={isMobile ? 4 : 3}>
-              <GroupIcon className={classes.icon} />
+              <BiGroup className={classes.icon} />
               <Typography variant="subtitle1">
                 {t("propertysizefamily.label")}
               </Typography>
@@ -245,7 +270,7 @@ export default function Info(props) {
               </Typography>
             </Grid>
             <Grid item xs={isMobile ? 4 : 3}>
-              <SingleBedTwoToneIcon className={classes.icon} />
+              <BiBed className={classes.icon} />
               <Typography variant="subtitle1">
                 {t("propertybed.label")}
               </Typography>
@@ -254,7 +279,7 @@ export default function Info(props) {
               </Typography>
             </Grid>
             <Grid item xs={isMobile ? 4 : 3}>
-              <BathtubTwoToneIcon className={classes.icon} />
+              <BiBath className={classes.icon} />
               <Typography variant="subtitle1">
                 {t("propertybath.label")}
               </Typography>
@@ -263,7 +288,7 @@ export default function Info(props) {
               </Typography>
             </Grid>
             <Grid item xs={isMobile ? 4 : 3}>
-              <QueryBuilderTwoToneIcon className={classes.icon} />
+              <BiTimeFive className={classes.icon} />
               <Typography variant="subtitle1">
                 {t("propertyyear.label")}
               </Typography>
@@ -272,7 +297,7 @@ export default function Info(props) {
               </Typography>
             </Grid>
             <Grid item xs={isMobile ? 4 : 3}>
-              <LocalParkingTwoToneIcon className={classes.icon} />
+              <BiCar className={classes.icon} />
               <Typography variant="subtitle1">
                 {t("propertycar.label")}
               </Typography>
@@ -281,7 +306,7 @@ export default function Info(props) {
               </Typography>
             </Grid>
             <Grid item xs={isMobile ? 4 : 3}>
-              <FormatListNumberedRtlTwoToneIcon className={classes.icon} />
+              <BiListOl className={classes.icon} />
               <Typography variant="subtitle1">
                 {t("propertyfloors.label")}
               </Typography>
@@ -290,7 +315,7 @@ export default function Info(props) {
               </Typography>
             </Grid>
             <Grid item xs={isMobile ? 4 : 3}>
-              <SquareFootTwoToneIcon className={classes.icon} />
+              <BiGrid className={classes.icon} />
               <Typography variant="subtitle1">
                 {props.typeproperty !== 3
                   ? t("propertysizeprice.label")
@@ -302,7 +327,7 @@ export default function Info(props) {
               </Typography>
             </Grid>
             <Grid item xs={isMobile ? 4 : 3}>
-              <Crop32TwoToneIcon className={classes.icon} />
+              <BiArea className={classes.icon} />
               <Typography variant="subtitle1">
                 {props.typeproperty !== 3
                   ? t("propertysize.label")
@@ -333,77 +358,78 @@ export default function Info(props) {
               ""
             )}
           </Grid>
-
-          <Paper className={classes.paper}>
-            <ValidatorForm
-              onSubmit={handleSubmit}
-              onError={() => alert.error(t("updateinfoerror2.label"))}
-            >
-              <Grid item xs={12}>
-                <Typography variant="h5">{t("contact.label")}</Typography>
-              </Grid>
-              <Grid item xs={12} style={{ paddingTop: "5%" }}>
-                <TextValidator
-                  label={t("displayname.label")}
-                  onChange={(event) => setdisplay(event.target.value)}
-                  name="displayname"
-                  value={displayname}
-                  variant="outlined"
-                  fullWidth
-                  validators={["required"]}
-                  errorMessages={[t("displaynamerequired.label")]}
-                />
-              </Grid>
-              <Grid item xs={12} style={{ paddingTop: "5%" }}>
-                <TextValidator
-                  label={t("email.label")}
-                  onChange={(event) => setemail(event.target.value)}
-                  name="email"
-                  value={email}
-                  variant="outlined"
-                  fullWidth
-                  validators={["required", "isEmail"]}
-                  errorMessages={[
-                    t("emailrequired.label"),
-                    t("emailisEmail.label"),
-                  ]}
-                />
-              </Grid>
-              <Grid item xs={12} style={{ paddingTop: "5%" }}>
-                <TextValidator
-                  label={t("phone.label")}
-                  onChange={(event) => setphone(event.target.value)}
-                  name="phone"
-                  value={phone}
-                  variant="outlined"
-                  fullWidth
-                  validators={["required"]}
-                  errorMessages={[t("phonerequired.label")]}
-                />
-              </Grid>
-              <Grid item xs={12} style={{ paddingTop: "5%" }}>
-                <div className={classes.wrapper}>
-                  <Button
-                    startIcon={<SendIcon />}
-                    variant="contained"
-                    color="primary"
-                    size="large"
+          {isMobile ? null : (
+            <Paper className={classes.paper}>
+              <ValidatorForm
+                onSubmit={handleSubmit}
+                onError={() => alert.error(t("updateinfoerror2.label"))}
+              >
+                <Grid item xs={12}>
+                  <Typography variant="h5">{t("contact.label")}</Typography>
+                </Grid>
+                <Grid item xs={12} style={{ paddingTop: "5%" }}>
+                  <TextValidator
+                    label={t("displayname.label")}
+                    onChange={(event) => setdisplay(event.target.value)}
+                    name="displayname"
+                    value={displayname}
+                    variant="outlined"
                     fullWidth
-                    type="submit"
-                    disabled={disable}
-                  >
-                    {t("buttonsubmitcontact.label")}
-                  </Button>
-                  {loading && (
-                    <CircularProgress
-                      size={24}
-                      className={classes.buttonProgress}
-                    />
-                  )}
-                </div>
-              </Grid>
-            </ValidatorForm>
-          </Paper>
+                    validators={["required"]}
+                    errorMessages={[t("displaynamerequired.label")]}
+                  />
+                </Grid>
+                <Grid item xs={12} style={{ paddingTop: "5%" }}>
+                  <TextValidator
+                    label={t("email.label")}
+                    onChange={(event) => setemail(event.target.value)}
+                    name="email"
+                    value={email}
+                    variant="outlined"
+                    fullWidth
+                    validators={["required", "isEmail"]}
+                    errorMessages={[
+                      t("emailrequired.label"),
+                      t("emailisEmail.label"),
+                    ]}
+                  />
+                </Grid>
+                <Grid item xs={12} style={{ paddingTop: "5%" }}>
+                  <TextValidator
+                    label={t("phone.label")}
+                    onChange={(event) => setphone(event.target.value)}
+                    name="phone"
+                    value={phone}
+                    variant="outlined"
+                    fullWidth
+                    validators={["required"]}
+                    errorMessages={[t("phonerequired.label")]}
+                  />
+                </Grid>
+                <Grid item xs={12} style={{ paddingTop: "5%" }}>
+                  <div className={classes.wrapper}>
+                    <Button
+                      startIcon={<SendIcon />}
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      fullWidth
+                      type="submit"
+                      disabled={disable}
+                    >
+                      {t("buttonsubmitcontact.label")}
+                    </Button>
+                    {loading && (
+                      <CircularProgress
+                        size={24}
+                        className={classes.buttonProgress}
+                      />
+                    )}
+                  </div>
+                </Grid>
+              </ValidatorForm>
+            </Paper>
+          )}
 
           <div className={classes.markedH4Center} />
           <Grid item xs={12}>
@@ -450,7 +476,7 @@ export default function Info(props) {
             <Typography variant="subtitle1">
               {t("addressfromLandmark.label")}
             </Typography>
-            <Typography variant="subtitle2">{props.Landmark}</Typography>
+            <Typography variant="subtitle2">{props.landmark}</Typography>
           </Grid>
           <Grid item xs={9}>
             <Typography variant="subtitle1">
@@ -475,13 +501,15 @@ export default function Info(props) {
       </Grid>
       <Container maxWidth="md" style={{ marginBottom: "2.5%" }}>
         <Card>
-          <Grid container xs={12} spacing={2} style={{ margin: "2.5%" }}>
-            <Grid item xs={12}>
+          <Grid
+            container
+            alignItems="center"
+            spacing={2}
+            xs={12}
+            style={{ margin: "2.5%" }}
+          >
+            <Grid item xs={11}>
               <Typography variant="h5">
-                <AccountBalanceIcon
-                  fontSize="large"
-                  style={{ marginRight: "1%" }}
-                />
                 {t("calculateloanheader.label")}
               </Typography>
             </Grid>
@@ -490,7 +518,7 @@ export default function Info(props) {
                 {t("calculateloansubheader.label")}
               </Typography>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={isMobile ? 5 : 4}>
               <TextField
                 label={t("deposit.label")}
                 value={pricedeposit}
@@ -504,7 +532,7 @@ export default function Info(props) {
               />
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs={isMobile ? 5 : 4}>
               <TextField
                 label={t("loan.label")}
                 value={priceloan}
@@ -517,16 +545,21 @@ export default function Info(props) {
                 }}
               />
             </Grid>
-            <Grid item xs={4}>
-              <Typography variant="subtitle2">
-                {t("paymentamount/month.label")}
-              </Typography>
-              <Typography variant="subtitle1" style={{ color: "#26ae61" }} className={classes.bold}>
-                {currencyFormat(pricemonth)} {t("bath.label")}
-              </Typography>
-            </Grid>
-
-            <Grid item xs={4}>
+            <BrowserView>
+              <Grid item xs={12}>
+                <Typography variant="subtitle2">
+                  {t("paymentamount/month.label")}
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  style={{ color: "#26ae61" }}
+                  className={classes.bold}
+                >
+                  {currencyFormat(pricemonth)} {t("bath.label")}
+                </Typography>
+              </Grid>
+            </BrowserView>
+            <Grid item xs={isMobile ? 5 : 4}>
               <TextField
                 id="filled-basic1"
                 size="small"
@@ -543,10 +576,11 @@ export default function Info(props) {
                 aria-labelledby="discrete-slider"
                 step={0.01}
                 max={15}
+                className={isMobile ? null : classes.slider}
               />
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs={isMobile ? 5 : 4}>
               <TextField
                 id="filled-basic2"
                 size="small"
@@ -562,30 +596,171 @@ export default function Info(props) {
                 valueLabelDisplay="auto"
                 aria-labelledby="discrete-slider"
                 max={30}
+                className={isMobile ? null : classes.slider}
               />
             </Grid>
-            <Grid item xs={2}>
-              <Typography variant="subtitle2">
-                {t("principalpayment.label")}
-              </Typography>
-              <Typography variant="subtitle1" color="success" className={classes.bold}>
-                {currencyFormat(
-                  PMT() - (priceloan * (interest * 0.01) * 30) / 365
-                )}
-                {t("bath.label")}
-              </Typography>
+            {isMobile ? (
+              <React.Fragment>
+                <Grid item xs={5}>
+                  <Typography variant="subtitle2">
+                    {t("paymentamount/month.label")}
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    style={{ color: "#26ae61" }}
+                    className={classes.bold}
+                  >
+                    {currencyFormat(pricemonth)} {t("bath.label")}
+                  </Typography>
+                </Grid>
+                <Grid item xs={5}>
+                  <Typography variant="subtitle2">
+                    {t("principalpayment.label")}
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    color="success"
+                    className={classes.bold}
+                  >
+                    {currencyFormat(
+                      PMT() - (priceloan * (interest * 0.01) * 30) / 365
+                    )}
+                    {t("bath.label")}
+                  </Typography>
+                </Grid>
+                <Grid item xs={5}>
+                  <Typography variant="subtitle2">
+                    {t("interestpayment.label")}
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    color="secondary"
+                    className={classes.bold}
+                  >
+                    {currencyFormat((priceloan * (interest * 0.01) * 30) / 365)}{" "}
+                    {t("bath.label")}
+                  </Typography>
+                </Grid>
+              </React.Fragment>
+            ) : null}
 
-              <Typography variant="subtitle2">
-                {t("interestpayment.label")}
-              </Typography>
-              <Typography variant="subtitle1" color="secondary" className={classes.bold}>
-                {currencyFormat((priceloan * (interest * 0.01) * 30) / 365)}{" "}
-                {t("bath.label")}
-              </Typography>
-            </Grid>
+            <BrowserView>
+              <Grid item xs={12}>
+                <Typography variant="subtitle2">
+                  {t("principalpayment.label")}
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  color="success"
+                  className={classes.bold}
+                >
+                  {currencyFormat(
+                    PMT() - (priceloan * (interest * 0.01) * 30) / 365
+                  )}
+                  {t("bath.label")}
+                </Typography>
+
+                <Typography variant="subtitle2">
+                  {t("interestpayment.label")}
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  color="secondary"
+                  className={classes.bold}
+                >
+                  {currencyFormat((priceloan * (interest * 0.01) * 30) / 365)}{" "}
+                  {t("bath.label")}
+                </Typography>
+              </Grid>
+            </BrowserView>
           </Grid>
         </Card>
       </Container>
+      <Dialog
+        fullWidth
+        maxWidth="sm"
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="max-width-dialog-title"
+      >
+        <DialogTitle id="max-width-dialog-title">
+          {t("contact.label")}
+        </DialogTitle>
+        <DialogContent>
+          <ValidatorForm
+            onSubmit={handleSubmit}
+            onError={() => alert.error(t("updateinfoerror2.label"))}
+          >
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+              spacing={2}
+            >
+              <Grid item xs={12}>
+                <TextValidator
+                  label={t("displayname.label")}
+                  onChange={(event) => setdisplay(event.target.value)}
+                  name="displayname"
+                  value={displayname}
+                  variant="outlined"
+                  fullWidth
+                  validators={["required"]}
+                  errorMessages={[t("displaynamerequired.label")]}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextValidator
+                  label={t("email.label")}
+                  onChange={(event) => setemail(event.target.value)}
+                  name="email"
+                  value={email}
+                  variant="outlined"
+                  fullWidth
+                  validators={["required", "isEmail"]}
+                  errorMessages={[
+                    t("emailrequired.label"),
+                    t("emailisEmail.label"),
+                  ]}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextValidator
+                  label={t("phone.label")}
+                  onChange={(event) => setphone(event.target.value)}
+                  name="phone"
+                  value={phone}
+                  variant="outlined"
+                  fullWidth
+                  validators={["required"]}
+                  errorMessages={[t("phonerequired.label")]}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <div className={classes.wrapper}>
+                  <Button
+                    startIcon={<SendIcon />}
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    type="submit"
+                    disabled={disable}
+                  >
+                    {t("buttonsubmitcontact.label")}
+                  </Button>
+                  {loading && (
+                    <CircularProgress
+                      size={24}
+                      className={classes.buttonProgress}
+                    />
+                  )}
+                </div>
+              </Grid>
+            </Grid>
+          </ValidatorForm>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

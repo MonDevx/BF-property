@@ -2,7 +2,7 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import AddIcon from "@material-ui/icons/Add";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -30,11 +30,11 @@ export default function Sectionrecommend(props) {
   const { t } = useTranslation();
   return (
     <Container className={classes.cardGrid} maxWidth="lg">
-      <Typography variant="h5" align="center" className={classes.headertitle}>
+      <Typography variant="h4" align="center" className={classes.headertitle}>
         {t("header.recommend.label")}
       </Typography>
       <Typography
-        variant="h4"
+        variant="h5"
         align="center"
         className={classes.headertitle}
         color="primary"
@@ -55,8 +55,8 @@ export default function Sectionrecommend(props) {
             seachkey: "view",
           },
         }}
+        endIcon={<ArrowForwardIosIcon />}
       >
-        <AddIcon />
         {t("seeallitem.label")}
       </Button>
     </Container>

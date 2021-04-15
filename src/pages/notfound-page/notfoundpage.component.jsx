@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "react-router-dom/Link";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -7,7 +7,7 @@ class NotFoundPage extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div align="center" style={{padding: '5%'}}>
+        <div align="center" style={{ padding: "5%" }}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Typography variant="h4" gutterBottom>

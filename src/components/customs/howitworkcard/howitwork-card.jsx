@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 20,
     fontFamily: theme.typography.fontFamily,
     color: theme.palette.background.paper,
-    padding: theme.spacing(0.5),
+    padding: theme.spacing(0.85),
     fontWeight: theme.typography.fontWeightMedium,
   },
   image: {
@@ -18,7 +18,10 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     padding: theme.spacing(3),
+    transition: "transform 0.15s ease-in-out",
+    "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
   },
+
 }));
 const defaultProps = {
   bgcolor: "primary.main",
@@ -33,7 +36,7 @@ export const HowItWorkCard = (props) => {
       <Card align="center" className={classes.card}>
         <Box borderRadius="50%" {...defaultProps}>
           <Typography
-            variant="subtitle1"
+            variant="body2"
             align="center"
             className={classes.number}
           >
@@ -42,14 +45,14 @@ export const HowItWorkCard = (props) => {
         </Box>
         <LazyLoadImage
           alt="img3"
-          src={process.env.PUBLIC_URL + image}
+          src={image}
           className={classes.image}
           effect="blur"
         />
-        <Typography variant="h5" align="center">
+        <Typography variant="subtitle1" align="center">
           {headline}
         </Typography>
-        <Typography variant="subtitle1" align="center">
+        <Typography variant="subtitle2" align="center">
           {text}
         </Typography>
       </Card>

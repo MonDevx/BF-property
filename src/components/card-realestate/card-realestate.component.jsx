@@ -14,14 +14,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
-import BathtubIcon from "@material-ui/icons/Bathtub";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import HotelIcon from "@material-ui/icons/Hotel";
-import RoomIcon from "@material-ui/icons/Room";
-import SquareFootIcon from "@material-ui/icons/SquareFoot";
-import UpdateIcon from "@material-ui/icons/Update";
 import React from "react";
 import LazyLoad from "react-lazyload";
 import { connect } from "react-redux";
@@ -29,7 +22,17 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { SkletonCard } from "../customs/skeleton/skeleton-card/skeleton-card.component.jsx";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { ChipStatus } from "../customs/chip-customs/chip-customs";
+import { ChipStatus } from "../customs/chip-customs/chip-customs.jsx";
+import {
+  BiBath,
+  BiBed,
+  BiMap,
+  BiGrid,
+  BiEdit,
+  BiTrash,
+  BiTimeFive,
+} from "react-icons/bi";
+import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -39,6 +42,8 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     display: "flex",
     flexDirection: "column",
+    transition: "transform 0.15s ease-in-out",
+    "&:hover": { transform: "scale3d(1.02, 1.02, 1)" },
   },
   cardMedia: {
     paddingTop: "56.25%", // 16:9
@@ -47,8 +52,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   bold: {
-    fontWeight: 600
-  }
+    fontWeight: 600,
+  },
+  icon: {
+    fontSize: 20,
+  },
 }));
 function currencyFormat(num) {
   return (
@@ -61,7 +69,7 @@ function currencyFormat(num) {
 
 function CardProperty(props) {
   const { t } = useTranslation();
-  const { currentProperty, currentUser } = props;
+  const { currentProperty, currentUser, currency } = props;
   const [open, setOpen] = React.useState(false);
   var property = [];
   const [deletepropertyvalue, Setdeletepropertyvalue] = React.useState({});
@@ -74,7 +82,21 @@ function CardProperty(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  
+
+  // const test = () => {
+  //   axios({
+  //     method: 'get',
+  //     url: 'http://rate-exchange.appspot.com/currency?from=THB&to=USD&q=12'
+  //   })
+  //     .then(response => {
+  //       console.log("response: ", response)
+  //       // do something about response
+  //     })
+  //     .catch(err => {
+  //       console.error(err)
+  //     })
+  // };
+
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -107,7 +129,7 @@ function CardProperty(props) {
                   <CardContent className={classes.cardContent}>
                     <Grid container spacing={1}>
                       <Grid item xs={12}>
-                        <Typography variant="h6"   className={classes.bold}>
+                        <Typography variant="h6" className={classes.bold}>
                           {detail.name.length < 28
                             ? detail.name.replaceAll("-", " ")
                             : detail.name
@@ -130,12 +152,23 @@ function CardProperty(props) {
                           color="primary"
                           style={{ fontWeight: 600 }}
                         >
-                          {currencyFormat(detail.price)} {t("baht.label")}
+                          {currencyFormat(
+                            currency === "gb"
+                              ? detail.price * 0.032
+                              : currency === "th"
+                              ? detail.price
+                              : detail.price * 0.21
+                          )}{" "}
+                          {currency === "gb"
+                              ? t("dollar.label")
+                              : currency === "th"
+                              ? t("baht.label")
+                              : t("yuan.label")}
                         </Typography>
                       </Grid>
                       <Grid item sm={12}>
                         <Typography variant="subtitle2">
-                          <RoomIcon fontSize="small" />
+                          <BiMap className={classes.icon} />
                           {(
                             detail.address +
                             " " +
@@ -174,7 +207,7 @@ function CardProperty(props) {
                         <Grid container spacing={1}>
                           <Grid item>
                             <Typography variant="subtitle2">
-                              <HotelIcon fontSize="small" />
+                              <BiBed className={classes.icon} />
                             </Typography>
                           </Grid>
                           <Grid item>
@@ -189,7 +222,7 @@ function CardProperty(props) {
                           </Grid>
                           <Grid item>
                             <Typography variant="subtitle2">
-                              <BathtubIcon fontSize="small" />
+                              <BiBath className={classes.icon} />
                             </Typography>
                           </Grid>
                           <Grid item>
@@ -204,7 +237,7 @@ function CardProperty(props) {
                           </Grid>
                           <Grid item>
                             <Typography variant="subtitle2">
-                              <SquareFootIcon fontSize="small" />
+                              <BiGrid className={classes.icon} />
                             </Typography>
                           </Grid>
                           <Grid item>
@@ -276,10 +309,13 @@ function CardProperty(props) {
                               },
                             }}
                           >
-                            <UpdateIcon />
+                            <BiTimeFive />
                           </IconButton>
                         </Tooltip>
-                        <Tooltip title={t("editproperty.label")} aria-label="add">
+                        <Tooltip
+                          title={t("editproperty.label")}
+                          aria-label="add"
+                        >
                           <IconButton
                             component={Link}
                             to={{
@@ -289,7 +325,7 @@ function CardProperty(props) {
                               },
                             }}
                           >
-                            <EditRoundedIcon />
+                            <BiEdit />
                           </IconButton>
                         </Tooltip>
                         <Tooltip
@@ -298,11 +334,9 @@ function CardProperty(props) {
                         >
                           <IconButton
                             aria-label="detele to favorites"
-                            onClick={() =>
-                              handleClickOpen(detail.id, index)
-                            }
+                            onClick={() => handleClickOpen(detail.id, index)}
                           >
-                            <DeleteIcon />
+                            <BiTrash />
                           </IconButton>
                         </Tooltip>
                       </React.Fragment>
@@ -355,6 +389,7 @@ function CardProperty(props) {
 }
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  currency: state.currency.currency,
 });
 
 export default connect(mapStateToProps)(CardProperty);

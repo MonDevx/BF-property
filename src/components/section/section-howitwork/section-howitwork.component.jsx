@@ -54,21 +54,21 @@ function Sectionhowitwork(props) {
   const howItWork = [
     {
       headline: t("sectionhowitwork.headeritem1"),
-      image: "/assets/img/img1.webp",
+      image: "./assets/img/img1.webp",
       text: t("sectionhowitwork.sub1"),
       mdDelay: "700",
       smDelay: "700",
     },
     {
       headline: t("sectionhowitwork.headeritem2"),
-      image: "/assets/img/img2.webp",
+      image: "./assets/img/img2.webp",
       text: t("sectionhowitwork.sub2"),
       mdDelay: "300",
       smDelay: "300",
     },
     {
       headline: t("sectionhowitwork.headeritem3"),
-      image: "/assets/img/img3.webp",
+      image: "./assets/img/img3.webp",
       text: t("sectionhowitwork.sub3"),
       mdDelay: "700",
       smDelay: "700",
@@ -92,10 +92,10 @@ function Sectionhowitwork(props) {
                 item
                 xs={12}
                 md={4}
-                data-aos="zoom-in-up"
-                data-aos-delay={
-                  isWidthUp("md", width) ? element.mdDelay : element.smDelay
-                }
+                // data-aos="zoom-in-up"
+                // data-aos-delay={
+                //   isWidthUp("md", width) ? element.mdDelay : element.smDelay
+                // }
               >
                 <HowItWorkCard
                   number={index + 1}

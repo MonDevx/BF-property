@@ -1,8 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Collapse from "@material-ui/core/Collapse";
 import Container from "@material-ui/core/Container";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
@@ -31,11 +29,9 @@ const useStyles = makeStyles((theme) => ({
   },
   seachbox: {
     marginTop: theme.spacing(15),
-    
   },
   card: {
     padding: theme.spacing(1.5),
-
   },
 }));
 
@@ -81,12 +77,12 @@ export default function Formseach() {
                 className={classes.formControl}
                 fullWidth
               >
-                <InputLabel id="demo-simple-select-outlined-label">
+                <InputLabel id="typeproperty-label">
                   {t("typeproperty.label")}
                 </InputLabel>
                 <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
+                  labelId="typeproperty-label"
+                  id="typeproperty"
                   value={type}
                   onChange={handleChangeType}
                   label={t("typeproperty.label")}
@@ -118,8 +114,8 @@ export default function Formseach() {
               <Button
                 fullWidth
                 variant="contained"
-                color="primary"
-                style={{ padding: "6%" }}
+                color="secondary"
+                style={{ padding: "4%" }}
                 component={Link}
                 to={{
                   pathname: "/seach-result",
@@ -136,7 +132,7 @@ export default function Formseach() {
                   },
                 }}
                 startIcon={<SearchRoundedIcon />}
-                aria-label="ค้นหา"
+                aria-label={t("seach.label")}
               >
                 {t("seach.label")}
               </Button>
@@ -144,12 +140,12 @@ export default function Formseach() {
 
             <Grid item xs={12} sm={3}>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel id="demo-simple-select-outlined-label">
+                <InputLabel id="price-label">
                   {t("pricebetween.label")}
                 </InputLabel>
                 <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
+                  labelId="price-label"
+                  id="price"
                   value={price}
                   onChange={handleChangeprice}
                   label={t("pricebetween.label")}
@@ -164,6 +160,7 @@ export default function Formseach() {
             </Grid>
             <Grid item xs={12} sm={3}>
               <TextField
+              id="room"
                 variant="outlined"
                 label={t("propertybed.label")}
                 type="number"

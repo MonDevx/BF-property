@@ -1,12 +1,8 @@
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
 import Typography from "@material-ui/core/Typography";
 import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
 import React from "react";
@@ -20,12 +16,13 @@ import { withStyles } from "@material-ui/core/styles";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Linkui from "@material-ui/core/Link";
 import { Link } from "react-router-dom";
-import EditIcon from "@material-ui/icons/Edit";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-
 import PhoneInput from "react-phone-input-2";
-
+import { AiOutlineEdit, AiOutlineUser } from "react-icons/ai";
 import "react-phone-input-2/lib/material.css";
+import { isMobile } from "react-device-detect";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
 const styles = (theme) => ({
   paper: {
     display: "flex",
@@ -98,7 +95,7 @@ class Editprofile extends React.Component {
             }
           >
             <Grid container spacing={3}>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <Breadcrumbs separator="›" aria-label="breadcrumb">
                   <Linkui
                     color="inherit"
@@ -106,12 +103,12 @@ class Editprofile extends React.Component {
                     to="/profile"
                     component={Link}
                   >
-                    <AccountBoxIcon className={classes.icon} />
+                    <AiOutlineUser className={classes.icon} />
                     {t("myacc.label")}
                   </Linkui>
 
                   <Typography color="textPrimary" className={classes.link}>
-                    <EditIcon className={classes.icon} />
+                    <AiOutlineEdit className={classes.icon} />
                     {t("editinformation.label")}
                   </Typography>
                 </Breadcrumbs>
@@ -155,37 +152,28 @@ class Editprofile extends React.Component {
                 />
               </Grid>
               <Grid item xs={6}>
-                <FormControl component="fieldset">
-                  <FormLabel component="legend">{t("sex.label")}</FormLabel>
-                  <RadioGroup
-                    aria-label="gender"
-                    name="gender"
+                <FormControl variant="outlined" >
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    {t("sex.label")}
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
                     value={User.gender ? User.gender : 1}
                     onChange={this.handleChange}
+                    label={t("sex.label")}
+                    name="gender"
                   >
-                    <FormControlLabel
-                      value={1}
-                      control={<Radio />}
-                      label={t("typesex1.label")}
-                    />
-                    <FormControlLabel
-                      value={2}
-                      control={<Radio />}
-                      label={t("typesex2.label")}
-                    />
-                    <FormControlLabel
-                      value={3}
-                      control={<Radio />}
-                      label={t("typesex3.label")}
-                    />
-                  </RadioGroup>
+                    <MenuItem value={1}>{t("typesex1.label")}</MenuItem>
+                    <MenuItem value={2}>{t("typesex2.label")}</MenuItem>
+                    <MenuItem value={3}>{t("typesex3.label")}</MenuItem>
+                  </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={3}>
                 <TextValidator
                   variant="outlined"
                   type="date"
-                  fullWidth
                   label={t("birthday.label")}
                   onChange={this.handleChange}
                   name="birthday"
@@ -197,7 +185,7 @@ class Editprofile extends React.Component {
                   errorMessages={[t("birthdayrequired.label")]}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={isMobile ? 10 : 4}>
                 <Button
                   type="submit"
                   variant="contained"
@@ -205,7 +193,6 @@ class Editprofile extends React.Component {
                   fullWidth
                   size="large"
                   startIcon={<SystemUpdateAltIcon />}
-                  style={{ backgroundColor: "#55aa54" }}
                   disabled={
                     JSON.stringify(User) ===
                     JSON.stringify(this.props.currentUser)

@@ -17,8 +17,7 @@ import { Link } from "react-router-dom";
 import Linkmu from "@material-ui/core/Link";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import EditinformationaddressForm from "./edit-infoaddressformproperty.component.jsx";
-import ListAltIcon from "@material-ui/icons/ListAlt";
-import EditIcon from "@material-ui/icons/Edit";
+import { AiOutlineHome, AiOutlineEdit } from "react-icons/ai";
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
@@ -31,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(6),
       padding: theme.spacing(4),
     },
+  },
+  link: {
+    display: "flex",
   },
   icon: {
     marginRight: theme.spacing(0.5),
@@ -67,17 +69,17 @@ export default function Editproperty(props) {
   return (
     <Container>
       <Paper className={classes.paper} elevation={3}>
-        <Grid item xs={5}>
+        <Grid item xs={12}>
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
           >
-            <Linkmu color="inherit" component={Link} to="/my-property">
-              <ListAltIcon className={classes.icon} />
+            <Linkmu color="inherit" component={Link} to="/my-property" className={classes.link}>
+              <AiOutlineHome className={classes.icon} />
               {t("myproperty.name.label")}
             </Linkmu>
-            <Typography color="textPrimary">
-              <EditIcon className={classes.icon} />
+            <Typography color="textPrimary" className={classes.link}>
+              <AiOutlineEdit className={classes.icon} />
               {"แก้ไขรายละเอียดข้อมูล"}
             </Typography>
           </Breadcrumbs>
@@ -124,7 +126,6 @@ export default function Editproperty(props) {
               color="primary"
               onClick={onupdate}
               startIcon={<SystemUpdateAltIcon />}
-              style={{ backgroundColor: "#55aa54" }}
               disabled={disable}
             >
               {t("propertysavebutton.label")}

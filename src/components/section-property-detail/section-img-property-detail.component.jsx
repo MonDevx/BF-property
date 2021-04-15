@@ -38,7 +38,9 @@ function Img(props) {
   const url = window.location.href;
   const { t } = useTranslation();
   const options = [
-    props.typeproperty !== 3 ? t("imgoutside.label") : t("imgcondooutside.label"),
+    props.typeproperty !== 3
+      ? t("imgoutside.label")
+      : t("imgcondooutside.label"),
     props.typeproperty !== 3 ? t("imginside.label") : t("imgcondoinside.label"),
   ];
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -192,7 +194,19 @@ function Img(props) {
             className={classes.toolbarItem}
             color="success"
           >
-            {t("price.label")} {formatMoney(props.price)} {t("bath.label")}
+            {t("price.label")}{" "}
+            {formatMoney(
+              props.currency === "gb"
+                ? props.price * 0.032
+                : props.currency === "th"
+                ? props.price
+                : props.price * 0.21
+            )}{" "}
+            {props.currency === "gb"
+              ? t("dollar.label")
+              : props.currency === "th"
+              ? t("baht.label")
+              : t("yuan.label")}
           </Typography>
 
           <Typography variant="h5" className={classes.toolbarItem}>
@@ -216,6 +230,7 @@ function Img(props) {
 }
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  currency: state.currency.currency,
 });
 
 export default connect(mapStateToProps)(Img);

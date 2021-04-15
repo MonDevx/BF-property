@@ -4,7 +4,7 @@ import React, { lazy, Suspense } from "react";
 import { Provider as AlertProvider } from "react-alert";
 import Announcement from "react-announcement";
 import { Cookies, withCookies } from "react-cookie";
-import MessengerCustomerChat from "react-messenger-customer-chat";
+import { LiveChatLoaderProvider, Messenger } from "react-live-chat-loader";
 import { connect } from "react-redux";
 import { Route } from "react-router-dom";
 import "./App.css";
@@ -19,15 +19,17 @@ import {
 } from "./firebase/firebase.utils";
 import { Maintance as MaintancePage } from "./pages";
 import { setCurrentUser } from "./redux/user/user.actions";
+import { setI18n } from "./redux/i18n/i18n.actions";
 import Routes from "./Routes";
 import theme from "./theme";
 import { ThemeProvider } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import ScrollTop from "./components/scroll-top/scroll-top.component.jsx";
-import LoaderSpinners from "./components/loader-spinners/loader-spinners";
-const Footer = lazy(() => import("./layouts/footer/footer.component"));
-const Header = lazy(() => import("./layouts/header/header.component"));
+import LoaderSpinners from "./components/loader-spinners/loader-spinners.jsx";
+import { withTranslation } from 'react-i18next';
+const Footer = lazy(() => import("./layouts/footer/footer.component.jsx"));
+const Header = lazy(() => import("./layouts/header/header.component.jsx"));
 const options = {
   timeout: 3000,
 };
@@ -63,7 +65,7 @@ class App extends React.Component {
       this.setState({
         maintenancestatus: snapshot.val(),
       });
-      if (snapshot.val()  === 1) {
+      if (snapshot.val() === 1) {
         this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
           this.setState({ currentUser: userAuth });
           if (userAuth) {
@@ -78,6 +80,7 @@ class App extends React.Component {
         });
       }
     });
+    this.props.i18n.changeLanguage(this.props.lang);
 
     this.unsubscribeFromAnnounce = this.getAnnounceText();
   }
@@ -91,9 +94,9 @@ class App extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-         <Pace color={theme.palette.primary.main} />
+        <Pace color={theme.palette.primary.main} />
         <AlertProvider template={AlertTemplate} {...options}>
-          {this.state.maintenancestatus  === 1 ? (
+          {this.state.maintenancestatus === 1 ? (
             <Suspense
               fallback={
                 <div align="center" style={{ margin: "21.80%" }}>
@@ -131,12 +134,15 @@ class App extends React.Component {
                   <KeyboardArrowUpIcon />
                 </Fab>
               </ScrollTop>
-              <MessengerCustomerChat
-                pageId="103720534694768"
-                appId="232462984487271"
-                theme_color="#3b4aa7"
-                language="th_TH"
-              />
+
+              <LiveChatLoaderProvider
+                provider="messenger"
+                providerKey="103720534694768"
+                appID="232462984487271"
+                locale="th_TH"
+              >
+                <Messenger />
+              </LiveChatLoaderProvider>
             </Suspense>
           ) : this.state.maintenancestatus === 0 ? (
             <Route path="/*" component={MaintancePage} />
@@ -151,13 +157,14 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ user, language }) => ({
   currentUser: user.currentUser,
+  lang: language.lang,
 });
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+  setI18n: (lang) => dispatch(setI18n(lang)),
+  
 });
-export default compose(
-  withCookies,
-  connect(mapStateToProps, mapDispatchToProps)
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(App));
+

@@ -58,8 +58,8 @@ export default function Sectionhowto() {
 
                 <LazyLoadImage
                   src={
-                    process.env.PUBLIC_URL +
-                    "/assets/img/webp/section-howto/undraw_buffer_wq43.webp"
+                   
+                    "./assets/img/webp/section-howto/undraw_buffer_wq43.webp"
                   }
                   alt="img1"
                   effect="blur"
@@ -78,8 +78,8 @@ export default function Sectionhowto() {
                 </Typography>
                 <LazyLoadImage
                   src={
-                    process.env.PUBLIC_URL +
-                    "/assets/img/webp/section-howto/undraw_all_the_data_h4ki.webp"
+                   
+                    "./assets/img/webp/section-howto/undraw_all_the_data_h4ki.webp"
                   }
                   alt="img2"
                   effect="blur"
@@ -98,8 +98,8 @@ export default function Sectionhowto() {
                 </Typography>{" "}
                 <LazyLoadImage
                   src={
-                    process.env.PUBLIC_URL +
-                    "/assets/img/webp/section-howto/undraw_Search_1px8.webp"
+                    
+                    "./assets/img/webp/section-howto/undraw_Search_1px8.webp"
                   }
                   alt="img3"
                   effect="blur"

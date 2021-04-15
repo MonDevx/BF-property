@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
-import { withRouter } from "react-router";
-import { Redirect } from "react-router-dom";
+import {withRouter} from "react-router";
+import Redirect from "react-router-dom/Redirect";
 import Editproperty from "../../components/edit-property/edit-property.component.jsx";
 import LoaderSpinners from "../../components/loader-spinners/loader-spinners.jsx";
 class EditpropertyPage extends React.Component {
@@ -21,28 +21,31 @@ class EditpropertyPage extends React.Component {
       )
       .then((result) => {
         this.setState({
-          id:result.data.id,
+          id: result.data.id,
           realestate: result.data.data,
           isLoading: false,
         });
-
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         this.setState({
           redireact: "/",
         });
       });
   }
   render() {
-    const { isLoading, realestate, redirect ,id} = this.state;
+    const { isLoading, realestate, redirect, id } = this.state;
     if (redirect) {
       return <Redirect to={redirect} />;
     }
     if (isLoading) {
-      return <LoaderSpinners />;
+      return (
+        <div style={{ margin: "100%" }}>
+          <LoaderSpinners />
+        </div>
+      );
     }
-    return <Editproperty property={realestate} id={id}/>;
+    return <Editproperty property={realestate} id={id} />;
   }
 }
 

@@ -15,8 +15,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Linkui from "@material-ui/core/Link";
 import { Link } from "react-router-dom";
-import LockIcon from '@material-ui/icons/Lock';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import {  AiOutlineLock,AiOutlineUser} from 'react-icons/ai';
+import {isMobile} from 'react-device-detect';
 const styles = (theme) => ({
   paper: {
     display: "flex",
@@ -108,7 +108,7 @@ class Changepassword extends React.Component {
             }
           >
             <Grid container spacing={3}>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <Breadcrumbs separator="›" aria-label="breadcrumb">
                   <Linkui
                     color="inherit"
@@ -116,12 +116,12 @@ class Changepassword extends React.Component {
                     to="/profile"
                     component={Link}
                   >
-                    <AccountBoxIcon className={classes.icon} />
+                    <AiOutlineUser className={classes.icon} />
                     {t("myacc.label")}
                   </Linkui>
 
                   <Typography color="textPrimary" className={classes.link}>
-                  <LockIcon className={classes.icon} />
+                  <AiOutlineLock className={classes.icon} />
                   {t("changepassword.label")}
                   </Typography>
                 </Breadcrumbs>
@@ -156,7 +156,7 @@ class Changepassword extends React.Component {
                   value={user.repeatPassword}
                 />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={isMobile?8:4}>
                 <Button
                   type="submit"
                   variant="contained"
@@ -164,7 +164,7 @@ class Changepassword extends React.Component {
                   fullWidth
                   size="medium"
                   startIcon={<SystemUpdateAltIcon />}
-                  style={{ backgroundColor: "#55aa54" }}
+          
                   disabled={user.password === "" || user.repeatPassword === ""}
                 >
                 {t("resetpasswordbutton")}

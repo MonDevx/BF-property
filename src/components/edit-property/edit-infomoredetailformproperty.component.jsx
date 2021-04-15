@@ -1,15 +1,14 @@
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-// import "easymde/dist/easymde.min.css";
 import React from "react";
 import SimpleMDEReact from "react-simplemde-editor";
 import { useTranslation } from "react-i18next";
-
+import './styles.css'
 const useStyles = makeStyles((theme) => ({
   howtoContent: {
     margin: theme.spacing(4),
-    backgroundColor:  theme.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
@@ -31,15 +30,19 @@ export default function EditinformationdetailsForm(props) {
       <Grid item xs={12} container spacing={4} className={classes.howtoContent}>
         <Grid item xs={12} sm={12}>
           <Typography variant="h6" color="primary" gutterBottom>
-            {t('propertymoredetail.label')} 
+            {t("propertymoredetail.label")}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12}>
-          <SimpleMDEReact
-            id="detail"
-            onChange={handleDetailChange}
-            value={formValues.detail}
-          />
+          <div
+           className="App"
+          >
+            <SimpleMDEReact
+              id="detail"
+              onChange={handleDetailChange}
+              value={formValues.detail}
+            />
+          </div>
         </Grid>
       </Grid>
     </React.Fragment>

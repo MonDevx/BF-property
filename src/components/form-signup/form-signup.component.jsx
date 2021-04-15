@@ -12,8 +12,6 @@ import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 import ReCAPTCHA from "react-google-recaptcha";
 import { withTranslation } from "react-i18next";
 import { compose } from "redux";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 const useStyles = (theme) => ({
   form: {
     width: "100%",
@@ -34,7 +32,6 @@ class SignUp extends React.Component {
       password: "",
       confirmPassword: "",
       valuecaptcha: "",
-      emailcheck: false,
     };
   }
 
@@ -48,7 +45,6 @@ class SignUp extends React.Component {
   }
 
   componentWillUnmount() {
-
     ValidatorForm.removeValidationRule("isPasswordMatch");
   }
 
@@ -94,7 +90,6 @@ class SignUp extends React.Component {
       password,
       confirmPassword,
       valuecaptcha,
-      emailcheck,
     } = this.state;
     const { classes, t } = this.props;
 
@@ -105,100 +100,88 @@ class SignUp extends React.Component {
             {t("signup.label")}
           </Typography>
           <Typography variant="subtitle2">{t("signupsub.label")}</Typography>
- 
-            <ValidatorForm onSubmit={this.handleSubmit}>
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <TextValidator
-                    variant="outlined"
-                    fullWidth
-                    label={t("displayname.label")}
-                    id="displayName"
-                    onChange={this.handleChange}
-                    name="displayName"
-                    value={displayName}
-                    validators={["required"]}
-                    errorMessages={[t("displaynamerequired.label")]}className={classes.form}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextValidator
-                    variant="outlined"
-                    fullWidth
-                    label={t("email.label")}
-                    id="email"
-                    onChange={this.handleChange}
-                    name="email"
-                    value={email}
-                    validators={["required", "isEmail"]}
-                    errorMessages={[
-                      t("emailrequired.label"),
-                      t("emailisEmail.label"),
-                    ]}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextValidator
-                    variant="outlined"
-                    fullWidth
-                    label={t("password.label")}
-                    onChange={this.handleChange}
-                    name="password"
-                    type="password"
-                    validators={["required"]}
-                    errorMessages={[t("passwordrequired.label")]}
-                    value={password}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextValidator
-                    variant="outlined"
-                    label={t("confirmPassword.label")}
-                    fullWidth
-                    onChange={this.handleChange}
-                    name="confirmPassword"
-                    type="password"
-                    validators={["required", "isPasswordMatch"]}
-                    errorMessages={[
-                      t("confirmPasswordrequired.label"),
-                      t("confirmPasswordisPasswordMatch.label"),
-                    ]}
-                    value={confirmPassword}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={emailcheck}
-                        onChange={this.handleChange}
-                        name="emailcheck"
-                        color="primary"
-                      />
-                    }
-                    label="รับการแจ้งเตือนข่าวสารทางอีเมล์"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <ReCAPTCHA
-                    sitekey="6LcJ1P4UAAAAAIqRs0zN5lng511G53rXwWeTLFRg"
-                    onChange={this.onChange}
-                  />
-                </Grid>
-              </Grid>
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                size="large"
-                disabled={valuecaptcha === ""}
-              >
-                {t("buttonsignup.label")}
-              </Button>
-            </ValidatorForm>
+          <ValidatorForm onSubmit={this.handleSubmit}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <TextValidator
+                  variant="outlined"
+                  fullWidth
+                  label={t("displayname.label")}
+                  id="displayName"
+                  onChange={this.handleChange}
+                  name="displayName"
+                  value={displayName}
+                  validators={["required"]}
+                  errorMessages={[t("displaynamerequired.label")]}
+                  className={classes.form}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextValidator
+                  variant="outlined"
+                  fullWidth
+                  label={t("email.label")}
+                  id="email"
+                  onChange={this.handleChange}
+                  name="email"
+                  value={email}
+                  validators={["required", "isEmail"]}
+                  errorMessages={[
+                    t("emailrequired.label"),
+                    t("emailisEmail.label"),
+                  ]}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextValidator
+                  variant="outlined"
+                  fullWidth
+                  label={t("password.label")}
+                  onChange={this.handleChange}
+                  name="password"
+                  type="password"
+                  validators={["required"]}
+                  errorMessages={[t("passwordrequired.label")]}
+                  value={password}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextValidator
+                  variant="outlined"
+                  label={t("confirmPassword.label")}
+                  fullWidth
+                  onChange={this.handleChange}
+                  name="confirmPassword"
+                  type="password"
+                  validators={["required", "isPasswordMatch"]}
+                  errorMessages={[
+                    t("confirmPasswordrequired.label"),
+                    t("confirmPasswordisPasswordMatch.label"),
+                  ]}
+                  value={confirmPassword}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <ReCAPTCHA
+                  sitekey="6LcJ1P4UAAAAAIqRs0zN5lng511G53rXwWeTLFRg"
+                  onChange={this.onChange}
+                />
+              </Grid>
+            </Grid>
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              size="large"
+              disabled={valuecaptcha === ""}
+            >
+              {t("buttonsignup.label")}
+            </Button>
+          </ValidatorForm>
           <Grid item>
             <Typography>
               {t("signupdetail.label")}

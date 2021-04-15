@@ -1,31 +1,34 @@
-import i18n from 'i18next'
-import Backend from 'i18next-xhr-backend'
-import { initReactI18next } from 'react-i18next'
+import i18n from "i18next";
+import Backend from "i18next-xhr-backend";
+import { initReactI18next } from "react-i18next";
 
 i18n
   .use(Backend)
   .use(initReactI18next)
   .init({
-    lng: i18n.language ||
-    (typeof window !== 'undefined' && window.localStorage.i18nextLng) ||
-    'th',
+    lng:
+      i18n.language ||
+      (typeof window !== "undefined" && window.localStorage.i18nextLng) ||
+      "th",
     backend: {
       /* translation file path */
-      loadPath: '/assets/i18n/{{ns}}/{{lng}}.json'
+      loadPath: "./assets/i18n/{{ns}}/{{lng}}.json",
     },
-    fallbackLng: 'th',
-    debug: process.env.NODE_ENV === "development"?true:false,
+
+    fallbackLng: "th",
+    debug: process.env.NODE_ENV === "development" ? true : false,
     /* can have multiple namespace, in case you want to divide a huge translation into smaller pieces and load them on demand */
-    ns: ['translations'],
-    defaultNS: 'translations',
+    ns: ["translations"],
+    defaultNS: "translations",
     keySeparator: false,
     interpolation: {
       escapeValue: false,
-      formatSeparator: ','
+      formatSeparator: ",",
     },
     react: {
-      wait: true
-    }
-  })
+      wait: true,
+      useSuspense: false,
+    },
+  });
 
-export default i18n
+export default i18n;

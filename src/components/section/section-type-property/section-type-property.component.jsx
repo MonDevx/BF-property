@@ -20,12 +20,8 @@ export default function Sectiontypeproperty() {
   const { t } = useTranslation();
   const images = [
     {
-      urljpg:
-        process.env.PUBLIC_URL +
-        "/assets/img/jpg/typehouse-main/Singlehouse.jpg",
-      urlwebp:
-        process.env.PUBLIC_URL +
-        "/assets/img/webp/typehouse-main/Singlehouse.webp",
+      urljpg: "./assets/img/jpg/typehouse-main/Singlehouse.jpg",
+      urlwebp: "./assets/img/webp/typehouse-main/Singlehouse.webp",
       title: t("typeproperty1.label"),
       value: 1,
       width: "48%",
@@ -33,11 +29,8 @@ export default function Sectiontypeproperty() {
       credit: "Photo by Ralph Kayden on Unsplash",
     },
     {
-      urljpg:
-        process.env.PUBLIC_URL + "/assets/img/jpg/typehouse-main/Townhouse.jpg",
-      urlwebp:
-        process.env.PUBLIC_URL +
-        "/assets/img/webp/typehouse-main/Townhouse.webp",
+      urljpg: "./assets/img/jpg/typehouse-main/Townhouse.jpg",
+      urlwebp: "./assets/img/webp/typehouse-main/Townhouse.webp",
       title: t("typeproperty2.label"),
       value: 2,
       width: "48%",

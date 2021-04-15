@@ -1,7 +1,7 @@
 import React from "react";
 import SignIn from "../../components/form-signin/form-signin.component.jsx";
 import SignUp from "../../components/form-signup/form-signup.component.jsx";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 const useStyles = makeStyles((theme) => ({

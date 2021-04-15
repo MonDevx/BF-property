@@ -41,7 +41,7 @@ const Routes = (props) => {
         }
       />
       <Route path="/property-detail/:name" component={PropertydetailPage} />
-      <Route path="/termsandcondition" component={TermsPage} />
+      <Route exact path="/termsandcondition" component={TermsPage} />
       <Route
         path="/property-updatestatus"
         render={() =>

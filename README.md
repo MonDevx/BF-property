@@ -12,20 +12,23 @@ See the [**Documentation**](https://drive.google.com/drive/folders/1EHtYzhDxHSWo
 ## Tech Stack :electric_plug:
 
 <p align="center">
-  <img height="50" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" />
+  <img height="45" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" />
    <img height="45" src="https://raw.githubusercontent.com/reduxjs/redux/master/logo/logo.png" />
-  <img height="40" src="https://material-ui.com/static/logo_raw.svg" />
-  <img height="50" src="https://www.gstatic.com/devrel-devsite/prod/ve89a7ff6276d59ea829bd99e9fee41a3dd0652e2c2557ff269cb86b77d119294/firebase/images/lockup.png?dcb_=0.44644892104487477" />
+  <img height="45" src="https://material-ui.com/static/logo_raw.svg" />
+    <img height="45" src="https://wptavern.com/wp-content/uploads/2017/10/Screen-Shot-2017-10-11-at-6.51.54-PM.png" />
+  <img height="45" src="https://firebase.google.com/images/social.png" />
+  
 </p>
 
 - React — A JavaScript library for building user interfaces — [reactjs.org](https://reactjs.org/)
 - Redux — A Predictable State Container for JS Apps — [redux.js.org](https://redux.js.org/)
 - Material-ui — React components for faster and easier web development. Build your own design system, or start with Material Design — [material-ui.](https://material-ui.com/)
 - Firebase —  is a Backend-as-a-Service — BaaS — that started as a YC11 startup and grew up into a next-generation app-development platform on Google Cloud Platform. — [firebase.google.com](https://firebase.google.com/?hl=th) 
+- Webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable of transforming, bundling, or packaging. — [webpack.js.org](https://webpack.js.org/) 
 
 ##  Project description :page_facing_up:
 
-This project is part of the subjects Siminar, Senior Project 1, Senior Project 2 is a project about a home shop selling website developed with React.js. link dowload 
+This project is part of the subjects Siminar, Senior Project 1, Senior Project 2 is a project about a realestate website developed with React.js. link dowload 
 - :books: link download [Paper this project](https://drive.google.com/file/d/1L4_YtqCiAu2ZxXsy9IkE_alPGOaero5J/view?usp=sharing) 
 - :books: link download [Document this project](https://drive.google.com/file/d/1Swps36Kqd6znKaORxek5kqxjVn86tVSN/view?usp=sharing) 
 

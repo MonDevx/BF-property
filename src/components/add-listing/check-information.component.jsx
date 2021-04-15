@@ -389,7 +389,7 @@ function Checkinformation(props) {
             <Typography variant="subtitle1" gutterBottom>
               {t("nearbyplaces.label")}
             </Typography>
-            <ChipNearbyPlaces nearbyplaces={props.Nearbyplaces} />
+            <ChipNearbyPlaces nearbyplaces={props.nearbyplaces} />
           </Grid>
         )}
         <Grid item xs={12}>

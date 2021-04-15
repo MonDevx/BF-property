@@ -9,7 +9,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import "easymde/dist/easymde.min.css";
 import { DropzoneArea } from "material-ui-dropzone";
 import React from "react";
 import SimpleMDEReact from "react-simplemde-editor";
@@ -20,6 +19,7 @@ import NumberFormat from "react-number-format";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import './styles.css'
 const thai = require("thai-data");
 const useStyles = makeStyles((theme) => ({
   buttons: {
@@ -190,7 +190,7 @@ export default function InformationForm(props) {
     ]);
   };
   React.useEffect(() => {
-    setFormValues({ ...formValues, Nearbyplaces: inputNearbyplaces });
+    setFormValues({ ...formValues, nearbyplaces: inputNearbyplaces });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputNearbyplaces]);
   return (
@@ -610,11 +610,14 @@ export default function InformationForm(props) {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12}>
+          <div
+           className="App"
+          >
             <SimpleMDEReact
               id="detail"
               onChange={handleDetailChange}
               value={formValues.detail}
-            />
+            /></div>
           </Grid>
         </Grid>
         <Grid
