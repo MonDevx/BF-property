@@ -1,17 +1,17 @@
 import React from "react";
-import HashLoader from "react-spinners/HashLoader";
+import ClipLoader from "react-spinners/ClipLoader";
+import Grid from "@material-ui/core/Grid";
 export default function LoaderSpinners() {
-  const style = {
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  };
   return (
-
-    <div align="center" style={style}>
-      <HashLoader size={45} color={"#007BFF"} />
-
-    </div>
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justify="center"
+      style={{ minHeight: "100vh" }}
+    >
+      <ClipLoader size={45} color={"#007BFF"} />
+    </Grid>
   );
 }

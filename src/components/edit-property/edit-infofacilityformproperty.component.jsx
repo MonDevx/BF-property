@@ -22,7 +22,7 @@ function EditinformationfacilityForm(props) {
   const classes = useStyles();
   const { t } = useTranslation();
   const { formValues, setFormValues } = props;
-
+  /* TODO  FIX LIST ITEM TO SUPPORT MULTIPLE LANGUAGES  */
   const checkboxhandleChange = (event) => {
     setFormValues({
       ...formValues,

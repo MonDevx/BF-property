@@ -46,7 +46,7 @@ export const ChipNearbyPlaces = (props) => {
     </React.Fragment>
   );
 };
-
+ /* TODO  FIX LIST ITEM TO SUPPORT MULTIPLE LANGUAGES  */
 export const ChipCentralServiceAndFurniture = (props) => {
   return (
     <React.Fragment>

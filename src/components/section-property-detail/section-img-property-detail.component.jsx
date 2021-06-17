@@ -142,6 +142,7 @@ function Img(props) {
           <Grid item style={{ padding: "0.20%" }}>
             <FacebookShareButton
               url={url}
+              quote={props.name.replaceAll("-", " ")}
               hashtag="#หาบ้านในฝันที่ BF-property"
             >
               <FacebookIcon size={27} round={true} />
@@ -149,7 +150,8 @@ function Img(props) {
           </Grid>
           <Grid item style={{ padding: "0.20%" }}>
             <LineShareButton
-              url={window.location.href}
+              url={url}
+              quote={props.name.replaceAll("-", " ")}
               hashtag="#หาบ้านในฝันที่ BF-property"
             >
               <LineIcon size={27} round={true} />

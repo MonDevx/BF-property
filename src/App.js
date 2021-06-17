@@ -1,15 +1,12 @@
 import Typography from "@material-ui/core/Typography";
-import { instanceOf } from "prop-types";
-import React, { lazy, Suspense } from "react";
+import React, { Suspense } from "react";
 import { Provider as AlertProvider } from "react-alert";
 import Announcement from "react-announcement";
-import { Cookies, withCookies } from "react-cookie";
 import { LiveChatLoaderProvider, Messenger } from "react-live-chat-loader";
 import { connect } from "react-redux";
-import { Route } from "react-router-dom";
+import Route from "react-router-dom/Route";
 import "./App.css";
 import AlertTemplate from "./components/alert/alert.component.jsx";
-import { compose } from "redux";
 import Pace from "./components/customs/pace/pace.js";
 import "./configuration/i18n";
 import {
@@ -22,14 +19,23 @@ import { setCurrentUser } from "./redux/user/user.actions";
 import { setI18n } from "./redux/i18n/i18n.actions";
 import Routes from "./Routes";
 import theme from "./theme";
-import { ThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import ScrollTop from "./components/scroll-top/scroll-top.component.jsx";
 import LoaderSpinners from "./components/loader-spinners/loader-spinners.jsx";
-import { withTranslation } from 'react-i18next';
-const Footer = lazy(() => import("./layouts/footer/footer.component.jsx"));
-const Header = lazy(() => import("./layouts/header/header.component.jsx"));
+import { withTranslation } from "react-i18next";
+import loadable from "react-loadable";
+// const Footer = lazy(() => import("./layouts/footer/footer.component.jsx"));
+// const Header = lazy(() => import("./layouts/header/header.component.jsx"));
+const Footer = loadable({
+  loader: () => import("./layouts/footer/footer.component.jsx"),
+  loading: () => null,
+});
+const Header = loadable({
+  loader: () => import("./layouts/header/header.component.jsx"),
+  loading: () => null,
+});
 const options = {
   timeout: 3000,
 };
@@ -37,9 +43,6 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
   unsubscribeFromAnnounceText = null;
   unsubscribeFromMaintenanceStatus = null;
-  static propTypes = {
-    cookies: instanceOf(Cookies).isRequired,
-  };
 
   constructor(props) {
     super(props);
@@ -104,14 +107,13 @@ class App extends React.Component {
                 </div>
               }
             >
-              {/* <CookieBanner /> */}
               <div id="back-to-top-anchor"></div>
               <Header />
               <Routes currentUser={this.props.currentUser} />
               <Footer />
               <Announcement
                 title={
-                  <Typography variant="h7" component="h2" gutterBottom>
+                  <Typography variant="h5" gutterBottom>
                     {"ประกาศจากทางเว็ปไซต์"}
                   </Typography>
                 }
@@ -121,7 +123,7 @@ class App extends React.Component {
                   </Typography>
                 }
                 imageSource="https://firebasestorage.googleapis.com/v0/b/bfproperty.appspot.com/o/logo-small.png?alt=media&token=df545452-df29-4696-b1ab-2df5c120eb36"
-                daysToLive={this.state.day}
+                // daysToLive={this.state.day}
                 secondsBeforeBannerShows={3}
                 closeIconSize={10}
               />
@@ -164,7 +166,8 @@ const mapStateToProps = ({ user, language }) => ({
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
   setI18n: (lang) => dispatch(setI18n(lang)),
-  
 });
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(App));
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withTranslation()(App));

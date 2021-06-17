@@ -18,7 +18,7 @@ import Menu from "@material-ui/core/Menu";
 import SortIcon from "@material-ui/icons/Sort";
 import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
-
+import { withRouter } from "react-router-dom";
 import Box from "@material-ui/core/Box";
 class Listproperty extends React.Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class Listproperty extends React.Component {
     });
   }
   componentWillMount() {
-    if (window.location.pathname !== "/seach-result") {
+    if (this.props.location.pathname !== "/seach-result") {
       this.setState({
         property: this.props.property,
         previousProperty: this.props.property,
@@ -46,7 +46,7 @@ class Listproperty extends React.Component {
     }
   }
   componentDidMount() {
-    if (window.location.pathname === "/seach-result") {
+    if (this.props.location.pathname === "/seach-result") {
       const {
         seachkey,
         type,
@@ -258,7 +258,7 @@ class Listproperty extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (window.location.pathname === "/seach-result") {
+    if (this.props.location.pathname === "/seach-result") {
       const {
         seachkey,
         type,
@@ -291,14 +291,13 @@ class Listproperty extends React.Component {
   }
   render() {
     const { property, currentPage, propertyPerPage, anchorEl } = this.state;
-    const { currentUser, alert } = this.props;
+    const { currentUser, alert, location } = this.props;
     const { name } = "";
     const indexOfLastTodo = currentPage * propertyPerPage;
     const indexOfFirstTodo = indexOfLastTodo - propertyPerPage;
     const currentProperty = property.slice(indexOfFirstTodo, indexOfLastTodo);
     const { t } = this.props;
     const pageNumbers = [];
-
     for (let i = 1; i <= Math.ceil(property.length / propertyPerPage); i++) {
       pageNumbers.push(i);
     }
@@ -387,7 +386,7 @@ class Listproperty extends React.Component {
             alert.success(t("alertaddfavoriteproperty"));
           } else {
             updateFavorites(favorite, event);
-            if (window.location.pathname === "/my-favorite") {
+            if (this.props.location.pathname === "/my-favorite") {
               this.setState({
                 property: property.filter(
                   (e) => e.id !== event.currentTarget.value
@@ -449,19 +448,19 @@ class Listproperty extends React.Component {
         <Grid item xs={6} sm={3}>
           {(() => {
             <React.Fragment></React.Fragment>;
-            if (window.location.pathname === "/my-property") {
+            if (location.pathname === "/my-property") {
               return (
                 <Typography variant="h5">
                   {t("myproperty.label")} {property.length} {t("list.label")}
                 </Typography>
               );
-            } else if (window.location.pathname === "/my-favorite") {
+            } else if (location.pathname === "/my-favorite") {
               return (
                 <Typography variant="h5">
                   {t("myfavorite.label")} {property.length} {t("list.label")}
                 </Typography>
               );
-            } else if (window.location.pathname === "/seach-result") {
+            } else if (location.pathname === "/seach-result") {
               return (
                 <Typography variant="h5">
                   {t("seachresult.label")} {property.length} {t("list.label")}
@@ -469,7 +468,7 @@ class Listproperty extends React.Component {
               );
             }
           })()}
-          {property.length > 0 &&window.location.pathname !== "/"? (
+          {property.length > 0 && this.props.location.pathname !== "/" ? (
             <Typography variant="subtitle1">
               {t("page.label")} {currentPage} / {pageNumbers.length}
             </Typography>
@@ -477,8 +476,7 @@ class Listproperty extends React.Component {
         </Grid>
 
         <Box display="flex" flexDirection="row-reverse" alignItems="center">
-  
-          {window.location.pathname !== "/" ? (
+          {location.pathname !== "/" ? (
             <Box p={2}>
               <div>
                 <Button
@@ -516,7 +514,7 @@ class Listproperty extends React.Component {
               </div>
             </Box>
           ) : null}
-                  {window.location.pathname === "/my-property" ? (
+          {location.pathname === "/my-property" ? (
             <Box p={3}>
               <TextField
                 id="outlined-basic"
@@ -550,23 +548,23 @@ class Listproperty extends React.Component {
             justify="center"
             alignItems="center"
             style={{
-              padding: window.location.pathname === "/" ? "10%" : "15%",
+              padding: location.pathname === "/" ? "10%" : "15%",
             }}
           >
             <Typography variant="h5">
               {t(
-                window.location.pathname === "/my-property"
+                location.pathname === "/my-property"
                   ? "mypropertyempty.label"
-                  : window.location.pathname === "/seach-result"
+                  : location.pathname === "/seach-result"
                   ? "seachresultemty.label"
-                  : window.location.pathname === "/"
+                  : location.pathname === "/"
                   ? "ไม่มีรายการบ้านแนะนำ"
                   : "myfavoriteempty.label"
               )}
             </Typography>
           </Grid>
         )}
-        {window.location.pathname !== "/" ? (
+        {location.pathname !== "/" ? (
           <Pagination
             count={pageNumbers.length}
             page={currentPage}
@@ -591,5 +589,6 @@ const mapStateToProps = (state) => ({
 export default compose(
   connect(mapStateToProps),
   withTranslation(),
+  withRouter,
   withAlert()
 )(Listproperty);

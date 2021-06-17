@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { isWebpSupported } from "react-image-webp/dist/utils";
 import { Link } from "react-router-dom";
-
+import { useLocation } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
   image: {
     position: "relative",
@@ -88,6 +88,7 @@ const HtmlTooltip = withStyles((theme) => ({
 export default function Buttonbase(props) {
   const classes = useStyles();
   const { handleNext } = props;
+  const location = useLocation();
   return (
     <React.Fragment>
       {props.images.map((image, index) => (
@@ -100,7 +101,7 @@ export default function Buttonbase(props) {
           }
           key={index}
         >
-          {window.location.pathname === "/" ? (
+          {location.pathname === "/" ? (
             <ButtonBase
               focusRipple
               key={image.title}

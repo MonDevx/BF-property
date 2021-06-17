@@ -37,10 +37,16 @@ This project is part of the subjects Siminar, Senior Project 1, Senior Project 2
 Several quick start options are available:
 - Clone the repo: `git clone https://github.com/pimdotzazaza43/BF-property.git`
 - Install with yarn install
-- yarn start http://localhost:3000/
+- Click NPM SCRIPTS dev http://localhost:8070
 
-
-
+NPM SCRIPTS
+- build webpack 
+- start webpack
+- test
+- eject
+- deploy
+- check
+- deploy test
 ## :pushpin: Copyright and license
 
 Code and documentation copyright 2020  Code released under the [MIT License](https://github.com/pimdotzazaza43/BF-property/blob/master/LICENSE)

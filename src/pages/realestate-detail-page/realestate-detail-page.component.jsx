@@ -6,7 +6,8 @@ import Img from "../../components/section-property-detail/section-img-property-d
 import Bar from "../../components/section-property-detail/section-bar-property-detail.component.jsx";
 import LoaderSpinners from "../../components/loader-spinners/loader-spinners.jsx";
 import { getInitialProps } from "react-i18next";
-
+import { Helmet } from "react-helmet";
+import { useStaticQuery, graphql } from "gatsby";
 class propertyDetailpage extends React.Component {
   constructor(props) {
     super(props);
@@ -23,12 +24,10 @@ class propertyDetailpage extends React.Component {
         `https://us-central1-bfproperty.cloudfunctions.net/webApi/api/v1/realestatedetail/${this.props.match.params.name}`
       )
       .then((result1) => {
-
         this.setState(
           {
             property: result1.data.data,
             id: result1.data.id,
-
           },
           () => {
             axios({
@@ -61,13 +60,9 @@ class propertyDetailpage extends React.Component {
   render() {
     const { isLoading, property, id } = this.state;
     if (isLoading) {
-      return (
-        <div style={{ margin: "100%" }}>
-          <LoaderSpinners />
-        </div>
-      );
+      return <LoaderSpinners />;
     }
-
+    const url = window.location.href;
     const timeStampDate = property.createat;
     const dateInMillis = timeStampDate._seconds * 1000;
 
@@ -78,7 +73,32 @@ class propertyDetailpage extends React.Component {
     return (
       <div>
         <React.Fragment>
-          <Bar typeproperty={property.idtype} status={property.status} time={date} />
+          <Helmet
+            title={property.name}
+            meta={[
+              {
+                property: `og:title`,
+                content:
+                  "BF-property",
+              },
+              {
+                property: `og:type`,
+                content: `website`,
+              },
+              {
+                property: `og:image`,
+                // You should ideally replace the hardcoded URL below with a value you set
+                // in your gatsby-config.js file.  And import all shared site metadata into
+                // this component with the useStaticQuery hook.
+                content: `${url}/${property.urlimginside[0]}`,
+              },
+            ]}
+          />
+          <Bar
+            typeproperty={property.idtype}
+            status={property.status}
+            time={date}
+          />
           <Img
             name={property.name}
             typeproperty={property.idtype}

@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import React, { useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 function Checkboxform(props) {
+  /* TODO  FIX LIST ITEM TO SUPPORT MULTIPLE LANGUAGES  */
   const { formValues, setFormValues } = props;
   const [items, setitems] = React.useState([
     {
@@ -100,6 +101,7 @@ function Checkboxform(props) {
           {t('facilityformtopic1.label')}
         </Typography>
       </Grid>
+      
       {items.map((item,index) => (
         //Store the the student id in the value of each check box
 

@@ -19,7 +19,7 @@ import NumberFormat from "react-number-format";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import './styles.css'
+import "./styles.css";
 const thai = require("thai-data");
 const useStyles = makeStyles((theme) => ({
   buttons: {
@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
-
   return (
     <NumberFormat
       {...other}
@@ -61,7 +60,9 @@ function NumberFormatCustom(props) {
     />
   );
 }
+
 export default function InformationForm(props) {
+  /* TODO  CLEAN CODE  */
   const [zipCode, setZipCode] = React.useState("");
   const [subDistrict, setSubDistrict] = React.useState(Array);
   const [subDistrictSelect, setSubDistrictSelect] = React.useState("");
@@ -174,7 +175,6 @@ export default function InformationForm(props) {
     const list = [...inputNearbyplaces];
     list[index][name] = value;
     setInputNearbyplaces(list);
-    
   };
 
   const handleRemoveClick = (index) => {
@@ -191,7 +191,7 @@ export default function InformationForm(props) {
   };
   React.useEffect(() => {
     setFormValues({ ...formValues, nearbyplaces: inputNearbyplaces });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputNearbyplaces]);
   return (
     <React.Fragment>
@@ -235,15 +235,14 @@ export default function InformationForm(props) {
               <TextField
                 onChange={handleChange}
                 value={formValues.projectname}
-                label={t('projectname.label')}
+                label={t("projectname.label")}
                 id="projectname"
                 name="projectname"
                 fullWidth
                 inputProps={{
                   maxLength: 100,
                 }}
-                helperText={error === true ? 
-                  t('projectnameerror.label') : ""}
+                helperText={error === true ? t("projectnameerror.label") : ""}
                 error={error}
                 onBlur={handleerror}
               />
@@ -398,7 +397,9 @@ export default function InformationForm(props) {
             <TextField
               name="numberoffloors"
               label={
-                formValues.idtype === 3 ? t("propertyfloorscondo.label") : t("propertyfloors.label")
+                formValues.idtype === 3
+                  ? t("propertyfloorscondo.label")
+                  : t("propertyfloors.label")
               }
               type="number"
               value={formValues.numberoffloors}
@@ -610,14 +611,13 @@ export default function InformationForm(props) {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12}>
-          <div
-           className="App"
-          >
-            <SimpleMDEReact
-              id="detail"
-              onChange={handleDetailChange}
-              value={formValues.detail}
-            /></div>
+            <div className="App">
+              <SimpleMDEReact
+                id="detail"
+                onChange={handleDetailChange}
+                value={formValues.detail}
+              />
+            </div>
           </Grid>
         </Grid>
         <Grid

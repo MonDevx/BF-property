@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.white,
   },
 }));
-
+/* TODO  CHAGNE UI NAVBAR MOBILE AND ADD BUTTON CHAGNE LANGUAGES SIDEBAR */
 function Header(props) {
   const { t, i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState(false);
@@ -120,6 +120,7 @@ function Header(props) {
     setSelectedIndex(index);
     i18n.changeLanguage(langoptions[index]);
     props.setI18n(langoptions[index]);
+    setAnchorEl(null);
   };
   const handleMenuItemClickCurrency = (event, index) => {
     props.setCurrency(langoptions[index]);
@@ -140,9 +141,10 @@ function Header(props) {
     } else {
       setAnchorE3(event.currentTarget);
     }
+
   };
 
-  const handleClose = (event) => {
+  const handleClose = () => {
     setAnchorEl(null);
     setAnchorE2(null);
     setAnchorE3(null);

@@ -173,6 +173,7 @@ class Footer extends React.Component {
               >
                 {t("aboutdetail.label")}
               </Typography>
+              {/* TODO  FIX FACEBOOK PAGE NOT LOAD */}
               <div
                 className="fb-page"
                 data-href="https://www.facebook.com/BFproperty-103720534694768"

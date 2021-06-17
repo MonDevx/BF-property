@@ -32,7 +32,8 @@ import {
   BiTrash,
   BiTimeFive,
 } from "react-icons/bi";
-import axios from "axios";
+import { useLocation } from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -71,6 +72,8 @@ function CardProperty(props) {
   const { t } = useTranslation();
   const { currentProperty, currentUser, currency } = props;
   const [open, setOpen] = React.useState(false);
+  const location = useLocation();
+
   var property = [];
   const [deletepropertyvalue, Setdeletepropertyvalue] = React.useState({});
   const handleClickOpen = (id, index) => {
@@ -260,7 +263,7 @@ function CardProperty(props) {
                     <ChipStatus status={detail.status} />
                   </Grid>
                   <div style={{ marginLeft: "auto" }}>
-                    {window.location.pathname !== "/my-property" ? (
+                    {location.pathname !== "/my-property" ? (
                       <IconButton
                         value={detail.id}
                         aria-label="add to favorites"

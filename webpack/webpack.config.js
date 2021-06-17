@@ -5,12 +5,10 @@ const dotenv = require("dotenv");
 const CopyPlugin = require("copy-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
-// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-// const WebpackShellPlugin = require("webpack-shell-plugin");
-// const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const WorkboxPlugin = require("workbox-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
   entry: path.resolve(__dirname, "..", "./src/index.js"),
   output: {
@@ -69,23 +67,23 @@ module.exports = {
           to: path.resolve(__dirname, "..", "./dist/assets"),
         },
         {
-          from: path.resolve(__dirname, "..", "./public/robots.txt"),
+          from: path.resolve(__dirname, "..", "./src/assets/robots.txt"),
           to: path.resolve(__dirname, "..", "./dist"),
         },
         {
-          from: path.resolve(__dirname, "..", "./public/manifest.json"),
+          from: path.resolve(__dirname, "..", "./src/assets/manifest.json"),
           to: path.resolve(__dirname, "..", "./dist"),
         },
         {
-          from: path.resolve(__dirname, "..", "./public/favicon.ico"),
+          from: path.resolve(__dirname, "..", "./src/assets/favicon.ico"),
           to: path.resolve(__dirname, "..", "./dist"),
         },
         {
-          from: path.resolve(__dirname, "..", "./public/logo32.png"),
+          from: path.resolve(__dirname, "..", "./src/assets/logo32.png"),
           to: path.resolve(__dirname, "..", "./dist"),
         },
         {
-          from: path.resolve(__dirname, "..", "./public/logo192.png"),
+          from: path.resolve(__dirname, "..", "./src/assets/logo192.png"),
           to: path.resolve(__dirname, "..", "./dist"),
         },
       ],
@@ -100,17 +98,22 @@ module.exports = {
       // gzip js and css
       test: /\.(js|css)/,
     }),
-    new UglifyJsPlugin(), // uglify js
-    // new WebpackShellPlugin({
-    //   onBuildStart: ['echo "Starting postcss command"'],
-    //   onBuildEnd: ["postcss --dir wwwroot/dist wwwroot/dist/*.css"], // uglify css using postcss
-    // }),
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: {
+          drop_console: true,
+        },
+      },
+    }),
+    new webpack.ProgressPlugin(),
+    new CleanWebpackPlugin(),
   ],
   devServer: {
-    port: 8080,
-    historyApiFallback: true,
+    port: 8070,
     inline: true,
-    hot: true
+    historyApiFallback: true,
+    contentBase: "./",
+    hot: true,
   },
   module: {
     rules: [
