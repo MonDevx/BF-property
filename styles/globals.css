@@ -1,0 +1,16 @@
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+@font-face {
+  font-family: "prompt";
+  src: url("/fonts/prompt/Prompt-Regular.ttf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+.App {
+  font-family: prompt;
+}

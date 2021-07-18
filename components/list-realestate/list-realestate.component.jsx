@@ -1,0 +1,596 @@
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Pagination from "@material-ui/lab/Pagination";
+import React from "react";
+import { withTranslation } from "next-i18next";
+import { firestorage, firestore } from "../../firebase.utils";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { withAlert } from "react-alert";
+import Cardproperty from "../card-realestate/card-realestate.component.jsx";
+import axios from "axios";
+import { auth } from "../../firebase.utils.js";
+import * as _ from "lodash";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import SortIcon from "@material-ui/icons/Sort";
+import SearchIcon from "@material-ui/icons/Search";
+import InputAdornment from "@material-ui/core/InputAdornment";
+// import { withRouter } from "react-router-dom";
+import { withRouter } from 'next/router'
+import Box from "@material-ui/core/Box";
+class Listproperty extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      property: [],
+      previousProperty: [],
+      currentPage: 1,
+      propertyPerPage: 8,
+      anchorEl: null,
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick(event, value) {
+    this.setState({
+      currentPage: Number(value),
+    });
+  }
+  componentWillMount() {
+    if (this.props.router.pathname !== "/seach-result") {
+      this.setState({
+        property: this.props.property,
+        previousProperty: this.props.property,
+      });
+    }
+  }
+  componentDidMount() {
+    if (this.props.router.pathname === "/seach-result") {
+      const {
+        seachkey,
+        type,
+        province,
+        price,
+        room,
+        family,
+        bath,
+        car,
+        size,
+        check,
+      } = this.props.value;
+      this.seach(
+        seachkey,
+        type,
+        province,
+        price,
+        room,
+        family,
+        bath,
+        car,
+        size,
+        check
+      );
+    }
+  }
+  seach(seachkey, type, province, price, room, family, bath, car, size, check) {
+    const { t } = this.props;
+    var ref;
+    var min, max;
+    var sizemin, sizemax;
+
+    if (price === 1) {
+      min = 500000;
+      max = 1000000;
+    } else if (price === 2) {
+      min = 1000000;
+      max = 5000000;
+    } else if (price === 3) {
+      min = 5000000;
+      max = 10000000;
+    } else if (price === 4) {
+      min = 10000000;
+      max = 100000000000;
+    }
+    if (size === 0) {
+      sizemin = 50;
+      sizemax = 900;
+    } else if (size === 1) {
+      sizemin = 50;
+      sizemax = 150;
+    } else if (size === 2) {
+      sizemin = 150;
+      sizemax = 300;
+    } else if (size === 3) {
+      sizemin = 300;
+      sizemax = 450;
+    } else if (size === 4) {
+      sizemin = 450;
+      sizemax = 900;
+    }
+
+    if (seachkey) {
+      if (seachkey === 1 || seachkey === 2) {
+        ref = firestore.collection("property").where("idtype", "==", seachkey);
+      } else if (seachkey === "view") {
+        ref = firestore.collection("property").orderBy("countview", "desc");
+      } else if (seachkey === "new") {
+        ref = firestore.collection("property").orderBy("CreateAt", "desc");
+      } else {
+        ref = firestore
+          .collection("property")
+          .where("province", "==", seachkey);
+      }
+    } else if (
+      type === 0 &&
+      province === "" &&
+      price === 0 &&
+      room === 0 &&
+      family === 0 &&
+      bath === 0 &&
+      car === 0 &&
+      size === 0 &&
+      check === true
+    ) {
+      ref = firestore.collection("property");
+    } else {
+      ref = firestore.collection("property");
+
+      if (type !== 0) {
+        ref = ref.where("idtype", "==", type);
+      }
+
+      if (province !== "") {
+        ref = ref.where("province", "==", province);
+      }
+
+      if (room !== 0) {
+        ref = ref.where("numberofbedrooms", "==", room);
+      }
+      if (family) {
+        if (family !== 0) {
+          ref = ref.where("sizefamily", "==", family);
+        }
+      }
+      if (bath) {
+        if (bath !== 0) {
+          ref = ref.where("numberofbathrooms", "==", bath);
+        }
+      }
+
+      if (car) {
+        if (car !== 0) {
+          ref = ref.where("numberofparkingspace", "==", car);
+        }
+      }
+      if (check === false) {
+        ref = ref.where("furniture", "==", [
+          {
+            name: "เครื่องปรับอากาศ",
+            checked: false,
+          },
+          {
+            name: "พัดลม",
+            checked: false,
+          },
+          {
+            name: "เครื่องฟอกอากาศ",
+            checked: false,
+          },
+          {
+            name: "เครื่องทำน้ำอุ่น",
+            checked: false,
+          },
+          {
+            name: "ตู้เย็น",
+            checked: false,
+          },
+
+          {
+            name: "ตู้เสื้อผ้า",
+            checked: false,
+          },
+          {
+            name: "ชุดโต๊ะเก้าอี้",
+            checked: false,
+          },
+          {
+            name: "โซฟา",
+            checked: false,
+          },
+          {
+            name: "เตียง",
+            checked: false,
+          },
+        ]);
+      }
+      if (price) {
+        if (price !== 4) {
+          ref = ref.orderBy("price").startAt(min).endAt(max);
+        } else {
+          ref = ref.where("price", ">=", min);
+        }
+      }
+    }
+
+    ref.get().then((querySnapshot) => {
+      var property = [];
+      querySnapshot.forEach((doc) => {
+        if (doc.data().status !== 4) {
+          let dict = { id: doc.id, ...doc.data() };
+          property.push(dict);
+        }
+      });
+
+      var property2 = [];
+
+      if (size !== 0 && size) {
+        for (var i in property) {
+          if (
+            property[i].propertysize >= sizemin &&
+            property[i].propertysize <= sizemax
+          ) {
+            property2.push(property[i]);
+          }
+        }
+
+        this.setState({
+          property: property2,
+        });
+      } else {
+        this.setState({
+          property: property,
+        });
+      }
+
+      if (this.state.property.length === 0) {
+        this.props.alert.error(t("list-realestate:list-realestate:seach.error"));
+      } else {
+        this.props.alert.success(
+          t("list-realestate:seach.listtotal") +
+            " " +
+            this.state.property.length +
+            " " +
+            t("list-realestate:list.label")
+        );
+      }
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.router.pathname === "/seach-result") {
+      const {
+        seachkey,
+        type,
+        province,
+        price,
+        room,
+        family,
+        bath,
+        car,
+        size,
+        check,
+      } = this.props.value;
+      if (
+        JSON.stringify(this.props.value) !== JSON.stringify(prevProps.value)
+      ) {
+        this.seach(
+          seachkey,
+          type,
+          province,
+          price,
+          room,
+          family,
+          bath,
+          car,
+          size,
+          check
+        );
+      }
+    }
+  }
+  render() {
+    const { property, currentPage, propertyPerPage, anchorEl } = this.state;
+    const { currentUser, alert, location } = this.props;
+    const { name } = "";
+    const indexOfLastTodo = currentPage * propertyPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - propertyPerPage;
+    const currentProperty = property.slice(indexOfFirstTodo, indexOfLastTodo);
+    const { t } = this.props;
+    const pageNumbers = [];
+
+    for (let i = 1; i <= Math.ceil(property.length / propertyPerPage); i++) {
+      pageNumbers.push(i);
+    }
+    const handleMenuClose = () => {
+      this.setState({
+        isMenuOpen: false,
+        anchorEl: null,
+      });
+    };
+
+    const handleMenuOpen = (event) => {
+      this.setState({
+        isMenuOpen: true,
+        anchorEl: event.currentTarget,
+      });
+    };
+    const updateFavorites = (favorite, event) => {
+      auth.currentUser
+        .getIdToken(/* forceRefresh */ true)
+        .then(function (idToken) {
+          axios({
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+            },
+            url:
+              "https://us-central1-bfproperty.cloudfunctions.net/webApi/api/v1/usersupdatefavorite",
+            method: "PUT",
+            data: {
+              favorite: favorite,
+            },
+          });
+        })
+        .catch(function (error) {
+          alert.error(error);
+        });
+    };
+    const sortproperty = (event) => {
+      var sortProperty;
+      if (event.target.value === 1) {
+        sortProperty = _.sortBy(property, "price");
+      } else if (event.target.value === 2) {
+        sortProperty = _.sortBy(property, "price").reverse();
+      } else if (event.target.value === 3) {
+        sortProperty = _.sortBy(property, "name");
+      } else {
+        sortProperty = _.sortBy(property, "name").reverse();
+      }
+      this.setState({
+        property: sortProperty,
+      });
+      handleMenuClose();
+    };
+    const findproperty = (event) => {
+      event.persist();
+      if (event.target.value !== "") {
+        this.setState({
+          property: property.filter((item) =>
+            item.name.includes(event.target.value)
+          ),
+        });
+      } else {
+        this.setState((state) => ({
+          property: state.previousProperty,
+        }));
+      }
+    };
+    const handleFavorite = (event) => {
+      event.persist();
+      try {
+        var favorite = currentUser.favorite;
+        var check = false;
+        if (favorite.length === 0) {
+          favorite.push(event.currentTarget.value);
+          updateFavorites(favorite);
+          alert.success(t("list-realestate:alertaddfavoriteproperty"));
+        } else {
+          favorite.forEach((element, index) => {
+            if (element === event.currentTarget.value) {
+              check = true;
+              favorite.splice(index, 1);
+            }
+          });
+          if (check === false) {
+            favorite.push(event.currentTarget.value);
+            updateFavorites(favorite);
+            alert.success(t("list-realestate:alertaddfavoriteproperty"));
+          } else {
+            updateFavorites(favorite, event);
+            if (this.props. router=== "/my-favorite") {
+              this.setState({
+                property: property.filter(
+                  (e) => e.id !== event.currentTarget.value
+                ),
+              });
+            }
+            alert.success(t("list-realestate:alertdeletefavoriteproperty"));
+          }
+        }
+      } catch (e) {
+        if (e) {
+          alert.error(t("list-realestate:alertaddfavoritepropertyerror"));
+        }
+        // if (e !== BreakException) throw e;
+      }
+    };
+    const deleteproperty = (id, urlin, urlout) => {
+      // eslint-disable-next-line array-callback-return
+      Object.entries(urlin).map(([keyName, keyIndex]) => {
+        var delete_imgtRef = firestorage.refFromURL(urlin[keyName].original);
+        delete_imgtRef
+          .delete()
+          .then(function () {})
+          .catch(function (error) {
+            alert.error("delete error", error);
+          });
+      });
+      // eslint-disable-next-line array-callback-return
+      Object.entries(urlout).map(([keyName, keyIndex]) => {
+        var delete_imgtRef = firestorage.refFromURL(urlout[keyName].original);
+
+        delete_imgtRef
+          .delete()
+          .then(function () {})
+          .catch(function (error) {
+            alert.error("delete error", error);
+          });
+      });
+
+      var delete_inforef = firestore.collection("property").doc(id);
+      delete_inforef
+        .delete()
+        .then(function () {})
+        .catch(function (error) {
+          console.log("delete error", error);
+        });
+      this.setState({
+        property: property.filter((e) => e.id !== id),
+      });
+      alert.success(t("list-realestate:alertdeleteproperty"));
+    };
+    return (
+      <Grid
+        container
+        justify="space-between"
+        alignItems="center"
+        style={{ paddingTop: "2%", paddingBottom: "2%" }}
+      >
+        <Grid item xs={6} sm={3}>
+          {(() => {
+            <React.Fragment></React.Fragment>;
+            if (this.props.router.pathname === "/my-property") {
+              return (
+                <Typography variant="h5">
+                  {t("list-realestate:myproperty.label")} {property.length} {t("list-realestate:list.label")}
+                </Typography>
+              );
+            } else if (this.props.router.pathname === "/my-favorite") {
+              return (
+                <Typography variant="h5">
+                  {t("list-realestate:myfavorite.label")} {property.length} {t("list-realestate:list.label")}
+                </Typography>
+              );
+            } else if (this.props.router.pathname === "/seach-result") {
+              return (
+                <Typography variant="h5">
+                  {t("list-realestate:seachresult.label")} {property.length} {t("list-realestate:list.label")}
+                </Typography>
+              );
+            }
+          })()}
+          {property.length > 0 && this.props.this.props.router.pathname !== "/" ? (
+            <Typography variant="subtitle1">
+              {t("list-realestate:page.label")} {currentPage} / {pageNumbers.length}
+            </Typography>
+          ) : null}
+        </Grid>
+
+        <Box display="flex" flexDirection="row-reverse" alignItems="center">
+          {this.props.router.pathname !== "/" ? (
+            <Box p={2}>
+              <div>
+                <Button
+                  onClick={handleMenuOpen}
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  startIcon={<SortIcon />}
+                >
+                  {t("list-realestate:sort.label")}
+                </Button>
+
+                <Menu
+                  id="simple-menu"
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                  anchorEl={anchorEl}
+                  getContentAnchorEl={null}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  transformOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                  <MenuItem value={1} onClick={sortproperty}>
+                    {t("list-realestate:sortmenu1.label")}
+                  </MenuItem>
+                  <MenuItem value={2} onClick={sortproperty}>
+                    {t("list-realestate:sortmenu2.label")}
+                  </MenuItem>
+                  <MenuItem value={3} onClick={sortproperty}>
+                    {t("list-realestate:sortmenu3.label")}
+                  </MenuItem>
+                  <MenuItem value={4} onClick={sortproperty}>
+                    {t("list-realestate:sortmenu4.label")}
+                  </MenuItem>
+                </Menu>
+              </div>
+            </Box>
+          ) : null}
+          {this.props.router.pathname === "/my-property" ? (
+            <Box p={3}>
+              <TextField
+                id="outlined-basic"
+                label={t("list-realestate:seachinput.label")}
+                variant="outlined"
+                onChange={findproperty}
+                value={name}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
+          ) : null}
+        </Box>
+        {property.length > 0 ? (
+          <React.Fragment>
+            <Cardproperty
+              currentProperty={currentProperty}
+              onhandleFavorite={handleFavorite}
+              deleteproperty={deleteproperty}
+            />
+          </React.Fragment>
+        ) : (
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            style={{
+              padding: this.props.router.pathname === "/" ? "10%" : "15%",
+            }}
+          >
+            <Typography variant="h5">
+              {t(
+                this.props.router.pathname === "/my-property"
+                  ? "list-realestate:mypropertyempty.label"
+                  : this.props.router.pathname === "/seach-result"
+                  ? "list-realestate:seachresultemty.label"
+                  : this.props.router.pathname === "/"
+                  ? "list-realestate:requireempty.label"
+                  : "list-realestate:myfavoriteempty.label"
+              )}
+            </Typography>
+          </Grid>
+        )}
+        {this.props.router.pathname !== "/" ? (
+          <Pagination
+            count={pageNumbers.length}
+            page={currentPage}
+            size="large"
+            id={currentPage}
+            onChange={this.handleClick}
+            showFirstButton={property.length > 0}
+            showLastButton={property.length > 0}
+            style={{ paddingTop: "2%" }}
+            hideNextButton={property.length === 0}
+            hidePrevButton={property.length === 0}
+          />
+        ) : null}
+      </Grid>
+    );
+  }
+}
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+export default compose(
+  connect(mapStateToProps),
+  withTranslation(),
+  withRouter,
+  withAlert()
+)(Listproperty);

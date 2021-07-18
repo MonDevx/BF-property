@@ -1,15 +1,21 @@
 {
   "hosting": {
-    "public": "./dist",
+    "public": "public",
+    "cleanUrls": true,
     "ignore": [
         "firebase.json",
+        "firbease-debug.log",
         "**/.*",
-        "**/node_modules/**"
+        "**/node_modules/**",
+        "components/**",
+        "pages/**",
+        "public/**",
+        "readme.md"
     ],
     "rewrites": [
         {
             "source": "**",
-            "destination": "/index.html"
+            "function": "nextjs-server"
         }
     ]
 }
