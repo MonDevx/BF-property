@@ -49,10 +49,9 @@ export default function EditinformationForm(props) {
   const classes = useStyles();
   const [error, setError] = React.useState(Boolean);
   const { formValues, setFormValues } = props;
-  const { t } = useTranslation();
+  const { t } = useTranslation(); 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     if (
       name === "price" ||
       name === "propertysize" ||

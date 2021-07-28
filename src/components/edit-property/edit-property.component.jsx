@@ -84,8 +84,8 @@ export default function Editproperty(props) {
             </Typography>
           </Breadcrumbs>
         </Grid>
-      {/* TODO  FUNCTION UPDATE IMAGE  */}
-       {/* TODO  FUNCTION UPDATE FIRST SHOW IMAGE  */}
+        {/* TODO  FUNCTION UPDATE IMAGE  */}
+        {/* TODO  FUNCTION UPDATE FIRST SHOW IMAGE  */}
         {/* <Grid item xs={3}>
           <Button
             startIcon={<ImageIcon />}
@@ -104,7 +104,7 @@ export default function Editproperty(props) {
           formValues={formValues}
           setFormValues={setFormValues}
         />
-
+        
         <EditinformationaddressForm
           formValues={formValues}
           setFormValues={setFormValues}

@@ -7,7 +7,7 @@ import Bar from "../../components/section-property-detail/section-bar-property-d
 import LoaderSpinners from "../../components/loader-spinners/loader-spinners.jsx";
 import { getInitialProps } from "react-i18next";
 import { Helmet } from "react-helmet";
-import { useStaticQuery, graphql } from "gatsby";
+
 class propertyDetailpage extends React.Component {
   constructor(props) {
     super(props);
@@ -73,7 +73,7 @@ class propertyDetailpage extends React.Component {
     return (
       <div>
         <React.Fragment>
-          <Helmet
+          {/* <Helmet
             title={property.name}
             meta={[
               {
@@ -93,7 +93,7 @@ class propertyDetailpage extends React.Component {
                 content: `${url}/${property.urlimginside[0]}`,
               },
             ]}
-          />
+          /> */}
           <Bar
             typeproperty={property.idtype}
             status={property.status}

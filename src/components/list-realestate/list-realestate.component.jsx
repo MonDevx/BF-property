@@ -61,14 +61,14 @@ class Listproperty extends React.Component {
       } = this.props.value;
       this.seach(
         seachkey,
-        type,
+        Number(type),
         province,
-        price,
-        room,
-        family,
-        bath,
-        car,
-        size,
+        Number(price),
+        Number(room),
+        Number(family),
+        Number(bath),
+        Number(car),
+        Number(size),
         check
       );
     }
@@ -76,185 +76,172 @@ class Listproperty extends React.Component {
   seach(seachkey, type, province, price, room, family, bath, car, size, check) {
     const { t } = this.props;
     var ref;
-    var min, max;
     var sizemin, sizemax;
 
-    if (price === 1) {
-      min = 500000;
-      max = 1000000;
-    } else if (price === 2) {
-      min = 1000000;
-      max = 5000000;
-    } else if (price === 3) {
-      min = 5000000;
-      max = 10000000;
-    } else if (price === 4) {
-      min = 10000000;
-      max = 100000000000;
-    }
-    if (size === 0) {
-      sizemin = 50;
-      sizemax = 900;
-    } else if (size === 1) {
-      sizemin = 50;
-      sizemax = 150;
-    } else if (size === 2) {
-      sizemin = 150;
-      sizemax = 300;
-    } else if (size === 3) {
-      sizemin = 300;
-      sizemax = 450;
-    } else if (size === 4) {
-      sizemin = 450;
-      sizemax = 900;
-    }
-
-    if (seachkey) {
-      if (seachkey === 1 || seachkey === 2) {
-        ref = firestore.collection("property").where("idtype", "==", seachkey);
-      } else if (seachkey === "view") {
-        ref = firestore.collection("property").orderBy("countview", "desc");
-      } else if (seachkey === "new") {
-        ref = firestore.collection("property").orderBy("CreateAt", "desc");
-      } else {
-        ref = firestore
-          .collection("property")
-          .where("province", "==", seachkey);
-      }
-    } else if (
-      type === 0 &&
-      province === "" &&
-      price === 0 &&
-      room === 0 &&
-      family === 0 &&
-      bath === 0 &&
-      car === 0 &&
-      size === 0 &&
-      check === true
-    ) {
-      ref = firestore.collection("property");
-    } else {
-      ref = firestore.collection("property");
-
-      if (type !== 0) {
-        ref = ref.where("idtype", "==", type);
+    try {
+      if (size === 0) {
+        sizemin = 50;
+        sizemax = 900;
+      } else if (size === 1) {
+        sizemin = 50;
+        sizemax = 150;
+      } else if (size === 2) {
+        sizemin = 150;
+        sizemax = 300;
+      } else if (size === 3) {
+        sizemin = 300;
+        sizemax = 450;
+      } else if (size === 4) {
+        sizemin = 450;
+        sizemax = 900;
       }
 
-      if (province !== "") {
-        ref = ref.where("province", "==", province);
-      }
-
-      if (room !== 0) {
-        ref = ref.where("numberofbedrooms", "==", room);
-      }
-      if (family) {
-        if (family !== 0) {
-          ref = ref.where("sizefamily", "==", family);
-        }
-      }
-      if (bath) {
-        if (bath !== 0) {
-          ref = ref.where("numberofbathrooms", "==", bath);
-        }
-      }
-
-      if (car) {
-        if (car !== 0) {
-          ref = ref.where("numberofparkingspace", "==", car);
-        }
-      }
-      if (check === false) {
-        ref = ref.where("furniture", "==", [
-          {
-            name: "เครื่องปรับอากาศ",
-            checked: false,
-          },
-          {
-            name: "พัดลม",
-            checked: false,
-          },
-          {
-            name: "เครื่องฟอกอากาศ",
-            checked: false,
-          },
-          {
-            name: "เครื่องทำน้ำอุ่น",
-            checked: false,
-          },
-          {
-            name: "ตู้เย็น",
-            checked: false,
-          },
-
-          {
-            name: "ตู้เสื้อผ้า",
-            checked: false,
-          },
-          {
-            name: "ชุดโต๊ะเก้าอี้",
-            checked: false,
-          },
-          {
-            name: "โซฟา",
-            checked: false,
-          },
-          {
-            name: "เตียง",
-            checked: false,
-          },
-        ]);
-      }
-      if (price) {
-        if (price !== 4) {
-          ref = ref.orderBy("price").startAt(min).endAt(max);
+      if (seachkey) {
+        if (seachkey ===  "บ้านเดี่ยว" || seachkey === "บ้านเทาว์เฮาส์") {
+          ref = firestore
+            .collection("property")
+            .where("idtype", "==", seachkey ===  "บ้านเดี่ยว"?1:2);
+        } else if (seachkey === "view") {
+          ref = firestore.collection("property").orderBy("countview", "desc");
+        } else if (seachkey === "new") {
+          ref = firestore.collection("property").orderBy("CreateAt", "desc");
         } else {
-          ref = ref.where("price", ">=", min);
+          ref = firestore
+            .collection("property")
+            .where("province", "==", seachkey);
         }
-      }
-    }
+      } else if (type === 0 && province === "" && price === 0 && room === 0) {
+        // console.log("test 1");
+        ref = firestore.collection("property");
+      } else {
+        // console.log("test 3 "+ type === "0");
+        ref = firestore.collection("property");
 
-    ref.get().then((querySnapshot) => {
-      var property = [];
-      querySnapshot.forEach((doc) => {
-        if (doc.data().status !== 4) {
-          let dict = { id: doc.id, ...doc.data() };
-          property.push(dict);
+        if (type !== 0) {
+          ref = ref.where("idtype", "==", type);
         }
-      });
 
-      var property2 = [];
+        if (province !== "") {
+          ref = ref.where("province", "==", province);
+        }
 
-      if (size !== 0 && size) {
-        for (var i in property) {
-          if (
-            property[i].propertysize >= sizemin &&
-            property[i].propertysize <= sizemax
-          ) {
-            property2.push(property[i]);
+        if (room !== 0) {
+          ref = ref.where("numberofbedrooms", "==", room);
+        }
+        if (family) {
+          if (family !== 0) {
+            ref = ref.where("sizefamily", "==", family);
+          }
+        }
+        if (bath) {
+          if (bath !== 0) {
+            ref = ref.where("numberofbathrooms", "==", bath);
           }
         }
 
-        this.setState({
-          property: property2,
-        });
-      } else {
-        this.setState({
-          property: property,
-        });
+        if (car) {
+          if (car !== 0) {
+            ref = ref.where("numberofparkingspace", "==", car);
+          }
+        }
+        if (check === false) {
+          ref = ref.where("furniture", "==", [
+            {
+              name: "เครื่องปรับอากาศ",
+              checked: false,
+            },
+            {
+              name: "พัดลม",
+              checked: false,
+            },
+            {
+              name: "เครื่องฟอกอากาศ",
+              checked: false,
+            },
+            {
+              name: "เครื่องทำน้ำอุ่น",
+              checked: false,
+            },
+            {
+              name: "ตู้เย็น",
+              checked: false,
+            },
+
+            {
+              name: "ตู้เสื้อผ้า",
+              checked: false,
+            },
+            {
+              name: "ชุดโต๊ะเก้าอี้",
+              checked: false,
+            },
+            {
+              name: "โซฟา",
+              checked: false,
+            },
+            {
+              name: "เตียง",
+              checked: false,
+            },
+          ]);
+        }
+        if (price) {
+          if (price !== 0) {
+            ref = ref
+              .orderBy("price")
+              .startAt((price = 1 ? 500000 : (price = 2 ? 1000000 : 5000000)))
+              .endAt((price = 1 ? 1000000 : (price = 2 ? 5000000 : 10000000)));
+          } else {
+            ref = ref.where("price", ">=", 0);
+          }
+        }
       }
 
-      if (this.state.property.length === 0) {
-        this.props.alert.error(t("seach.error"));
-      } else {
-        this.props.alert.success(
-          t("seach.listtotal") +
+      ref.get().then((querySnapshot) => {
+        var property = [];
+        querySnapshot.forEach((doc) => {
+          if (doc.data().status !== 4) {
+            let dict = { id: doc.id, ...doc.data() };
+            property.push(dict);
+          }
+        });
+
+        var property2 = [];
+
+        if (size !== 0 && size) {
+          for (var i in property) {
+            if (
+              property[i].propertysize >= sizemin &&
+              property[i].propertysize <= sizemax
+            ) {
+              property2.push(property[i]);
+            }
+          }
+
+          this.setState({
+            property: property2,
+          });
+        } else {
+          this.setState({
+            property: property,
+          });
+        }
+
+        if (this.state.property.length === 0) {
+          this.props.alert.error(t("seach.error"));
+        } else {
+          this.props.alert.success(
+            t("seach.listtotal") +
             " " +
             this.state.property.length +
             " " +
             t("list.label")
-        );
-      }
-    });
+          );
+        }
+      });
+    } catch (error) {
+      this.props.alert.error(error.toString());
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -276,14 +263,14 @@ class Listproperty extends React.Component {
       ) {
         this.seach(
           seachkey,
-          type,
+          Number(type),
           province,
-          price,
-          room,
-          family,
-          bath,
-          car,
-          size,
+          Number(price),
+          Number(room),
+          Number(family),
+          Number(bath),
+          Number(car),
+          Number(size),
           check
         );
       }
@@ -322,8 +309,7 @@ class Listproperty extends React.Component {
             headers: {
               Authorization: `Bearer ${idToken}`,
             },
-            url:
-              "https://us-central1-bfproperty.cloudfunctions.net/webApi/api/v1/usersupdatefavorite",
+            url: "https://us-central1-bfproperty.cloudfunctions.net/webApi/api/v1/usersupdatefavorite",
             method: "PUT",
             data: {
               favorite: favorite,
@@ -409,7 +395,7 @@ class Listproperty extends React.Component {
         var delete_imgtRef = firestorage.refFromURL(urlin[keyName].original);
         delete_imgtRef
           .delete()
-          .then(function () {})
+          .then(function () { })
           .catch(function (error) {
             alert.error("delete error", error);
           });
@@ -420,7 +406,7 @@ class Listproperty extends React.Component {
 
         delete_imgtRef
           .delete()
-          .then(function () {})
+          .then(function () { })
           .catch(function (error) {
             alert.error("delete error", error);
           });
@@ -429,7 +415,7 @@ class Listproperty extends React.Component {
       var delete_inforef = firestore.collection("property").doc(id);
       delete_inforef
         .delete()
-        .then(function () {})
+        .then(function () { })
         .catch(function (error) {
           console.log("delete error", error);
         });
@@ -556,10 +542,10 @@ class Listproperty extends React.Component {
                 location.pathname === "/my-property"
                   ? "mypropertyempty.label"
                   : location.pathname === "/seach-result"
-                  ? "seachresultemty.label"
-                  : location.pathname === "/"
-                  ? "ไม่มีรายการบ้านแนะนำ"
-                  : "myfavoriteempty.label"
+                    ? "seachresultemty.label"
+                    : location.pathname === "/"
+                      ? "ไม่มีรายการบ้านแนะนำ"
+                      : "myfavoriteempty.label"
               )}
             </Typography>
           </Grid>

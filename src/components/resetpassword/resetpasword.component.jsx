@@ -89,7 +89,7 @@ class Resetpassword extends React.Component {
               <Grid item xs={6}>
                 <Grid container spacing={3}>
                   <Grid item xs={12}>
-                    <Typography variant="h2" className={classes.headertitle}>
+                    <Typography variant="h2" className={classes.headertitle} >
                       {t("forgetpasswordform.label")}
                     </Typography>
                   </Grid>

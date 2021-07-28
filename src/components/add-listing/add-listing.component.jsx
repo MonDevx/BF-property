@@ -196,7 +196,9 @@ export default function Addlisting(props) {
     <React.Fragment>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-          <Typography variant="h4">{t("addlistingheader.label")}</Typography>
+          <Typography variant="h4" style={{ fontWeight: "bold" }}>
+            {t("addlistingheader.label")}
+          </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (
               <Step key={label}>

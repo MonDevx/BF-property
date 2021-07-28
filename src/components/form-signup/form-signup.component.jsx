@@ -164,7 +164,7 @@ class SignUp extends React.Component {
               </Grid>
               <Grid item xs={12}>
                 <ReCAPTCHA
-                  sitekey="6LcJ1P4UAAAAAIqRs0zN5lng511G53rXwWeTLFRg"
+                  sitekey={process.env.REACT_APPP_RECAPTCHA}
                   onChange={this.onChange}
                 />
               </Grid>

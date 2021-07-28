@@ -6,47 +6,73 @@ import { connect } from "react-redux";
 import { withAlert } from "react-alert";
 import Container from "@material-ui/core/Container";
 import { compose } from "redux";
+import { auth } from "../../firebase/firebase.utils";
+
 class FavoritePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       property: [],
+      redirect: null,
       isLoading: true,
+      idToken: null
     };
-
   }
-  componentDidMount() {
-
-    if(this.props.currentUser.favorite.length){
-       axios({
-      url:
-        "https://us-central1-bfproperty.cloudfunctions.net/webApi/api/v1/favoriterealestatelist",
-      method: "GET",
-      params: {
-        favoritelist: this.props.currentUser.favorite,
-      },
-    })
-      .then((result) => {
+  async componentDidMount() {
+    const { currentUser, alert } = this.props;
+    await auth.currentUser
+      .getIdToken(/* forceRefresh */ true)
+      .then((idToken) => {
         this.setState({
-          property: result.data,
-          isLoading: false,
+          idToken: idToken,
         });
       })
       .catch((error) => {
-        console.log(error);
+        alert.error(error.toString());
+        this.setState({
+          redirect:"/"
+        });
       });
-    }else{
+    if (currentUser.favorite.length && this.state.idToken) {
+
+      axios({
+        headers: {
+          Authorization: `Bearer ${this.state.idToken}`,
+        },
+        url: "https://us-central1-bfproperty.cloudfunctions.net/webApi/api/v1/favoriterealestatelist",
+        method: "GET",
+        params: {
+          favoritelist: currentUser.favorite,
+        },
+      })
+        .then((result) => {
+          this.setState({
+            property: result.data,
+            isLoading: false,
+          });
+        })
+        .catch((error) => {
+          alert.error(error.toString());
+        });
+    } else {
       this.setState({
         isLoading: false,
+        redirect:"/"
       });
     }
   }
 
-
   render() {
-    const { isLoading, property } = this.state;
+    const { isLoading, property, redirect } = this.state;
+    if (redirect) {
+      return <Redirect to={redirect} />;
+    }
     if (isLoading) {
-      return <div style={{margin: '50%'}}><LoaderSpinners /></div>;
+      return (
+        <div style={{ margin: "50%" }}>
+          <LoaderSpinners />
+        </div>
+      );
     }
     return (
       <Container

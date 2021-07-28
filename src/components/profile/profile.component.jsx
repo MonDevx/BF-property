@@ -27,12 +27,23 @@ const styles = (theme) => ({
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
       marginTop: theme.spacing(6),
       marginBottom: theme.spacing(6),
-      padding: theme.spacing(10),
+      padding: theme.spacing(9),
     },
   },
-  large: {
-    width: theme.spacing(20),
-    height: theme.spacing(20),
+  sizeimage: {
+
+    [theme.breakpoints.down('sm')]: {
+      width: theme.spacing(10),
+      height: theme.spacing(10),
+    },
+    [theme.breakpoints.up('md')]: {
+      width: theme.spacing(15),
+      height: theme.spacing(15),
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: theme.spacing(20),
+      height: theme.spacing(20),
+    },
   },
   input: {
     display: "none",
@@ -40,6 +51,7 @@ const styles = (theme) => ({
   headertitle: {
     fontWeight: "bold",
   },
+
 });
 {
   /* TODO  FUNCTION ADD/UPDATE IMAGE USER*/
@@ -79,10 +91,11 @@ class Profile extends React.Component {
         <Paper elevation={3} className={classes.paper}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
-              <Typography variant="h4" className={classes.headertitle}>
-                {displayName}
+              <Typography variant="h3" className={classes.headertitle}>
+                {"ยินดีตอนรับ " + (displayName ? displayName : "")}
               </Typography>
             </Grid>
+
             <Grid item xs={12} sm={3}>
               <Button
                 startIcon={<AiOutlineEdit />}
@@ -119,7 +132,7 @@ class Profile extends React.Component {
                   spacing={3}
                 >
                   <Grid item xs={12}>
-                    <Avatar src={photoURL} className={classes.large} />
+                    <Avatar src={photoURL} className={classes.sizeimage} />
                   </Grid>
                   <Grid item xs={12}>
                     <input
@@ -135,8 +148,9 @@ class Profile extends React.Component {
                         color="primary"
                         component="span"
                         endIcon={<AiOutlineCamera />}
+                        size="'small'"
                       >
-                        เลือกรูปภาพ
+                        รูปภาพ
                       </Button>
                     </label>
                   </Grid>
@@ -170,13 +184,13 @@ class Profile extends React.Component {
                 spacing={3}
               >
                 <Grid item xs={12}>
-                  <Typography variant="h6">{t("info.label")}</Typography>
+                  <Typography variant="h4" className={classes.headertitle}>{t("info.label")}</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Typography variant="subtitle1">
                     {t("displayname.label")}
                     {" : "}
-                    {displayName}
+                    {displayName ? displayName : t("infoemty.label")}
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -200,10 +214,10 @@ class Profile extends React.Component {
                     {gender === 1
                       ? t("typesex1.label")
                       : gender === 2
-                      ? t("typesex2.label")
-                      : gender === 3
-                      ? t("typesex3.label")
-                      : t("infoemty.label")}
+                        ? t("typesex2.label")
+                        : gender === 3
+                          ? t("typesex3.label")
+                          : t("infoemty.label")}
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>

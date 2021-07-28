@@ -132,12 +132,8 @@ function CardProperty(props) {
                   <CardContent className={classes.cardContent}>
                     <Grid container spacing={1}>
                       <Grid item xs={12}>
-                        <Typography variant="h6" className={classes.bold}>
-                          {detail.name.length < 28
-                            ? detail.name.replaceAll("-", " ")
-                            : detail.name
-                                .replaceAll("-", " ")
-                                .substring(0, 28) + " ..."}
+                        <Typography variant="h6" className={classes.bold} noWrap>
+                          {detail.name.replaceAll("-", " ")}
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
@@ -145,8 +141,8 @@ function CardProperty(props) {
                           {detail.idtype === 1
                             ? t("typeproperty1.label")
                             : detail.idtype === 2
-                            ? t("typeproperty2.label")
-                            : t("typeproperty3.label")}
+                              ? t("typeproperty2.label")
+                              : t("typeproperty3.label")}
                         </Typography>
                       </Grid>
                       <Grid item sm={12}>
@@ -159,20 +155,20 @@ function CardProperty(props) {
                             currency === "gb"
                               ? detail.price * 0.032
                               : currency === "th"
-                              ? detail.price
-                              : detail.price * 0.21
+                                ? detail.price
+                                : detail.price * 0.21
                           )}{" "}
                           {currency === "gb"
-                              ? t("dollar.label")
-                              : currency === "th"
+                            ? t("dollar.label")
+                            : currency === "th"
                               ? t("baht.label")
                               : t("yuan.label")}
                         </Typography>
                       </Grid>
                       <Grid item sm={12}>
-                        <Typography variant="subtitle2">
+                        <Typography variant="subtitle2" noWrap>
                           <BiMap className={classes.icon} />
-                          {(
+                          {
                             detail.address +
                             " " +
                             detail.district +
@@ -181,29 +177,8 @@ function CardProperty(props) {
                             " " +
                             detail.province +
                             " " +
-                            detail.zipcode
-                          ).length < 62
-                            ? detail.address +
-                              " " +
-                              detail.district +
-                              " " +
-                              detail.subDistrict +
-                              " " +
-                              detail.province +
-                              " " +
-                              detail.zipCode +
-                              "                  "
-                            : (
-                                detail.address +
-                                " " +
-                                detail.district +
-                                " " +
-                                detail.subdistrict +
-                                " " +
-                                detail.province +
-                                " " +
-                                detail.zipCode
-                              ).substring(0, 64) + " ..."}
+                            detail.zipCode
+                          }
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
@@ -298,6 +273,7 @@ function CardProperty(props) {
                       </IconButton>
                     ) : (
                       <React.Fragment>
+                        
                         <Tooltip
                           title={t("updatestausproperty.label")}
                           aria-label="add"

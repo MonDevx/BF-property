@@ -23,6 +23,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import data from "../../json/province.json";
+import qs from 'query-string';
 const provicejson = data;
 const useStyles = makeStyles((theme) => ({
   expand: {
@@ -206,9 +207,10 @@ export default function Formseachresult() {
                 className={classes.formControl}
                 component={Link}
                 startIcon={<SearchRoundedIcon />}
+
                 to={{
                   pathname: "/seach-result",
-                  state: {
+                  search: qs.stringify({
                     type: typeproperty,
                     province: provice,
                     price: price,
@@ -218,7 +220,7 @@ export default function Formseachresult() {
                     car: car,
                     size: sizeproperty,
                     check: state.checkedA,
-                  },
+                  }),
                 }}
               >
                 {t("seach.label")}

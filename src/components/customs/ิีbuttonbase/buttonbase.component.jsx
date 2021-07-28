@@ -6,6 +6,7 @@ import React from "react";
 import { isWebpSupported } from "react-image-webp/dist/utils";
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom'
+import qs from 'query-string';
 const useStyles = makeStyles((theme) => ({
   image: {
     position: "relative",
@@ -62,9 +63,8 @@ const useStyles = makeStyles((theme) => ({
   },
   imageTitle: {
     position: "relative",
-    padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${
-      theme.spacing(1) + 6
-    }px`,
+    padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6
+      }px`,
   },
   imageMarked: {
     height: 3,
@@ -115,17 +115,17 @@ export default function Buttonbase(props) {
               component={Link}
               to={{
                 pathname: "/seach-result",
-                state: {
+                search: qs.stringify({
                   seachkey: image.value,
-                },
+
+                }),
               }}
             >
               <span
                 className={classes.imageSrc}
                 style={{
-                  backgroundImage: `url(${
-                    isWebpSupported() ? image.urlwebp : image.urljpg
-                  })`,
+                  backgroundImage: `url(${isWebpSupported() ? image.urlwebp : image.urljpg
+                    })`,
                 }}
               />
 
@@ -157,9 +157,8 @@ export default function Buttonbase(props) {
               <span
                 className={classes.imageSrc}
                 style={{
-                  backgroundImage: `url(${
-                    isWebpSupported() ? image.urlwebp : image.urljpg
-                  })`,
+                  backgroundImage: `url(${isWebpSupported() ? image.urlwebp : image.urljpg
+                    })`,
                 }}
               />
 
@@ -178,7 +177,8 @@ export default function Buttonbase(props) {
             </ButtonBase>
           )}
         </HtmlTooltip>
-      ))}
-    </React.Fragment>
+      ))
+      }
+    </React.Fragment >
   );
 }

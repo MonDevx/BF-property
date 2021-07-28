@@ -15,9 +15,9 @@ class Terms extends React.Component {
         >
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Typography variant="h4" gutterBottom>
-                {t("terms1")}
-              </Typography>
+            <Typography variant="h4" gutterBottom style={{ 'fontWeight': 'bold' }}>
+            {t("terms1")}
+          </Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="subtitle1" gutterBottom>

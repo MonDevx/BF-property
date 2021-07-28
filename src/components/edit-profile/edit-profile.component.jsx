@@ -114,7 +114,7 @@ class Editprofile extends React.Component {
                 </Breadcrumbs>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="h6">{t("info.label")}</Typography>
+                <Typography  variant="h4" gutterBottom style={{ 'fontWeight': 'bold' }}>{t("info.label")}</Typography>
               </Grid>
 
               <Grid item xs={6}>

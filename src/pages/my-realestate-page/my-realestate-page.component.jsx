@@ -6,32 +6,64 @@ import axios from "axios";
 import LoaderSpinners from "../../components/loader-spinners/loader-spinners.jsx";
 import { withAlert } from "react-alert";
 import { compose } from "redux";
+import { auth } from "../../firebase/firebase.utils"
+
 class MyhousePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       property: [],
+      redirect: null,
       isLoading: true,
+      idToken: null
     };
   }
-  componentDidMount() {
-    axios
-      .get(
-        `https://us-central1-bfproperty.cloudfunctions.net/webApi/api/v1/myrealestatelist/${this.props.currentUser.id}`
-      )
-      .then((result) => {
+  async componentDidMount() {
+    const { alert } = this.props;
+    await auth.currentUser
+      .getIdToken(/* forceRefresh */ true)
+      .then((idToken) => {
         this.setState({
-          property: result.data,
-          isLoading: false,
+          idToken: idToken,
         });
       })
       .catch((error) => {
-        this.props.alert.error(error.toString());
+        alert.error(error.toString());
+        this.setState({
+          redirect:"/"
+        });
       });
+    if (this.state.idToken) {
+
+      axios({
+        headers: {
+          Authorization: `Bearer ${this.state.idToken}`,
+        },
+        url: "https://us-central1-bfproperty.cloudfunctions.net/webApi/api/v1/myrealestatelist",
+        method: "GET",
+      })
+        .then((result) => {
+          this.setState({
+            property: result.data,
+            isLoading: false,
+          });
+        })
+        .catch((error) => {
+          alert.error(error.toString());
+        });
+    } else {
+      this.setState({
+        isLoading: false,
+        redirect:"/"
+      });
+    }
   }
 
   render() {
-    const { isLoading, property } = this.state;
+    const { isLoading, property, redirect } = this.state;
+    if (redirect) {
+      return <Redirect to={redirect} />;
+    }
     if (isLoading) {
       return (
         <div style={{ margin: "50%" }}>

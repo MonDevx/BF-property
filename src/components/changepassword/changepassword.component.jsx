@@ -127,7 +127,7 @@ class Changepassword extends React.Component {
                 </Breadcrumbs>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="h6">{t("resetpassword.label")}</Typography>
+                <Typography variant="h4" gutterBottom style={{ 'fontWeight': 'bold' }}>{t("resetpassword.label")}</Typography>
               </Grid>
               <Grid item xs={6}>
                 <TextValidator
