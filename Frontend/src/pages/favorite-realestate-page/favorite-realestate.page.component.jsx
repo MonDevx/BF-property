@@ -7,7 +7,7 @@ import { withAlert } from "react-alert";
 import Container from "@material-ui/core/Container";
 import { compose } from "redux";
 import { auth } from "../../firebase/firebase.utils";
-
+import { Redirect } from "react-router-dom";
 class FavoritePage extends React.Component {
   constructor(props) {
     super(props);
@@ -57,7 +57,6 @@ class FavoritePage extends React.Component {
     } else {
       this.setState({
         isLoading: false,
-        redirect:"/"
       });
     }
   }

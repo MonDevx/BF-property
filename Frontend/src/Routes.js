@@ -2,23 +2,6 @@ import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import LoaderSpinners from "./components/loader-spinners/loader-spinners.jsx";
 import loadable from "react-loadable";
-// import {
-//   Addlisting as AddlistingPage,
-//   Changepassword as ChangepasswordPage,
-//   Editprofile as EditprofilePage,
-//   Editproperty as EditpropertyPage,
-//   Favoriteproperty as FavoritepropertyPage,
-//   Index as IndexPage,
-//   Myproperty as MypropertyPage,
-//   Notfound as NotfoundPage,
-//   Profile as ProfilePage,
-//   Propertydetail as PropertydetailPage,
-//   Resetpassword as ResetpasswordPage,
-//   Seachresult as SeachresultPage,
-//   SigninandSignup as SigninandSignupPage,
-//   Terms as TermsPage,
-//   Updatestatus as UpdatestatusPage,
-// } from "./pages";
 const AddlistingPage = loadable({
   loader: () =>
     import(
@@ -126,6 +109,7 @@ const ChangepasswordPage = loadable({
 });
 const Routes = (props) => {
   return (
+    
     <Switch>
       <Route path="/" exact component={IndexPage} />
       <Route

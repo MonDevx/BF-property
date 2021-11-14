@@ -116,18 +116,20 @@ class Footer extends React.Component {
               <Chip
                 variant="default"
                 size="small"
+                color="primary"
                 label={t("typeproperty1.label")}
               />
               <Chip
                 variant="default"
+                color="primary"
                 size="small"
                 label={t("typeproperty2.label")}
               />
-              <Chip variant="default" size="small" label={t("footer.tag1")} />
-              <Chip variant="default" size="small" label={t("footer.tag2")} />
-              <Chip variant="default" size="small" label={t("footer.tag3")} />
-              <Chip variant="default" size="small" label={t("footer.tag4")} />
-              <Chip variant="default" size="small" label={t("footer.tag5")} />
+              <Chip variant="default" color="primary" size="small" label={t("footer.tag1")} />
+              <Chip variant="default" color="primary" size="small" label={t("footer.tag2")} />
+              <Chip variant="default" color="primary" size="small" label={t("footer.tag3")} />
+              <Chip variant="default" color="primary" size="small" label={t("footer.tag4")} />
+              <Chip variant="default" color="primary" size="small" label={t("footer.tag5")} />
             </Grid>
             <Grid item xs>
               <Typography
@@ -245,7 +247,7 @@ class Footer extends React.Component {
                   variant="contained"
                   fullWidth
                   size="large"
-                  color=""
+                  color="primary"
                   style={{ marginTop: 10 }}
                   type="submit"
                   disabled={this.state.disable}

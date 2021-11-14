@@ -8,7 +8,7 @@ import { store, persistor } from "./redux/store/store";
 import { PersistGate } from "redux-persist/integration/react";
 ReactDOM.render(
   <Provider store={store}>
-    <HashRouter>
+    <HashRouter hashType ="noslash">
       <PersistGate loading={null} persistor={persistor}>
         <App />
       </PersistGate>
