@@ -2,6 +2,6 @@
 export default {
   
   tooltip: {
-    fontFamily: ['prompt'].join(',')
+    fontFamily: ['Noto Sans Thai','Noto Sans'].join(',')
   }
 };

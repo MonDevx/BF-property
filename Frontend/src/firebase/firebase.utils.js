@@ -52,6 +52,8 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 };
 
 export const auth = firebase.auth();
+export const PersistenceLOCAL = firebase.auth.Auth.Persistence.LOCAL;
+export const PersistenceSESSION = firebase.auth.Auth.Persistence.SESSION;
 export const firestore = firebase.firestore();
 export const firestore2 = firebase.firestore;
 export const firestorage = firebase.storage();

@@ -12,6 +12,7 @@ import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 import ReCAPTCHA from "react-google-recaptcha";
 import { withTranslation } from "react-i18next";
 import { compose } from "redux";
+import { withAlert } from "react-alert";
 const useStyles = (theme) => ({
   form: {
     width: "100%",
@@ -57,7 +58,9 @@ class SignUp extends React.Component {
       const { user } = await auth.createUserWithEmailAndPassword(
         email,
         password
-      );
+      ).catch((error) => {
+        this.props.alert.error(error.message);
+      });
 
       await createUserProfileDocument(user, { displayName });
 
@@ -68,7 +71,7 @@ class SignUp extends React.Component {
         confirmPassword: "",
       });
     } catch (error) {
-      console.error(error);
+      this.props.alert.error(error.message);
     }
   };
   handleChange = (event) => {
@@ -204,4 +207,4 @@ SignUp.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default compose(withTranslation(), withStyles(useStyles))(SignUp);
+export default compose(withTranslation(), withAlert(), withStyles(useStyles))(SignUp);

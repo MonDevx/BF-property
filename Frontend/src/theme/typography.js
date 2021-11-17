@@ -8,7 +8,7 @@ export default {
     fontSize: '35px',
     letterSpacing: '-0.24px',
     lineHeight: '40px',
-    fontFamily: ['prompt'].join(','),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
   },
   h2: {
     color: palette.text.primary,
@@ -16,7 +16,7 @@ export default {
     fontSize: '29px',
     letterSpacing: '-0.24px',
     lineHeight: '32px',
-    fontFamily: ['prompt'].join(','),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
   },
   h3: {
     color: palette.text.primary,
@@ -24,7 +24,7 @@ export default {
     fontSize: '24px',
     letterSpacing: '-0.06px',
     lineHeight: '28px',
-    fontFamily: ['prompt'].join(','),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
   },
   h4: {
     color: palette.text.primary,
@@ -32,7 +32,7 @@ export default {
     fontSize: '20px',
     letterSpacing: '-0.06px',
     lineHeight: '24px',
-    fontFamily: ['prompt'].join(','),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
   },
   h5: {
     color: palette.text.primary,
@@ -40,7 +40,7 @@ export default {
     fontSize: '18px',
     letterSpacing: '-0.05px',
     lineHeight: '20px',
-    fontFamily: ['prompt'].join(','),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
   },
   h6: {
     color: palette.text.primary,
@@ -48,14 +48,14 @@ export default {
     fontSize: '16px',
     letterSpacing: '-0.05px',
     lineHeight: '20px',
-    fontFamily: ['prompt'].join(','),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
   },
   subtitle1: {
     color: palette.text.primary,
     fontSize: '16px',
     letterSpacing: '-0.05px',
     lineHeight: '25px',
-    fontFamily: ['prompt'].join(','),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
   },
   subtitle2: {
     color: palette.text.secondary,
@@ -63,26 +63,26 @@ export default {
     fontSize: '14px',
     letterSpacing: '-0.05px',
     lineHeight: '21px',
-    fontFamily: ['prompt'].join(','),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
   },
   body1: {
     color: palette.text.primary,
     fontSize: '14px',
     letterSpacing: '-0.05px',
     lineHeight: '21px',
-    fontFamily: ['prompt'].join(','),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
   },
   body2: {
     color: palette.text.secondary,
     fontSize: '12px',
     letterSpacing: '-0.04px',
     lineHeight: '18px',
-    fontFamily: ['prompt'].join(','),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
   },
   button: {
     color: palette.text.primary,
     fontSize: '14px',
-    fontFamily: ['prompt'].join(','),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
   },
 
   caption: {
@@ -90,7 +90,7 @@ export default {
     fontSize: '11px',
     letterSpacing: '0.33px',
     lineHeight: '13px',
-    fontFamily: ['prompt'].join(','),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
   },
   overline: {
     color: palette.text.secondary,
@@ -99,7 +99,7 @@ export default {
     letterSpacing: '0.33px',
     lineHeight: '13px',
     textTransform: 'uppercase',
-    fontFamily: ['prompt'].join(','),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
   },
 
 };

@@ -221,7 +221,7 @@ function Header(props) {
               display="inline"
               color="primary"
             >
-              BF-property
+              BFproperty
             </Typography>
           </div>
           <div>

@@ -2,7 +2,7 @@
 export default {
   root: {
     margin: "3px",
-    fontFamily: ["prompt"].join(","),
+    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
     fontSize: "13px",
   },
 };

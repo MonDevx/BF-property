@@ -2,6 +2,6 @@
 export default {
 
   badge: {
-      fontFamily: ["prompt"].join(","),
+      fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
     },
 };

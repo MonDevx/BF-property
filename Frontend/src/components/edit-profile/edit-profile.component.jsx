@@ -136,11 +136,11 @@ class Editprofile extends React.Component {
                   value={User.phone}
                   specialLabel={t("phone.label")}
                   inputStyle={{
-                    fontFamily: "prompt",
+                    fontFamily: "Noto Sans Thai,Noto Sans",
                     height: "55px",
                   }}
                   containerStyle={{
-                    fontFamily: "prompt",
+                    fontFamily: "Noto Sans Thai,Noto Sans",
                   }}
                   disableDropdown={true}
                   defaultErrorMessage={t("phonerequired.label")}

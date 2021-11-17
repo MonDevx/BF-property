@@ -18,6 +18,8 @@ import {
   auth,
   signInWithFacebook,
   signInWithGoogle,
+  PersistenceLOCAL,
+  PersistenceSESSION,
 } from "../../firebase/firebase.utils.js";
 import { withTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -46,29 +48,42 @@ class SignIn extends React.Component {
     this.state = {
       email: "",
       password: "",
+      remember: false,
     };
   }
 
   handleSubmit = async (event) => {
     event.preventDefault();
     const { t } = this.props;
-    const { email, password } = this.state;
+    const { email, password, remember } = this.state;
 
     try {
-      await auth.signInWithEmailAndPassword(email, password);
-      this.setState({ email: "", password: "" });
+      console.log(remember);
+      auth
+        .setPersistence(remember ? PersistenceLOCAL : PersistenceSESSION)
+        .then(() => {
+          // Existing and future Auth states are now persisted in the current
+          // session only. Closing the window would clear any existing state even
+          // if a user forgets to sign out.
+          // ...
+          // New sign-in will be persisted with session persistence.
+          return auth.signInWithEmailAndPassword(email, password);
+        })
+        .catch((error) => {
+          this.props.alert.error(error.message);
+        });
     } catch (error) {
       this.props.alert.error(t("error.sigin.label"));
     }
   };
 
   handleChange = (event) => {
-    const { value, name } = event.target;
+    const { value, name, checked } = event.target;
 
-    this.setState({ [name]: value });
+    this.setState({ [name]: name != "remember" ? value : checked });
   };
   render() {
-    const { email, password } = this.state;
+    const { email, password,remember } = this.state;
     const { classes, t } = this.props;
     return (
       <Container component="main" maxWidth="xs">
@@ -106,7 +121,14 @@ class SignIn extends React.Component {
             errorMessages={[t("passwordrequired.label")]}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={
+              <Checkbox
+                name="remember"
+                value={remember}
+                color="primary"
+                onChange={this.handleChange}
+              />
+            }
             label={t("remeberme.label")}
           />
           <Button
