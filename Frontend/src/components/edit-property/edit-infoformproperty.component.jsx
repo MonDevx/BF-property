@@ -10,18 +10,13 @@ import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import NumberFormat from "react-number-format";
+import FormControl from "@material-ui/core/FormControl";
 const useStyles = makeStyles((theme) => ({
-  howtoContent: {
-    margin: theme.spacing(4),
-    backgroundColor: theme.palette.background.default,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    borderRadius: "10px",
-  },
+
   content: {
     margin: theme.spacing(2),
   },
+
 }));
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -49,7 +44,7 @@ export default function EditinformationForm(props) {
   const classes = useStyles();
   const [error, setError] = React.useState(Boolean);
   const { formValues, setFormValues } = props;
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (
@@ -94,15 +89,11 @@ export default function EditinformationForm(props) {
           xs={12}
           container
           spacing={2}
-          className={classes.howtoContent}
+
         >
-          <Grid item xs={12} sm={12}>
-            <Typography variant="h6" color="primary" gutterBottom>
-              {t("propertyheader.label")}
-            </Typography>
-          </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="outlined"
               onChange={handleChange}
               value={formValues.name}
               label={t("propertyname.label")}
@@ -142,6 +133,7 @@ export default function EditinformationForm(props) {
           )}
           <Grid item xs={12} sm={3}>
             <TextField
+              variant="outlined"
               fullWidth
               label={t("propertyprice.label")}
               value={formValues.price}
@@ -155,6 +147,7 @@ export default function EditinformationForm(props) {
           </Grid>
           <Grid item xs={12} sm={3}>
             <TextField
+              variant="outlined"
               required
               fullWidth
               name="propertysize"
@@ -178,6 +171,7 @@ export default function EditinformationForm(props) {
           </Grid>
           <Grid item xs={12} sm={3}>
             <TextField
+              variant="outlined"
               fullWidth
               label={
                 formValues.idtype !== 3
@@ -198,8 +192,9 @@ export default function EditinformationForm(props) {
             </Typography>
           </Grid>
           <Grid item xs={6} sm={3}>
+          <FormControl variant="outlined" fullWidth>
             <InputLabel id="demo-simple-select-label">
-              {t("propertysizefamily.label")}{" "}
+              {t("propertysizefamily.label")}
             </InputLabel>
             <Select
               fullWidth
@@ -207,19 +202,24 @@ export default function EditinformationForm(props) {
               onChange={handleChange}
               value={Number(formValues.sizefamily)}
             >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
               <MenuItem value={1}>
-                {t("propertysizefamilytype1.label")}{" "}
+                {t("propertysizefamilytype1.label")}
               </MenuItem>
               <MenuItem value={2}>
-                {t("propertysizefamilytype2.label")}{" "}
+                {t("propertysizefamilytype2.label")}
               </MenuItem>
               <MenuItem value={3}>
-                {t("propertysizefamilytype3.label")}{" "}
+                {t("propertysizefamilytype3.label")}
               </MenuItem>
             </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={6} sm={3}>
             <TextField
+              variant="outlined"
               name="Numberofbedrooms"
               label={t("propertybed.label")}
               type="number"
@@ -239,6 +239,7 @@ export default function EditinformationForm(props) {
           </Grid>
           <Grid item xs={6} sm={3}>
             <TextField
+              variant="outlined"
               name="Numberofbathrooms"
               label={t("propertybath.label")}
               type="number"
@@ -260,6 +261,7 @@ export default function EditinformationForm(props) {
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <DatePicker
                 id="Yearofconstruction"
+                inputVariant="outlined"
                 views={["year"]}
                 label={t("propertyyear.label")}
                 minDate={new Date("1900-01-01")}
@@ -271,6 +273,7 @@ export default function EditinformationForm(props) {
           </Grid>
           <Grid item xs={6} sm={3}>
             <TextField
+              variant="outlined"
               name="Numberofparkingspace"
               label={t("propertycar.label")}
               type="number"
@@ -290,6 +293,7 @@ export default function EditinformationForm(props) {
           </Grid>
           <Grid item xs={6} sm={3}>
             <TextField
+              variant="outlined"
               name="Numberoffloors"
               label={
                 formValues.idtype === 3
@@ -314,6 +318,7 @@ export default function EditinformationForm(props) {
           {formValues.idtype === 3 ? (
             <Grid item xs={12} sm={2}>
               <TextField
+                variant="outlined"
                 onChange={handleChange}
                 value={formValues.building}
                 label={t("building.label")}

@@ -142,7 +142,7 @@ module.exports = {
     ],
   },
 
-  // devtool: "inline-source-map",
+  devtool: "inline-source-map",
   resolve: {
     extensions: [".js", ".jsx", ".css", ".json"],
   },

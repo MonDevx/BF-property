@@ -3,7 +3,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import React, { useEffect } from "react";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 function Checkboxform(props) {
   /* TODO  FIX LIST ITEM TO SUPPORT MULTIPLE LANGUAGES  */
   const { formValues, setFormValues } = props;
@@ -87,46 +87,43 @@ function Checkboxform(props) {
     );
   };
   const saveFruits2 = () => {
-    setFormValues({ ...formValues, furniture: items , centralservice: items2 });
+    setFormValues({ ...formValues, furniture: items, centralservice: items2 });
   };
   useEffect(() => {
     saveFruits2();
-  }, [items,items2]);
-  const { t} = useTranslation();
+  }, [items, items2]);
+  const { t } = useTranslation();
   return (
     <React.Fragment>
-      <Grid item xs={12} sm={6}>
-        <Typography variant="subtitle1" gutterBottom>
-
-          {t('facilityformtopic1.label')}
+      <Grid item xs={12}>
+        <Typography variant="subtitle1" color="primary" gutterBottom>
+          {t("facilityformtopic1.label")}
         </Typography>
+
+
+        {items.map((item, index) => (
+          <FormControlLabel
+            key={index}
+            control={
+              <Checkbox
+                label={item.name}
+                onChange={checkboxhandleChange}
+                checked={item.checked}
+                name={item.name}
+                color="primary"
+              />
+            }
+            label={item.name}
+          />
+        ))}
       </Grid>
-      
-      {items.map((item,index) => (
-        //Store the the student id in the value of each check box
-
-        <FormControlLabel  key={index}
-          control={ 
-            <Checkbox
-              label={item.name}
-              onChange={checkboxhandleChange}
-              checked={item.checked}
-              name={item.name}
-              color="primary"
-            />
-          }
-          label={item.name}
-        />
-      ))}
-
-      <Grid item xs={12} sm={12}>
-        <Typography variant="subtitle1" gutterBottom>
-        {t('facilityformtopic2.label')}
+      <Grid item xs={12}>
+        <Typography variant="subtitle1" color="primary" gutterBottom>
+          {t("facilityformtopic2.label")}
         </Typography>
-        {items2.map((item,index) => (
-          //Store the the student id in the value of each check box
-
-          <FormControlLabel key={index}
+        {items2.map((item, index) => (
+          <FormControlLabel
+            key={index}
             control={
               <Checkbox
                 label={item.name}
@@ -134,7 +131,6 @@ function Checkboxform(props) {
                 checked={item.checked}
                 name={item.name}
                 color="primary"
-                
               />
             }
             label={item.name}

@@ -25,14 +25,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
-  howtoContent: {
-    margin: theme.spacing(4),
-    backgroundColor: theme.palette.background.default,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    borderRadius: "10px",
-  },
 }));
 
 export default function EditinformationaddressForm(props) {
@@ -114,7 +106,9 @@ export default function EditinformationaddressForm(props) {
     }
   };
   const [inputNearbyplaces, setInputNearbyplaces] = React.useState(
-    formValues.Nearbyplaces
+    formValues.Nearbyplaces.length === 0 ?
+      formValues.Nearbyplaces
+      : [{ LocationName: "", Distance: "" }]
   );
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -137,20 +131,23 @@ export default function EditinformationaddressForm(props) {
   };
 
   const { t } = useTranslation();
-  const items3 = [];
+  const listNearByPlaces = [];
   if (inputNearbyplaces !== undefined || formValues.Nearbyplaces) {
     inputNearbyplaces.forEach((x, i) => {
-      items3.push(
+      listNearByPlaces.push(
         <Grid item xs={4}>
           <TextField
+            variant="outlined"
             id="LocationName"
             label={t("locationnameinput.label")}
             name="LocationName"
             placeholder={t("locationnameinputplaceholder.label")}
             value={x.LocationName}
             onChange={(e) => handleInputChange(e, i)}
+            style={{ paddingBottom: "5%" }}
           />
           <TextField
+            variant="outlined"
             id="Distance"
             label={t("distanceinput.label")}
             name="Distance"
@@ -177,17 +174,13 @@ export default function EditinformationaddressForm(props) {
       );
     });
   }
-   React.useEffect(() => {
+
+  React.useEffect(() => {
     setFormValues({ ...formValues, Nearbyplaces: inputNearbyplaces });
   }, [inputNearbyplaces]);
   return (
     <React.Fragment>
-      <Grid item xs={12} container spacing={4} className={classes.howtoContent}>
-        <Grid item xs={12} sm={12}>
-          <Typography variant="h6" color="primary" gutterBottom>
-            {t("addressfromheader.label")}
-          </Typography>
-        </Grid>
+      <Grid item xs={12} container spacing={4}>
         <Grid item xs={12} sm={12}>
           <SimpleMap
             onChange={handleInputMap}
@@ -203,6 +196,7 @@ export default function EditinformationaddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            variant="outlined"
             onChange={handleChange}
             value={formValues.landmark}
             label={t("addressfromLandmark.label")}
@@ -221,6 +215,7 @@ export default function EditinformationaddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            variant="outlined"
             onChange={handleChange}
             value={formValues.address}
             label={t("addressfromadress.label")}
@@ -239,6 +234,7 @@ export default function EditinformationaddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={3}>
           <TextField
+            variant="outlined"
             value={zipCode}
             onChange={(e) => onSetZipCode(e.target.value)}
             id="zipCode"
@@ -265,6 +261,7 @@ export default function EditinformationaddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={3}>
           <TextField
+            variant="outlined"
             value={district}
             label={t("addressfromdistrict.label")}
             disabled
@@ -272,6 +269,7 @@ export default function EditinformationaddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={3}>
           <TextField
+            variant="outlined"
             value={province}
             id="province"
             label={t("addressfromsubprovince.label")}
@@ -284,7 +282,7 @@ export default function EditinformationaddressForm(props) {
           </Typography>
         </Grid>
 
-        {items3}
+        {listNearByPlaces}
       </Grid>
     </React.Fragment>
   );

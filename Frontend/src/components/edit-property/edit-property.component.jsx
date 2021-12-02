@@ -2,7 +2,7 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles,withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
 import React from "react";
@@ -18,7 +18,43 @@ import Linkmu from "@material-ui/core/Link";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import EditinformationaddressForm from "./edit-infoaddressformproperty.component.jsx";
 import { AiOutlineHome, AiOutlineEdit } from "react-icons/ai";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Box from "@material-ui/core/Box";
+const AntTabs = withStyles({
+  root: {
+    borderBottom: "1px solid #e8e8e8",
+  },
+  indicator: {
+    backgroundColor: "#1890ff",
+  },
+})(Tabs);
+const AntTab = withStyles((theme) => ({
+  root: {
+    textTransform: "none",
+    minWidth: 72,
+    fontWeight: theme.typography.fontWeightRegular,
+    marginRight: theme.spacing(4),
+    fontFamily: ["Noto Sans Thai", "Noto Sans"].join(","),
+    "&:hover": {
+      color: "#40a9ff",
+      opacity: 1,
+    },
+    "&$selected": {
+      color: "#1890ff",
+      fontWeight: theme.typography.fontWeightMedium,
+    },
+    "&:focus": {
+      color: "#40a9ff",
+    },
+  },
+  selected: {},
+}))((props) => <Tab disableRipple {...props} />);
 const useStyles = makeStyles((theme) => ({
+
+  padding: {
+    padding: theme.spacing(3),
+  },
   paper: {
     display: "flex",
     flexWrap: "wrap",
@@ -40,6 +76,29 @@ const useStyles = makeStyles((theme) => ({
     height: 20,
   },
 }));
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+  const classes = useStyles();
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
+      {...other}
+    >
+      <Grid item xs={12} container alignItems="center" spacing={2} className={classes.content}>
+        {children}
+      </Grid>
+    </div>
+  );
+}
 export default function Editproperty(props) {
   const classes = useStyles();
   const [formValues, setFormValues] = React.useState({ ...props.property });
@@ -47,7 +106,11 @@ export default function Editproperty(props) {
   const [disable, setDisable] = React.useState(true);
 
   const { t } = useTranslation();
+  const [value, setValue] = React.useState(0);
 
+  const handleChangeTab = (event, newValue) => {
+    setValue(newValue);
+  };
   const onupdate = () => {
     try {
       firestore
@@ -74,7 +137,12 @@ export default function Editproperty(props) {
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
           >
-            <Linkmu color="inherit" component={Link} to="/my-property" className={classes.link}>
+            <Linkmu
+              color="inherit"
+              component={Link}
+              to="/my-property"
+              className={classes.link}
+            >
               <AiOutlineHome className={classes.icon} />
               {t("myproperty.name.label")}
             </Linkmu>
@@ -96,24 +164,58 @@ export default function Editproperty(props) {
             {t("propertyeditpicture.label")}
           </Button>
         </Grid> */}
-        <EditinformationForm
-          formValues={formValues}
-          setFormValues={setFormValues}
-        />
-        <EditinformationfacilityForm
-          formValues={formValues}
-          setFormValues={setFormValues}
-        />
-        
-        <EditinformationaddressForm
-          formValues={formValues}
-          setFormValues={setFormValues}
-        />
+        <Box sx={{ width: "100%" }}>
+          <div className={classes.Tab}>
+            <AntTabs
+              value={value}
+              onChange={handleChangeTab}
+              aria-label="ant example"
+              scrollButtons="auto"
+              variant="scrollable"
+            >
+              <AntTab
+                label={t("propertyheader.label")}
+                {...a11yProps(0)}
+              ></AntTab>
+              <AntTab label={t("facility.label")} {...a11yProps(1)}></AntTab>
+              <AntTab
+                label={t("addressfromheader.label")}
+                {...a11yProps(2)}
+              ></AntTab>
+              <AntTab
+                label={t("propertymoredetail.label")}
+                {...a11yProps(3)}
+              ></AntTab>
+              <AntTab label={t("uploadfile.label")} {...a11yProps(4)} disabled></AntTab>
+            </AntTabs>
+            <Typography className={classes.padding} />
+          </div>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <EditinformationForm
+            formValues={formValues}
+            setFormValues={setFormValues}
+          />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <EditinformationfacilityForm
+            formValues={formValues}
+            setFormValues={setFormValues}
+          />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <EditinformationaddressForm
+            formValues={formValues}
+            setFormValues={setFormValues}
+          />
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <EditinformationdetailsForm
+            formValues={formValues}
+            setFormValues={setFormValues}
+          />
+        </TabPanel>
 
-        <EditinformationdetailsForm
-          formValues={formValues}
-          setFormValues={setFormValues}
-        />
         <Grid
           container
           direction="row"

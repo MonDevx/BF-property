@@ -6,14 +6,6 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { useTranslation } from "react-i18next";
 const useStyles = makeStyles((theme) => ({
-  howtoContent: {
-    margin: theme.spacing(4),
-    backgroundColor: theme.palette.background.default,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    borderRadius: "10px",
-  },
   content: {
     margin: theme.spacing(2),
   },
@@ -85,25 +77,20 @@ function EditinformationfacilityForm(props) {
 
   return (
     <React.Fragment>
-      <Grid item xs={12} container spacing={4} className={classes.howtoContent}>
+      <Grid item xs={12} container spacing={4} >
         <Grid item xs={12} sm={12}>
-          <Typography variant="h6" color="primary" gutterBottom>
-            {t("facilityformheader.label")}
+          <Typography variant="subtitle1" color="primary" gutterBottom>
+            {t("facilityformtopic1.label")}
           </Typography>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle1" gutterBottom>
-              {t("facilityformtopic1.label")}
-            </Typography>
-          </Grid>
           {listItems}
-
-          <Grid item xs={12} sm={12}>
-            <Typography variant="subtitle1" gutterBottom>
-              {t("facilityformtopic2.label")}
-            </Typography>
-            {listItems2}
-          </Grid>
         </Grid>
+        <Grid item xs={12} sm={12}>
+          <Typography variant="subtitle1" color="primary" gutterBottom>
+            {t("facilityformtopic2.label")}
+          </Typography>
+          {listItems2}
+        </Grid>
+
       </Grid>
     </React.Fragment>
   );

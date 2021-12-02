@@ -118,7 +118,7 @@ export default function AutocompleteSeach(props) {
         <TextField
           {...params}
           label={t("seach.location.label")}
-          variant="filled"
+          variant="outlined"
           fullWidth
         />
       )}

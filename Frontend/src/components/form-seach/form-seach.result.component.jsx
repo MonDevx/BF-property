@@ -23,7 +23,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import data from "../../json/province.json";
-import qs from 'query-string';
+import qs from "query-string";
 const provicejson = data;
 const useStyles = makeStyles((theme) => ({
   expand: {
@@ -38,11 +38,11 @@ const useStyles = makeStyles((theme) => ({
   },
   seachbox: {
     marginTop: theme.spacing(2),
-    
   },
   card: {
-    padding: theme.spacing(1.5),
+    padding: theme.spacing(1.25),
   },
+
 }));
 
 export default function Formseachresult() {
@@ -99,14 +99,15 @@ export default function Formseachresult() {
   const { t } = useTranslation();
   return (
     <Container maxWidth="lg" className={classes.seachbox}>
-      <Card className={classes.card}>
-        <CardActions>
+      <Card >
+        <CardActions >
           <Grid
             container
             direction="row"
             justify="flex-start"
             alignItems="center"
             spacing={2}
+            className={classes.card}
           >
             <Grid item xs={12} sm={2}>
               <FormControl
@@ -207,7 +208,6 @@ export default function Formseachresult() {
                 className={classes.formControl}
                 component={Link}
                 startIcon={<SearchRoundedIcon />}
-
                 to={{
                   pathname: "/seach-result",
                   search: qs.stringify({
@@ -240,13 +240,7 @@ export default function Formseachresult() {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent >
-            <Grid
-              container
-              direction="row"
-              justify="flex-start"
-              alignItems="center"
-              spacing={2}
-            >
+            <Grid container direction="row" justify="flex-start" spacing={2}>
               <Grid item xs={12} sm={2}>
                 <FormControl variant="outlined" fullWidth>
                   <InputLabel id="demo-simple-select-outlined-label">

@@ -1,5 +1,5 @@
 import Typography from "@material-ui/core/Typography";
-import React, { Suspense } from "react";
+import React, { Suspense, lazy } from "react";
 import { Provider as AlertProvider } from "react-alert";
 import Announcement from "react-announcement";
 import { LiveChatLoaderProvider, Messenger } from "react-live-chat-loader";
@@ -14,10 +14,10 @@ import {
   createUserProfileDocument,
   databaserealtime,
 } from "./firebase/firebase.utils";
-import { Maintance as MaintancePage } from "./pages";
+import { MaintancePage } from "./pages";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { setI18n } from "./redux/i18n/i18n.actions";
-import Routes from "./Routes";
+
 import theme from "./theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
@@ -26,16 +26,9 @@ import ScrollTop from "./components/scroll-top/scroll-top.component.jsx";
 import LoaderSpinners from "./components/loader-spinners/loader-spinners.jsx";
 import { withTranslation } from "react-i18next";
 import loadable from "react-loadable";
-// const Footer = lazy(() => import("./layouts/footer/footer.component.jsx"));
-// const Header = lazy(() => import("./layouts/header/header.component.jsx"));
-const Footer = loadable({
-  loader: () => import("./layouts/footer/footer.component.jsx"),
-  loading: () => null,
-});
-const Header = loadable({
-  loader: () => import("./layouts/header/header.component.jsx"),
-  loading: () => null,
-});
+import { Footer, Header } from "./layouts";
+
+import Routes from "./Routes";
 const options = {
   timeout: 3000,
 };

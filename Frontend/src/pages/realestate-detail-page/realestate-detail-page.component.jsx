@@ -6,7 +6,7 @@ import Img from "../../components/section-property-detail/section-img-property-d
 import Bar from "../../components/section-property-detail/section-bar-property-detail.component.jsx";
 import LoaderSpinners from "../../components/loader-spinners/loader-spinners.jsx";
 import { getInitialProps } from "react-i18next";
-import { Helmet } from "react-helmet";
+
 
 class propertyDetailpage extends React.Component {
   constructor(props) {
@@ -73,27 +73,7 @@ class propertyDetailpage extends React.Component {
     return (
       <div>
         <React.Fragment>
-          {/* <Helmet
-            title={property.name}
-            meta={[
-              {
-                property: `og:title`,
-                content:
-                  "BF-property",
-              },
-              {
-                property: `og:type`,
-                content: `website`,
-              },
-              {
-                property: `og:image`,
-                // You should ideally replace the hardcoded URL below with a value you set
-                // in your gatsby-config.js file.  And import all shared site metadata into
-                // this component with the useStaticQuery hook.
-                content: `${url}/${property.urlimginside[0]}`,
-              },
-            ]}
-          /> */}
+ zz
           <Bar
             typeproperty={property.idtype}
             status={property.status}

@@ -54,7 +54,7 @@ export default function Addlisting(props) {
     name: "",
     filesoutside: [],
     filesinside: [],
-    sizefamily: 1,
+    sizefamily: "",
     detail: "",
     latitude: 13.750573,
     longitude: 100.498519,

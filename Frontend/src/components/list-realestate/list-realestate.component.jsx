@@ -97,10 +97,10 @@ class Listproperty extends React.Component {
       }
 
       if (seachkey) {
-        if (seachkey ===  "บ้านเดี่ยว" || seachkey === "บ้านเทาว์เฮาส์") {
+        if (seachkey === "บ้านเดี่ยว" || seachkey === "บ้านเทาว์เฮาส์") {
           ref = firestore
             .collection("property")
-            .where("idtype", "==", seachkey ===  "บ้านเดี่ยว"?1:2);
+            .where("idtype", "==", seachkey === "บ้านเดี่ยว" ? 1 : 2);
         } else if (seachkey === "view") {
           ref = firestore.collection("property").orderBy("countview", "desc");
         } else if (seachkey === "new") {
@@ -189,8 +189,10 @@ class Listproperty extends React.Component {
           if (price !== 0) {
             ref = ref
               .orderBy("price")
-              .startAt((price = 1 ? 500000 : (price = 2 ? 1000000 : 5000000)))
-              .endAt((price = 1 ? 1000000 : (price = 2 ? 5000000 : 10000000)));
+              .startAt((price === 1 ? 500000 : (price === 2 ? 1000000 : 5000000)))
+              .endAt((price === 1 ? 1000000 : (price === 2 ? 5000000 : 10000000)));
+          } else if (price === 4) {
+            ref = ref.where("price", ">", 10000000);
           } else {
             ref = ref.where("price", ">=", 0);
           }

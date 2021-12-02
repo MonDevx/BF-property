@@ -39,7 +39,6 @@
     "react-device-detect": "^1.15.0",
     "react-dom": "^17.0.1",
     "react-google-recaptcha": "^2.1.0",
-    "react-helmet": "^6.1.0",
     "react-i18next": "^11.8.5",
     "react-icons": "^4.2.0",
     "react-image-gallery": "^1.0.8",
@@ -50,6 +49,7 @@
     "react-leaflet-control": "^2.1.2",
     "react-live-chat-loader": "^2.2.0",
     "react-material-ui-form-validator": "2.1.4",
+    "react-messenger-customer-chat": "^0.8.0",
     "react-number-format": "^4.4.4",
     "react-phone-input-2": "^2.13.9",
     "react-places-autocomplete": "^7.3.0",
@@ -83,7 +83,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "firebase deploy",
-    "check": "depcheck",
+    "check": "npx depcheck ",
     "deploy test": "firebase hosting:channel:deploy testing-hosting"
   },
   "eslintConfig": {
