@@ -94,10 +94,7 @@ module.exports = {
       clientsClaim: true,
       skipWaiting: true,
     }),
-    new CompressionPlugin({
-      // gzip js and css
-      test: /\.(js|css)/,
-    }),
+
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
@@ -139,10 +136,14 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.webm$/,
+        use: 'file-loader?name=videos/[name].[ext]',
+ },
     ],
   },
 
-  devtool: "inline-source-map",
+  ///devtool: "inline-source-map",
   resolve: {
     extensions: [".js", ".jsx", ".css", ".json"],
   },

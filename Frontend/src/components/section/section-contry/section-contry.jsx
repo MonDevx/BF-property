@@ -11,6 +11,12 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
   },
+  content: {
+    backgroundColor: theme.palette.background.paper,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  },
   headertitle: {
     fontWeight: "bold",
   },
@@ -54,17 +60,19 @@ export default function Sectioncontry() {
     },
   ];
   return (
-    <Container className={classes.cardGrid} maxWidth="lg">
-      <Typography variant="h5" className={classes.headertitle}>
-        {t("header.label")}{" "}
-      </Typography>
-      <Typography variant="h4" color="primary" className={classes.headertitle}>
-        {t("subheader.label")}
-      </Typography>
+    <div className={classes.content}>
+      <Container className={classes.cardGrid} maxWidth="lg">
+        <Typography variant="h5" className={classes.headertitle}>
+          {t("header.label")}{" "}
+        </Typography>
+        <Typography variant="h4" color="primary" className={classes.headertitle}>
+          {t("subheader.label")}
+        </Typography>
 
-      <div style={{ marginTop: 15 }}>
-        <Buttonbase images={images} />
-      </div>
-    </Container>
+        <div style={{ marginTop: 15 }}>
+          <Buttonbase images={images} />
+        </div>
+      </Container>
+    </div>
   );
 }

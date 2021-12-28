@@ -6,62 +6,69 @@ import React from "react";
 import { isWebpSupported } from "react-image-webp/dist/utils";
 import Formseach from "../../form-seach/form-seach.component.jsx";
 import { useTranslation } from "react-i18next";
+import "./videoBackground.css";
+import video from "../../../assets/video_home.webm"
 const useStyles = makeStyles((theme) => ({
-  heroContent: {
-    backgroundImage: `url(${
-      isWebpSupported()
-        ? "./assets/img/webp/section/section-main-img.webp"
-        : "./assets/img/section/section-main-img.jpg"
-    })`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
+  root: {
+    display: "inline-block",
+    position: "fixed",
+    top: "0",
+    right: "0",
+    bottom: "0",
+    left: "0",
+    overflow: "hidden",
+    zIndex: -1,
   },
   content: {
     padding: theme.spacing(8, 0, 6),
 
-    backgroundColor: "rgba(0,0,0,.5)",
+    backgroundColor: "rgba(0,0,0,.25)",
   },
   text: {
     color: theme.palette.common.white,
   },
 }));
 
-const HtmlTooltip = withStyles((theme) => ({
-  tooltip: {
-    backgroundColor: "#f5f5f9",
-    color: "rgba(0, 0, 0, 0.87)",
-    maxWidth: 220,
-    fontSize: theme.typography.pxToRem(12),
-    border: "1px solid #dadde9",
-  },
-}))(Tooltip);
 
 export default function Sectionrecommend() {
   const classes = useStyles();
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
-    <HtmlTooltip
-      title={
-        <React.Fragment>
-          <Typography color="inherit">Credit photo</Typography>
-          {"Photo by Daniel DiNuzzo on Unsplash"}
-        </React.Fragment>
-      }
-    >
-      <div className={classes.heroContent}>
-        <div className={classes.content}>
-          <Container maxWidth="sm">
-            <Typography variant="h2" align="center" className={classes.text}>
-              {t("mainheader.label")}
-            </Typography>
-            <Typography variant="h3" align="center" className={classes.text}>
-              {t("mainsubheader.label")}
-            </Typography>
-          </Container>
-          <Formseach />
-        </div>
+    <React.Fragment>
+
+      <div className={classes.root}>
+        <video className="video-background"  autoPlay loop muted>
+          <source
+            src={video}
+            type="video/webm"
+          />
+        </video>
       </div>
-    </HtmlTooltip>
+
+
+
+      <div className={classes.content}>
+        <Container maxWidth="sm">
+          <Typography variant="h2" align="center" className={classes.text}>
+            {t("mainheader.label")}
+          </Typography>
+          <Typography variant="h3" align="center" className={classes.text}>
+            {t("mainsubheader.label")}
+          </Typography>
+        </Container>
+        <Formseach />
+      </div>
+    </React.Fragment>
+    /* <div className={classes.content}>
+        <Container maxWidth="sm">
+          <Typography variant="h2" align="center" className={classes.text}>
+            {t("mainheader.label")}
+          </Typography>
+          <Typography variant="h3" align="center" className={classes.text}>
+            {t("mainsubheader.label")}
+          </Typography>
+        </Container>
+        <Formseach />
+      </div> */
   );
 }

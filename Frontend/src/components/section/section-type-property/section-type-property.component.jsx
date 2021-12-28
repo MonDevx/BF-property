@@ -10,6 +10,12 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
   },
+  content: {
+    backgroundColor: theme.palette.background.paper,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  },
   headertitle: {
     fontWeight: "bold",
   },
@@ -39,6 +45,7 @@ export default function Sectiontypeproperty() {
     },
   ];
   return (
+    <div className={classes.content}>
     <Container className={classes.cardGrid} maxWidth="lg">
       <Typography
         variant="h4"
@@ -52,6 +59,6 @@ export default function Sectiontypeproperty() {
       <div style={{ marginTop: 15 }}>
         <Buttonbase images={images} />
       </div>
-    </Container>
+    </Container></div>
   );
 }

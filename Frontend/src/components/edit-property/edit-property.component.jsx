@@ -2,7 +2,7 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles,withStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
 import React from "react";
@@ -75,6 +75,9 @@ const useStyles = makeStyles((theme) => ({
     width: 20,
     height: 20,
   },
+  content: {
+    margin: theme.spacing(3),
+  }
 }));
 function a11yProps(index) {
   return {
@@ -154,17 +157,7 @@ export default function Editproperty(props) {
         </Grid>
         {/* TODO  FUNCTION UPDATE IMAGE  */}
         {/* TODO  FUNCTION UPDATE FIRST SHOW IMAGE  */}
-        {/* <Grid item xs={3}>
-          <Button
-            startIcon={<ImageIcon />}
-            variant="contained"
-            color="secondary"
-            style={{ backgroundColor: "#ff9700" }}
-          >
-            {t("propertyeditpicture.label")}
-          </Button>
-        </Grid> */}
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%" }} style={{ paddingTop: '3%' }}>
           <div className={classes.Tab}>
             <AntTabs
               value={value}

@@ -11,7 +11,7 @@ const styles = (theme) => ({
   root: {
     display: "flex",
     background:
-      "linear-gradient(165.96deg, rgba(35, 56, 135, 0.95) 29.9%, rgba(8, 172, 145, 0.95) 104.77%)",
+      "linear-gradient(165.96deg, rgba(35, 56, 135) 29.9%, rgba(8, 172, 145 ) 104.77%)",
     overflow: "hidden",
   },
   container: {

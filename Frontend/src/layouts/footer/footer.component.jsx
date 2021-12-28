@@ -17,7 +17,7 @@ import Chip from "@material-ui/core/Chip";
 const styles = (theme) => ({
   footer: {
     background:
-      "linear-gradient(165.96deg, rgba(35, 56, 135, 0.95) 29.9%, rgba(8, 172, 145, 0.95) 104.77%)",
+      "linear-gradient(165.96deg, rgba(35, 56, 135) 29.9%, rgba(8, 172, 145) 104.77%)",
     padding: theme.spacing(5),
   },
   texthead: {

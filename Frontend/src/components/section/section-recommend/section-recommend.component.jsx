@@ -12,6 +12,12 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
   },
+  content: {
+    backgroundColor: theme.palette.background.paper,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  },
   markedH4Center: {
     height: 3,
     width: 95,
@@ -29,36 +35,37 @@ export default function Sectionrecommend(props) {
   const cards = props.property;
   const { t } = useTranslation();
   return (
-    <Container className={classes.cardGrid} maxWidth="lg">
-      <Typography variant="h4" align="center" className={classes.headertitle}>
-        {t("header.recommend.label")}
-      </Typography>
-      <Typography
-        variant="h5"
-        align="center"
-        className={classes.headertitle}
-        color="primary"
-      >
-        {t("subheader.recommend.label")}
-      </Typography>
-      <div className={classes.markedH4Center}></div>
+    <div className={classes.content}>
+      <Container className={classes.cardGrid} maxWidth="lg">
+        <Typography variant="h4" align="center" className={classes.headertitle}>
+          {t("header.recommend.label")}
+        </Typography>
+        <Typography
+          variant="h5"
+          align="center"
+          className={classes.headertitle}
+          color="primary"
+        >
+          {t("subheader.recommend.label")}
+        </Typography>
+        <div className={classes.markedH4Center}></div>
 
-      {cards ? <Listrealestate property={cards} /> : <renderLoader />}
+        {cards ? <Listrealestate property={cards} /> : <renderLoader />}
 
-      <Button
-        size="large"
-        style={{ marginTop: 8, float: "right" }}
-        component={Link}
-        to={{
-          pathname: "/seach-result",
-          state: {
-            seachkey: "view",
-          },
-        }}
-        endIcon={<ArrowForwardIosIcon />}
-      >
-        {t("seeallitem.label")}
-      </Button>
-    </Container>
+        <Button
+          size="large"
+          style={{ marginTop: 8, float: "right" }}
+          component={Link}
+          to={{
+            pathname: "/seach-result",
+            state: {
+              seachkey: "view",
+            },
+          }}
+          endIcon={<ArrowForwardIosIcon />}
+        >
+          {t("seeallitem.label")}
+        </Button>
+      </Container></div>
   );
 }

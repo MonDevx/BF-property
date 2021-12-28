@@ -106,8 +106,8 @@ export default function EditinformationaddressForm(props) {
     }
   };
   const [inputNearbyplaces, setInputNearbyplaces] = React.useState(
-    formValues.Nearbyplaces.length === 0 ?
-      formValues.Nearbyplaces
+    formValues.nearbyplaces.length === 0 ?
+      formValues.nearbyplaces
       : [{ LocationName: "", Distance: "" }]
   );
   const handleInputChange = (e, index) => {
@@ -242,7 +242,7 @@ export default function EditinformationaddressForm(props) {
           />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <FormControl fullWidth>
+          <FormControl variant="outlined" fullWidth>
             <InputLabel id="demo-simple-select-label">
               {t("addressfromsubDistrict.label")}
             </InputLabel>

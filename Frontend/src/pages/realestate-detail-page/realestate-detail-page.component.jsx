@@ -73,7 +73,6 @@ class propertyDetailpage extends React.Component {
     return (
       <div>
         <React.Fragment>
- zz
           <Bar
             typeproperty={property.idtype}
             status={property.status}
