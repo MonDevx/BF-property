@@ -1,7 +1,8 @@
-import Container from "@material-ui/core/Container";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
+import Container from "@mui/material/Container";
+import makeStyles from '@mui/styles/makeStyles';
+import withStyles from '@mui/styles/withStyles';
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import React from "react";
 import { isWebpSupported } from "react-image-webp/dist/utils";
 import Formseach from "../../form-seach/form-seach.component.jsx";

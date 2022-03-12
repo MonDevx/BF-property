@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import React from "react";
 import Buttonbase from "../customs/ิีbuttonbase/buttonbase.component.jsx";
 import { useTranslation } from "react-i18next";

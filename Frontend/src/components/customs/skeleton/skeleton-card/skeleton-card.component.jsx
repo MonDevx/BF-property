@@ -1,11 +1,11 @@
 import React from "react";
-import Skeleton from "@material-ui/lab/Skeleton";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import Skeleton from '@mui/material/Skeleton';
+import CardActionArea from "@mui/material/CardActionArea";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from "@mui/material/Typography";
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -30,7 +30,7 @@ export const SkletonCard = () => {
       <CardActionArea aria-label={"property"}>
         <Skeleton
           animation="wave"
-          variant="rect"
+          variant="rectangular"
           className={classes.cardMedia}
         />
         <CardContent className={classes.cardContent}>
@@ -49,7 +49,7 @@ export const SkletonCard = () => {
             <Grid item xs={3}>
               <Skeleton
                 animation="wave"
-                variant="rect"
+                variant="rectangular"
                 width={40}
                 height={40}
               />
@@ -57,7 +57,7 @@ export const SkletonCard = () => {
             <Grid item xs={3}>
               <Skeleton
                 animation="wave"
-                variant="rect"
+                variant="rectangular"
                 width={40}
                 height={40}
               />
@@ -65,7 +65,7 @@ export const SkletonCard = () => {
             <Grid item xs={3}>
               <Skeleton
                 animation="wave"
-                variant="rect"
+                variant="rectangular"
                 width={40}
                 height={40}
               />
@@ -73,7 +73,7 @@ export const SkletonCard = () => {
             <Grid item xs={3}>
               <Skeleton
                 animation="wave"
-                variant="rect"
+                variant="rectangular"
                 width={40}
                 height={40}
               />
@@ -95,7 +95,7 @@ export const SkletonCard = () => {
       </CardActionArea>
       <CardActions>
         <div style={{ marginLeft: "auto" }}>
-          <Skeleton animation="wave" variant="rect" width={40} height={40} />
+          <Skeleton animation="wave" variant="rectangular" width={40} height={40} />
         </div>
       </CardActions>
     </React.Fragment>

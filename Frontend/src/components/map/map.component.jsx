@@ -1,7 +1,7 @@
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import GpsFixedRoundedIcon from "@material-ui/icons/GpsFixedRounded";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import GpsFixedRoundedIcon from "@mui/icons-material/GpsFixedRounded";
 
 import React from "react";
 
@@ -12,7 +12,7 @@ import { Map, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import Leaflet from "leaflet";
 import Control from "react-leaflet-control";
-import Chip from "@material-ui/core/Chip";
+import Chip from "@mui/material/Chip";
 import AutocompleteSeach from "../autocomplete-seach/autocomplete-seach.jsx";
 Leaflet.Icon.Default.imagePath = "../node_modules/leaflet";
 

@@ -1,9 +1,9 @@
 import React from "react";
 import SignIn from "../../components/form-signin/form-signin.component.jsx";
 import SignUp from "../../components/form-signup/form-signup.component.jsx";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Paper";
+import makeStyles from '@mui/styles/makeStyles';
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",

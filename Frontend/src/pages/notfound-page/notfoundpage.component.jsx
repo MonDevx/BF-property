@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "react-router-dom/Link";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 class NotFoundPage extends React.Component {
   render() {
     return (

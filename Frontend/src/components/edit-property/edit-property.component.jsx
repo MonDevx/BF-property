@@ -1,10 +1,11 @@
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import makeStyles from '@mui/styles/makeStyles';
+import withStyles from '@mui/styles/withStyles';
+import Typography from "@mui/material/Typography";
+import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import React from "react";
 import { useAlert } from "react-alert";
 import { firestore } from "../../firebase/firebase.utils";
@@ -12,15 +13,15 @@ import EditinformationfacilityForm from "./edit-infofacilityformproperty.compone
 import EditinformationForm from "./edit-infoformproperty.component.jsx";
 import EditinformationdetailsForm from "./edit-infomoredetailformproperty.component.jsx";
 import { useTranslation } from "react-i18next";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { Link } from "react-router-dom";
-import Linkmu from "@material-ui/core/Link";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import Linkmu from "@mui/material/Link";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import EditinformationaddressForm from "./edit-infoaddressformproperty.component.jsx";
 import { AiOutlineHome, AiOutlineEdit } from "react-icons/ai";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Box from "@material-ui/core/Box";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
 const AntTabs = withStyles({
   root: {
     borderBottom: "1px solid #e8e8e8",
@@ -212,7 +213,7 @@ export default function Editproperty(props) {
         <Grid
           container
           direction="row"
-          justify="flex-end"
+          justifyContent="flex-end"
           alignItems="flex-end"
         >
           <div className={classes.buttons}>

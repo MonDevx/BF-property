@@ -1,7 +1,7 @@
 
 import React from "react";
 import Formseachresult from "../../components/form-seach/form-seach.result.component.jsx";
-import Container from "@material-ui/core/Container";
+import Container from "@mui/material/Container";
 import { Redirect } from 'react-router';
 import qs from 'query-string';
 const Listrealestate = React.lazy(() => {

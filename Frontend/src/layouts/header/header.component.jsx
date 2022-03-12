@@ -1,25 +1,25 @@
-import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import AppBar from "@mui/material/AppBar";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 import NavigationDrawer from "../../components/customs/ืnavigationdrawer/navigationdrawer.js";
 import ReactCountryFlag from "react-country-flag";
 import { useTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase/firebase.utils";
-import Tooltip from "@material-ui/core/Tooltip";
+import Tooltip from "@mui/material/Tooltip";
 import React, { useState, useCallback } from "react";
-import Badge from "@material-ui/core/Badge";
-import Avatar from "@material-ui/core/Avatar";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import withStyles from "@material-ui/core/styles/withStyles";
+import Badge from "@mui/material/Badge";
+import Avatar from "@mui/material/Avatar";
+import makeStyles from '@mui/styles/makeStyles';
+import withStyles from '@mui/styles/withStyles';
 import { Detector } from "react-detect-offline";
-import Hidden from "@material-ui/core/Hidden";
-import MenuIcon from "@material-ui/icons/Menu";
+import Hidden from "@mui/material/Hidden";
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   AiOutlineAppstoreAdd,
   AiOutlineHome,
@@ -230,11 +230,11 @@ function Header(props) {
                 className={classes.menuButton}
                 onClick={handleMobileDrawerOpen}
                 aria-label="Open Navigation"
-              >
+                size="large">
                 <MenuIcon color="primary" />
               </IconButton>
             </Hidden>
-            <Hidden smDown>
+            <Hidden mdDown>
               <Button
                 variant="text"
                 component={Link}
@@ -270,7 +270,7 @@ function Header(props) {
                             : props.currentUser.favorite.length
                         }
                         showZero
-                        overlap="circle"
+                        overlap="circular"
                         color="error"
                       >
                         <AiOutlineHeart
@@ -315,15 +315,36 @@ function Header(props) {
                     anchorEl={anchorE2}
                     open={Boolean(anchorE2)}
                     onClose={handleClose}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "center",
-                    }}
                     keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "center",
+
+                    PaperProps={{
+                      elevation: 0,
+                      sx: {
+                        overflow: 'visible',
+                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                        mt: 1.5,
+                        '& .MuiAvatar-root': {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                        '&:before': {
+                          content: '""',
+                          display: 'block',
+                          position: 'absolute',
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: 'background.paper',
+                          transform: 'translateY(-50%) rotate(45deg)',
+                          zIndex: 0,
+                        },
+                      },
                     }}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                   >
                     <MenuItem
                       component={Link}
@@ -388,17 +409,37 @@ function Header(props) {
               <Menu
                 id="currency-menu"
                 anchorEl={anchorE3}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "center",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "center",
-                }}
+
                 open={Boolean(anchorE3)}
                 onClose={handleClose}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: 'visible',
+                    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                    mt: 1.5,
+                    '& .MuiAvatar-root': {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    '&:before': {
+                      content: '""',
+                      display: 'block',
+                      position: 'absolute',
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: 'background.paper',
+                      transform: 'translateY(-50%) rotate(45deg)',
+                      zIndex: 0,
+                    },
+                  },
+                }}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
               >
                 {optionsCurrency.map((option, index) => (
                   <MenuItem
@@ -445,10 +486,34 @@ function Header(props) {
                   horizontal: "center",
                 }}
                 keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "center",
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: 'visible',
+                    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                    mt: 1.5,
+                    '& .MuiAvatar-root': {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    '&:before': {
+                      content: '""',
+                      display: 'block',
+                      position: 'absolute',
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: 'background.paper',
+                      transform: 'translateY(-50%) rotate(45deg)',
+                      zIndex: 0,
+                    },
+                  },
                 }}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >

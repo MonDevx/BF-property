@@ -1,13 +1,13 @@
-import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
-import Container from "@material-ui/core/Container";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Grid from "@material-ui/core/Grid";
-import Linkui from "@material-ui/core/Link";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import Container from "@mui/material/Container";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Grid from "@mui/material/Grid";
+import Linkui from "@mui/material/Link";
+import withStyles from '@mui/styles/withStyles';
+import Typography from "@mui/material/Typography";
 
-import FacebookIcon from "@material-ui/icons/Facebook";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import PropTypes from "prop-types";
 import React from "react";
 import { withAlert } from "react-alert";
@@ -134,11 +134,9 @@ class SignIn extends React.Component {
           <Button
             type="submit"
             variant="contained"
-            color="default"
             className={classes.submit}
             fullWidth
-            size="large"
-          >
+            size="large">
             {t("sigin.label")}
           </Button>
         </ValidatorForm>

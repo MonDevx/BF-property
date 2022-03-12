@@ -1,9 +1,9 @@
 import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
-import Box from "@material-ui/core/Box";
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
 const useStyles = makeStyles((theme) => ({
   number: {
     fontSize: 20,

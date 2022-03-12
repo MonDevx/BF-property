@@ -1,4 +1,4 @@
-import Container from "@material-ui/core/Container";
+import Container from "@mui/material/Container";
 import React from "react";
 import Listrealestate from "../../components/list-realestate/list-realestate.component.jsx";
 import { connect } from "react-redux";

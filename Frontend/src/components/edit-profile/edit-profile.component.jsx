@@ -1,10 +1,10 @@
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import FormControl from "@material-ui/core/FormControl";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import React from "react";
 import { withAlert } from "react-alert";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
@@ -12,17 +12,17 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { firestore } from "../../firebase/firebase.utils";
 import { withTranslation } from "react-i18next";
-import { withStyles } from "@material-ui/core/styles";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import Linkui from "@material-ui/core/Link";
+import withStyles from '@mui/styles/withStyles';
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Linkui from "@mui/material/Link";
 import { Link } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import { AiOutlineEdit, AiOutlineUser } from "react-icons/ai";
 import "react-phone-input-2/lib/material.css";
 import { isMobile } from "react-device-detect";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 const styles = (theme) => ({
   paper: {
     display: "flex",

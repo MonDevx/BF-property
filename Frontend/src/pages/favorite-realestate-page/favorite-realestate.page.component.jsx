@@ -4,7 +4,7 @@ import Listrealestate from "../../components/list-realestate/list-realestate.com
 import LoaderSpinners from "../../components/loader-spinners/loader-spinners.jsx";
 import { connect } from "react-redux";
 import { withAlert } from "react-alert";
-import Container from "@material-ui/core/Container";
+import Container from "@mui/material/Container";
 import { compose } from "redux";
 import { auth } from "../../firebase/firebase.utils";
 import { Redirect } from "react-router-dom";

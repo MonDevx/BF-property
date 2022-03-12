@@ -1,12 +1,12 @@
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from "@mui/material/Typography";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import React from "react";
 import ImageGallery from "react-image-gallery";
 import { connect } from "react-redux";
@@ -115,14 +115,14 @@ function Img(props) {
   return (
     <div className={classes.img}>
       <Container maxWidth="lg">
-        <Grid container direction="row" justify="flex-end" alignItems="center">
+        <Grid container direction="row" justifyContent="flex-end" alignItems="center">
           <Grid item>
             <IconButton
               value={props.id}
               aria-label="add to favorites"
               onClick={handleFavorite}
               disabled={currentUser ? false : true}
-            >
+              size="large">
               {currentUser !== null ? (
                 <FavoriteIcon
                   style={{ fontSize: 27 }}
@@ -188,7 +188,7 @@ function Img(props) {
         <Grid
           container
           direction="row-reverse"
-          justify="space-between"
+          justifyContent="space-between"
           alignItems="center"
         >
           <Typography

@@ -1,7 +1,7 @@
 import React from "react";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import Zoom from "@material-ui/core/Zoom";
-import { makeStyles } from '@material-ui/core/styles';
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import Zoom from "@mui/material/Zoom";
+import makeStyles from '@mui/styles/makeStyles';
 export default function ScrollTop(props) {
     const useStyles = makeStyles((theme) => ({
       root: {

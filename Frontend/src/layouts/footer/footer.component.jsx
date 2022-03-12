@@ -1,11 +1,11 @@
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Link from "@material-ui/core/Link";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Typography from "@material-ui/core/Typography";
-import EmailIcon from "@material-ui/icons/Email";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
+import withStyles from '@mui/styles/withStyles';
+import Typography from "@mui/material/Typography";
+import EmailIcon from "@mui/icons-material/Email";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import React from "react";
 import { withAlert } from "react-alert";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
@@ -13,7 +13,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { compose } from "redux";
 import axios from "axios";
 import { withTranslation } from "react-i18next";
-import Chip from "@material-ui/core/Chip";
+import Chip from "@mui/material/Chip";
 const styles = (theme) => ({
   footer: {
     background:
@@ -32,7 +32,7 @@ const styles = (theme) => ({
     height: 3,
     width: "100%",
     display: "block",
-    margin: `${theme.spacing(1)}px auto 0`,
+    margin: `${theme.spacing(1)} auto 0`,
     backgroundColor: "#E5E5E5",
     marginTop: "4.5%",
   },
@@ -113,23 +113,13 @@ class Footer extends React.Component {
               >
                 {t("footerheadertag.label")}
               </Typography>
-              <Chip
-                variant="default"
-                size="small"
-                color="primary"
-                label={t("typeproperty1.label")}
-              />
-              <Chip
-                variant="default"
-                color="primary"
-                size="small"
-                label={t("typeproperty2.label")}
-              />
-              <Chip variant="default" color="primary" size="small" label={t("footer.tag1")} />
-              <Chip variant="default" color="primary" size="small" label={t("footer.tag2")} />
-              <Chip variant="default" color="primary" size="small" label={t("footer.tag3")} />
-              <Chip variant="default" color="primary" size="small" label={t("footer.tag4")} />
-              <Chip variant="default" color="primary" size="small" label={t("footer.tag5")} />
+              <Chip size="small" color="primary" label={t("typeproperty1.label")} />
+              <Chip color="primary" size="small" label={t("typeproperty2.label")} />
+              <Chip color="primary" size="small" label={t("footer.tag1")} />
+              <Chip color="primary" size="small" label={t("footer.tag2")} />
+              <Chip color="primary" size="small" label={t("footer.tag3")} />
+              <Chip color="primary" size="small" label={t("footer.tag4")} />
+              <Chip color="primary" size="small" label={t("footer.tag5")} />
             </Grid>
             <Grid item xs>
               <Typography
@@ -262,7 +252,7 @@ class Footer extends React.Component {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="baseline"
             >
               <Link component={RouterLink} to="/termsandcondition">

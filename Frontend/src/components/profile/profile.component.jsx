@@ -1,16 +1,16 @@
 /* eslint-disable no-lone-blocks */
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import { compose } from "redux";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import {
   AiOutlineCloudUpload,
   AiOutlineCamera,
@@ -32,7 +32,7 @@ const styles = (theme) => ({
   },
   sizeimage: {
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('lg')]: {
       width: theme.spacing(10),
       height: theme.spacing(10),
     },
@@ -127,7 +127,7 @@ class Profile extends React.Component {
                 <Grid
                   container
                   direction="column"
-                  justify="space-between"
+                  justifyContent="space-between"
                   alignItems="center"
                   spacing={3}
                 >
@@ -180,7 +180,7 @@ class Profile extends React.Component {
               <Grid
                 container
                 direction="column"
-                justify="space-between"
+                justifyContent="space-between"
                 spacing={3}
               >
                 <Grid item xs={12}>

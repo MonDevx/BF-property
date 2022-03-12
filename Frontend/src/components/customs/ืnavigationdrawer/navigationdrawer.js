@@ -7,19 +7,22 @@ import {
     ListItemIcon,
     ListItemText,
     Drawer,
-    withStyles,
     IconButton,
     Typography,
-    withWidth,
     isWidthUp,
     Toolbar,
     Grid,
-} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import Badge from "@material-ui/core/Badge";
-import Avatar from "@material-ui/core/Avatar";
+} from "@mui/material";
+import withStyles from '@mui/styles/withStyles';
+import CloseIcon from "@mui/icons-material/Close";
+import Badge from "@mui/material/Badge";
+import Avatar from "@mui/material/Avatar";
 import { Detector } from "react-detect-offline";
 import { useTranslation } from "react-i18next";
+
+// FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
+const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props} width="xs" />;
+
 const styles = (theme) => ({
     closeIcon: {},
     headSection: {
@@ -96,7 +99,7 @@ function NavigationDrawer(props) {
                     disableGutters
                 >
                     <ListItemIcon className={classes.closeIcon}>
-                        <IconButton onClick={onClose} aria-label="Close Navigation">
+                        <IconButton onClick={onClose} aria-label="Close Navigation" size="large">
                             <CloseIcon color="primary" />
                         </IconButton>
                     </ListItemIcon>
@@ -106,7 +109,7 @@ function NavigationDrawer(props) {
                 <Grid
                     container
                     direction="column"
-                    justify="center"
+                    justifyContent="center"
                     alignItems="center"
                     spacing={1}
                 >

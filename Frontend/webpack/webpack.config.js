@@ -17,6 +17,7 @@ module.exports = {
     chunkFilename: "[id].[chunkhash].js",
   },
   optimization: {
+    sideEffects: false, 
     splitChunks: {
       cacheGroups: {
         vendors: {

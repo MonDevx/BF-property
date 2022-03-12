@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import React, { Suspense, lazy } from "react";
 import { Provider as AlertProvider } from "react-alert";
 import Announcement from "react-announcement";
@@ -19,9 +19,9 @@ import { setCurrentUser } from "./redux/user/user.actions";
 import { setI18n } from "./redux/i18n/i18n.actions";
 
 import theme from "./theme";
-import { ThemeProvider } from "@material-ui/core/styles";
-import Fab from "@material-ui/core/Fab";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
+import Fab from "@mui/material/Fab";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ScrollTop from "./components/scroll-top/scroll-top.component.jsx";
 import LoaderSpinners from "./components/loader-spinners/loader-spinners.jsx";
 import { withTranslation } from "react-i18next";
@@ -89,65 +89,67 @@ class App extends React.Component {
   }
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <Pace color={theme.palette.primary.main} />
-        <AlertProvider template={AlertTemplate} {...options}>
-          {this.state.maintenancestatus === 1 ? (
-            <Suspense
-              fallback={
-                <div align="center" style={{ margin: "21.80%" }}>
-                  <LoaderSpinners />
-                </div>
-              }
-            >
-              <div id="back-to-top-anchor"></div>
-              <Header />
-              <Routes currentUser={this.props.currentUser} />
-              <Footer />
-              <Announcement
-                title={
-                  <Typography variant="h5" gutterBottom>
-                    {"ประกาศจากทางเว็ปไซต์"}
-                  </Typography>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <Pace color={theme.palette.primary.main} />
+          <AlertProvider template={AlertTemplate} {...options}>
+            {this.state.maintenancestatus === 1 ? (
+              <Suspense
+                fallback={
+                  <div align="center" style={{ margin: "21.80%" }}>
+                    <LoaderSpinners />
+                  </div>
                 }
-                subtitle={
-                  <Typography variant="subtitle2" gutterBottom>
-                    {this.state.announcementtext}
-                  </Typography>
-                }
-                imageSource="https://firebasestorage.googleapis.com/v0/b/bfproperty.appspot.com/o/logo-small.png?alt=media&token=df545452-df29-4696-b1ab-2df5c120eb36"
-                // daysToLive={this.state.day}
-                secondsBeforeBannerShows={3}
-                closeIconSize={10}
-              />
-              <ScrollTop>
-                <Fab
-                  color="secondary"
-                  size="small"
-                  aria-label="scroll back to top"
-                >
-                  <KeyboardArrowUpIcon />
-                </Fab>
-              </ScrollTop>
-
-              <LiveChatLoaderProvider
-                provider="messenger"
-                providerKey="103720534694768"
-                appID="232462984487271"
-                locale="th_TH"
               >
-                <Messenger />
-              </LiveChatLoaderProvider>
-            </Suspense>
-          ) : this.state.maintenancestatus === 0 ? (
-            <Route path="/*" component={MaintancePage} />
-          ) : (
-            <div align="center" style={{ margin: "21.80%" }}>
-              <LoaderSpinners />
-            </div>
-          )}
-        </AlertProvider>
-      </ThemeProvider>
+                <div id="back-to-top-anchor"></div>
+                <Header />
+                <Routes currentUser={this.props.currentUser} />
+                <Footer />
+                <Announcement
+                  title={
+                    <Typography variant="h5" gutterBottom>
+                      {"ประกาศจากทางเว็ปไซต์"}
+                    </Typography>
+                  }
+                  subtitle={
+                    <Typography variant="subtitle2" gutterBottom>
+                      {this.state.announcementtext}
+                    </Typography>
+                  }
+                  imageSource="https://firebasestorage.googleapis.com/v0/b/bfproperty.appspot.com/o/logo-small.png?alt=media&token=df545452-df29-4696-b1ab-2df5c120eb36"
+                  // daysToLive={this.state.day}
+                  secondsBeforeBannerShows={3}
+                  closeIconSize={10}
+                />
+                <ScrollTop>
+                  <Fab
+                    color="secondary"
+                    size="small"
+                    aria-label="scroll back to top"
+                  >
+                    <KeyboardArrowUpIcon />
+                  </Fab>
+                </ScrollTop>
+
+                <LiveChatLoaderProvider
+                  provider="messenger"
+                  providerKey="103720534694768"
+                  appID="232462984487271"
+                  locale="th_TH"
+                >
+                  <Messenger />
+                </LiveChatLoaderProvider>
+              </Suspense>
+            ) : this.state.maintenancestatus === 0 ? (
+              <Route path="/*" component={MaintancePage} />
+            ) : (
+              <div align="center" style={{ margin: "21.80%" }}>
+                <LoaderSpinners />
+              </div>
+            )}
+          </AlertProvider>
+        </ThemeProvider>
+      </StyledEngineProvider>
     );
   }
 }

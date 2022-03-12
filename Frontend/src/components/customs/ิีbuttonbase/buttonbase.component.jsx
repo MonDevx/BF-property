@@ -1,7 +1,8 @@
-import ButtonBase from "@material-ui/core/ButtonBase";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
+import ButtonBase from "@mui/material/ButtonBase";
+import makeStyles from '@mui/styles/makeStyles';
+import withStyles from '@mui/styles/withStyles';
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import React from "react";
 import { isWebpSupported } from "react-image-webp/dist/utils";
 import { Link } from "react-router-dom";
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
 
     height: 200,
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('md')]: {
       width: "100% !important", // Overrides inline-style
       height: 100,
     },
@@ -63,8 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
   imageTitle: {
     position: "relative",
-    padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6
-      }px`,
+    padding: `calc(${theme.spacing(2)} ${theme.spacing(4)} ${theme.spacing(1)} + 6px)`,
   },
   imageMarked: {
     height: 3,

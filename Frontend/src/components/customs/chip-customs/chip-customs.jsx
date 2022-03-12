@@ -1,9 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import Chip from "@material-ui/core/Chip";
+import Chip from "@mui/material/Chip";
 import { getDistance } from "geolib";
-import NearMeIcon from "@material-ui/icons/NearMe";
-import DoneIcon from "@material-ui/icons/Done";
+import NearMeIcon from "@mui/icons-material/NearMe";
+import DoneIcon from "@mui/icons-material/Done";
 
 export const ChipNearbyPlaces = (props) => {
   const { t } = useTranslation();

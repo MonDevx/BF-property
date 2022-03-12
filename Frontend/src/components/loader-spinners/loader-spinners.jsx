@@ -1,6 +1,6 @@
 import React from "react";
 import ClipLoader from "react-spinners/ClipLoader";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 export default function LoaderSpinners() {
   return (
     <Grid
@@ -8,7 +8,7 @@ export default function LoaderSpinners() {
       spacing={0}
       direction="column"
       alignItems="center"
-      justify="center"
+      justifyContent="center"
       style={{ minHeight: "100vh" }}
     >
       <ClipLoader size={45} color={"#007BFF"} />

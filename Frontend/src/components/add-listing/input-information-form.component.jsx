@@ -1,13 +1,14 @@
 import DateFnsUtils from "@date-io/date-fns";
-import Button from "@material-ui/core/Button";
-import FormControl from "@material-ui/core/FormControl";
-import Grid from "@material-ui/core/Grid";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import withStyles from '@mui/styles/withStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { DropzoneArea } from "material-ui-dropzone";
 import React from "react";
@@ -16,13 +17,13 @@ import SimpleMap from "../map/map.component.jsx";
 import Checkboxform from "./checkbox-form.component.jsx";
 import { useTranslation } from "react-i18next";
 import NumberFormat from "react-number-format";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import "./styles.css";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Box from "@material-ui/core/Box";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
 const thai = require("thai-data");
 
 const AntTabs = withStyles({
@@ -677,15 +678,12 @@ export default function InformationForm(props) {
                   />
 
                   {inputNearbyplaces.length !== 1 && (
-                    <IconButton
-                      aria-label="delete"
-                      onClick={() => handleRemoveClick(i)}
-                    >
+                    <IconButton aria-label="delete" onClick={() => handleRemoveClick(i)} size="large">
                       <DeleteIcon />
                     </IconButton>
                   )}
                   {inputNearbyplaces.length - 1 === i && (
-                    <IconButton aria-label="add" onClick={handleAddClick}>
+                    <IconButton aria-label="add" onClick={handleAddClick} size="large">
                       <AddCircleIcon />
                     </IconButton>
                   )}

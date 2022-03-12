@@ -1,27 +1,27 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import { makeStyles } from "@material-ui/core/styles";
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import makeStyles from '@mui/styles/makeStyles';
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import React from "react";
 import LazyLoad from "react-lazyload";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { SkletonCard } from "../customs/skeleton/skeleton-card/skeleton-card.component.jsx";
-import Skeleton from "@material-ui/lab/Skeleton";
+import Skeleton from '@mui/material/Skeleton';
 import { ChipStatus } from "../customs/chip-customs/chip-customs.jsx";
 import {
   BiBath,
@@ -60,12 +60,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function currencyFormat(num) {
-  return (
-    "$ " +
-    Number(num)
-      .toFixed()
-      .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-  );
+  return "$ " +
+  Number(num)
+    .toFixed()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
 
 function CardProperty(props) {
@@ -124,7 +122,7 @@ function CardProperty(props) {
                   ) : (
                     <Skeleton
                       animation="wave"
-                      variant="rect"
+                      variant="rectangular"
                       className={classes.cardMedia}
                     />
                   )}
@@ -287,7 +285,7 @@ function CardProperty(props) {
                                 status: detail.status,
                               },
                             }}
-                          >
+                            size="large">
                             <BiTimeFive />
                           </IconButton>
                         </Tooltip>
@@ -303,7 +301,7 @@ function CardProperty(props) {
                                 id: detail.id,
                               },
                             }}
-                          >
+                            size="large">
                             <BiEdit />
                           </IconButton>
                         </Tooltip>
@@ -314,7 +312,7 @@ function CardProperty(props) {
                           <IconButton
                             aria-label="detele to favorites"
                             onClick={() => handleClickOpen(detail.id, index)}
-                          >
+                            size="large">
                             <BiTrash />
                           </IconButton>
                         </Tooltip>

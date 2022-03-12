@@ -1,6 +1,6 @@
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Pagination from "@material-ui/lab/Pagination";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Pagination from '@mui/material/Pagination';
 import React from "react";
 import { withTranslation } from "react-i18next";
 import { firestorage, firestore } from "../../firebase/firebase.utils";
@@ -11,15 +11,15 @@ import Cardproperty from "../card-realestate/card-realestate.component.jsx";
 import axios from "axios";
 import { auth } from "../../firebase/firebase.utils.js";
 import * as _ from "lodash";
-import MenuItem from "@material-ui/core/MenuItem";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
-import SortIcon from "@material-ui/icons/Sort";
-import SearchIcon from "@material-ui/icons/Search";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import SortIcon from "@mui/icons-material/Sort";
+import SearchIcon from "@mui/icons-material/Search";
+import InputAdornment from "@mui/material/InputAdornment";
 import { withRouter } from "react-router-dom";
-import Box from "@material-ui/core/Box";
+import Box from "@mui/material/Box";
 class Listproperty extends React.Component {
   constructor(props) {
     super(props);
@@ -429,7 +429,7 @@ class Listproperty extends React.Component {
     return (
       <Grid
         container
-        justify="space-between"
+        justifyContent="space-between"
         alignItems="center"
         style={{ paddingTop: "2%", paddingBottom: "2%" }}
       >
@@ -533,7 +533,7 @@ class Listproperty extends React.Component {
           <Grid
             container
             direction="row"
-            justify="center"
+            justifyContent="center"
             alignItems="center"
             style={{
               padding: location.pathname === "/" ? "10%" : "15%",

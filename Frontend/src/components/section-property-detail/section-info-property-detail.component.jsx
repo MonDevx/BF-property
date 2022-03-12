@@ -1,33 +1,33 @@
 /* eslint-disable no-lone-blocks */
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
-import MapIcon from "@material-ui/icons/Map";
-import SendIcon from "@material-ui/icons/Send";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from "@mui/material/Typography";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import MapIcon from "@mui/icons-material/Map";
+import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
 import React from "react";
 import { useAlert } from "react-alert";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import SimpleMap from "../map/map.component.jsx";
 import { useTranslation } from "react-i18next";
-import Slider from "@material-ui/core/Slider";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Card from "@material-ui/core/Card";
+import Slider from "@mui/material/Slider";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Card from "@mui/material/Card";
 import NumberFormat from "react-number-format";
-import EmojiTransportationIcon from "@material-ui/icons/EmojiTransportation";
+import EmojiTransportationIcon from "@mui/icons-material/EmojiTransportation";
 import {
   ChipNearbyPlaces,
   ChipCentralServiceAndFurniture,
 } from "../customs/chip-customs/chip-customs.jsx";
-import Paper from "@material-ui/core/Paper";
+import Paper from "@mui/material/Paper";
 import { BrowserView, MobileView, isMobile } from "react-device-detect";
 
 import {
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     height: 1,
     width: "100%",
     display: "block",
-    margin: `${theme.spacing(4)}px auto 0`,
+    margin: `${theme.spacing(4)} auto 0`,
     backgroundColor: "#f6f6f6",
   },
   wrapper: {
@@ -241,7 +241,7 @@ export default function Info(props) {
                   })
                 }
                 aria-label="add an alarm"
-              >
+                size="large">
                 <MapIcon />
               </IconButton>
             </Grid>
@@ -694,7 +694,7 @@ export default function Info(props) {
             <Grid
               container
               direction="column"
-              justify="center"
+              justifyContent="center"
               alignItems="center"
               spacing={2}
             >

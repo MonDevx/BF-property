@@ -1,12 +1,16 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
+import withStyles from '@mui/styles/withStyles';
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 import { useTranslation } from "react-i18next";
-import { isWidthUp, withWidth } from "@material-ui/core";
+import { isWidthUp } from "@mui/material";
 import { compose } from "redux";
 import { HowItWorkCard } from "../../customs/howitworkcard/howitwork-card.jsx";
+
+// FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
+const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props} width="xs" />;
+
 const styles = (theme) => ({
   root: {
     display: "flex",

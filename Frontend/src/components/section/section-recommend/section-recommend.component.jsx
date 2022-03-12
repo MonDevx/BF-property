@@ -1,8 +1,8 @@
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from "@mui/material/Typography";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     height: 3,
     width: 95,
     display: "block",
-    margin: `${theme.spacing(1)}px auto 0`,
+    margin: `${theme.spacing(1)} auto 0`,
     backgroundColor: theme.palette.primary.main,
   },
   headertitle: {

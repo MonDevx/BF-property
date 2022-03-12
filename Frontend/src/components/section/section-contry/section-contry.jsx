@@ -1,6 +1,6 @@
-import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import Container from "@mui/material/Container";
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from "@mui/material/Typography";
 import React from "react";
 import Buttonbase from "../../customs/ิีbuttonbase/buttonbase.component.jsx";
 

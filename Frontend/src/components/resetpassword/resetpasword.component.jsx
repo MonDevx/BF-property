@@ -1,15 +1,15 @@
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import React from "react";
 import { withAlert } from "react-alert";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { auth } from "../../firebase/firebase.utils.js";
 import { withTranslation } from "react-i18next";
 import { compose } from "redux";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 const styles = (theme) => ({
   paper: {
     display: "flex",
@@ -74,7 +74,7 @@ class Resetpassword extends React.Component {
             <Grid
               container
               direction="row"
-              justify="center"
+              justifyContent="center"
               alignItems="center"
               spacing={5}
             >

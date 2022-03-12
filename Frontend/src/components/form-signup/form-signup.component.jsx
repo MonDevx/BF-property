@@ -1,9 +1,9 @@
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Link from "@material-ui/core/Link";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
+import withStyles from '@mui/styles/withStyles';
+import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import React from "react";
