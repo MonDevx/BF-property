@@ -7,15 +7,15 @@ import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import TextField from "@mui/material/TextField";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import Autocomplete from '@mui/material/Autocomplete';
+import Autocomplete from "@mui/material/Autocomplete";
 import React from "react";
 import { Link } from "react-router-dom";
 import data from "../../json/province.json";
 import { useTranslation } from "react-i18next";
-import qs from 'query-string';
+import qs from "query-string";
 const provicejson = data;
 const useStyles = makeStyles((theme) => ({
   expand: {
@@ -62,7 +62,7 @@ export default function Formseach() {
   };
   const { t } = useTranslation();
   return (
-    <Container maxWidth="md" className={classes.seachbox}>
+    <Container maxWidth="lg" className={classes.seachbox}>
       <Card className={classes.card}>
         <CardActions>
           <Grid
@@ -72,7 +72,7 @@ export default function Formseach() {
             alignItems="center"
             spacing={2}
           >
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={2}>
               <FormControl
                 variant="outlined"
                 className={classes.formControl}
@@ -95,7 +95,7 @@ export default function Formseach() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={5}>
+            <Grid item xs={12} sm={2}>
               <Autocomplete
                 id="combo-box-demo"
                 options={provicejson}
@@ -110,33 +110,6 @@ export default function Formseach() {
                   />
                 )}
               />
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <Button
-                fullWidth
-                variant="contained"
-                color="secondary"
-                style={{ padding: "4%" }}
-                component={Link}
-                to={{
-                  pathname: "/seach-result",
-                  search: qs.stringify({
-                    type: type,
-                    province: provice,
-                    price: price,
-                    room: room,
-                    // family: 0,
-                    // bath: 0,
-                    // car: 0,
-                    // size: 0,
-                    // check: true,
-                  }),
-                }}
-                startIcon={<SearchRoundedIcon />}
-                aria-label={t("seach.label")}
-              >
-                {t("seach.label")}
-              </Button>
             </Grid>
 
             <Grid item xs={12} sm={3}>
@@ -159,9 +132,9 @@ export default function Formseach() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={2}>
               <TextField
-              id="room"
+                id="room"
                 variant="outlined"
                 label={t("propertybed.label")}
                 type="number"
@@ -178,6 +151,28 @@ export default function Formseach() {
                 inputProps={{ min: "0", max: "9", step: "1" }}
                 fullWidth
               />
+            </Grid>
+            <Grid item xs={12} sm={2}>
+              <Button
+                fullWidth
+                variant="contained"
+                color="secondary"
+                style={{ padding: "4%" }}
+                component={Link}
+                to={{
+                  pathname: "/seach-result",
+                  search: qs.stringify({
+                    type: type,
+                    province: provice,
+                    price: price,
+                    room: room,
+                  }),
+                }}
+                startIcon={<SearchRoundedIcon />}
+                aria-label={t("seach.label")}
+              >
+                {t("seach.label")}
+              </Button>
             </Grid>
           </Grid>
         </CardActions>

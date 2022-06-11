@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { DropzoneArea } from "material-ui-dropzone";
 import React from "react";
-import SimpleMDEReact from "react-simplemde-editor";
+import SimpleMDE  from "react-simplemde-editor";
 import SimpleMap from "../map/map.component.jsx";
 import Checkboxform from "./checkbox-form.component.jsx";
 import { useTranslation } from "react-i18next";
@@ -20,10 +20,10 @@ import NumberFormat from "react-number-format";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import "./styles.css";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import "easymde/dist/easymde.min.css";
 const thai = require("thai-data");
 
 const AntTabs = withStyles({
@@ -256,7 +256,7 @@ export default function InformationForm(props) {
   return (
     <React.Fragment>
       <div className={classes.root}>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h5" >
           {formValues.idtype === 3
             ? t("forminfoheadercondo.label")
             : t("forminfoheader.label")}
@@ -304,7 +304,6 @@ export default function InformationForm(props) {
                   id="name"
                   name="name"
                   fullWidth
-                  variant="outlined"
                   inputProps={{
                     maxLength: 100,
                   }}
@@ -318,7 +317,7 @@ export default function InformationForm(props) {
               {formValues.idtype === 3 ? (
                 <Grid item xs={12} sm={4}>
                   <TextField
-                    variant="outlined"
+                    variant="outlined" 
                     onChange={handleChange}
                     value={formValues.projectname}
                     label={t("projectname.label")}
@@ -351,6 +350,7 @@ export default function InformationForm(props) {
                     inputComponent: NumberFormatCustom,
                   }}
                 />
+                
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
@@ -694,7 +694,7 @@ export default function InformationForm(props) {
           </TabPanel>
           <TabPanel value={value} index={3}>
             <Grid item xs={12}>
-              <SimpleMDEReact
+              <SimpleMDE
                 id="detail"
                 onChange={handleDetailChange}
                 value={formValues.detail}
@@ -768,7 +768,6 @@ export default function InformationForm(props) {
           <Button
             variant="contained"
             color="primary"
-            onClick={handleNext}
             className={classes.button}
             onClick={() => handleNext(formValues)}
             disabled={

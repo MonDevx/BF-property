@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import LoaderSpinners from "./components/loader-spinners/loader-spinners.jsx";
 import loadable from "react-loadable";
 import {
@@ -21,53 +21,53 @@ import {
   UpdateStatusPage,
 } from "./pages";
 
-const Routes = (props) => {
+const Router = (props) => {
   return (
-    <Switch>
-      <Route path="/" exact component={IndexPage} />
+    <Routes>
+      <Route path="/" index element={<IndexPage />} />
       <Route
         path="/signin"
-        render={() =>
-          props.currentUser ? <Redirect to="/" /> : <SigninandSignupPage />
+        element={
+          props.currentUser ? <Navigate to="/" replace /> : <SigninandSignupPage />
         }
       />
       <Route
         path="/add-listing"
-        render={() =>
+        element={
           props.currentUser ? <AddListingPage /> : <SigninandSignupPage />
         }
       />
       <Route
         path="/property-edit"
-        render={() =>
+        element={
           props.currentUser ? <EditPropertyPage /> : <SigninandSignupPage />
         }
       />
-      <Route path="/property-detail/:name" component={PropertyDetailPage} />
-      <Route exact path="/termsandcondition" component={TermsPage} />
+      <Route path="/property-detail/:name" element={<PropertyDetailPage />} />
+      <Route exact path="/termsandcondition" element={<TermsPage />} />
       <Route
         path="/property-updatestatus"
-        render={() =>
+        element={
           props.currentUser ? <UpdateStatusPage /> : <SigninandSignupPage />
         }
       />
-      <Route path="/seach-result" component={SeachResultPage} />
+      <Route path="/seach-result" element={<SeachResultPage />} />
       <Route
         path="/my-favorite"
-        render={() =>
+        element={
           props.currentUser ? <FavoritePropertyPage /> : <SigninandSignupPage />
         }
       />
       <Route
         path="/profile"
-        render={({ match: { url } }) =>
+        element={({ match: { url } }) =>
           props.currentUser ? (
             <React.Fragment>
-              <Route path={`${url}`} component={ProfilePage} exact />
-              <Route path={`${url}/edit-profile`} component={EditProfilePage} />
+              <Route path={`${url}`} element={<ProfilePage />} exact />
+              <Route path={`${url}/edit-profile`} element={<EditProfilePage />} />
               <Route
                 path={`${url}/changepassword`}
-                component={ChangePasswordPage}
+                element={<ChangePasswordPage />}
               />
             </React.Fragment>
           ) : (
@@ -75,16 +75,16 @@ const Routes = (props) => {
           )
         }
       />
-      <Route path={`/resetpassword`} component={ResetPasswordPage} />
+      <Route path={`/resetpassword`} element={<ResetPasswordPage />} />
       <Route
         path="/my-property"
-        render={() =>
+        element={
           props.currentUser ? <MyPropertyPage /> : <SigninandSignupPage />
         }
       />
-      <Route path="*" component={NotFoundPage} />
-    </Switch>
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 };
 
-export default Routes;
+export default Router;

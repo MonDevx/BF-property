@@ -11,7 +11,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { SkletonCard } from "../customs/skeleton/skeleton-card/skeleton-card.component.jsx";
-import Skeleton from '@mui/material/Skeleton';
+import Skeleton from "@mui/material/Skeleton";
 import { ChipStatus } from "../customs/chip-customs/chip-customs.jsx";
 import {
   BiBath,
@@ -32,7 +32,7 @@ import {
   BiTrash,
   BiTimeFive,
 } from "react-icons/bi";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -46,8 +46,16 @@ const useStyles = makeStyles((theme) => ({
     transition: "transform 0.15s ease-in-out",
     "&:hover": { transform: "scale3d(1.02, 1.02, 1)" },
   },
+  overlay: {
+    position: "absolute",
+    top: "20px",
+    left: "20px",
+    color: "black",
+    backgroundColor: "white",
+  },
   cardMedia: {
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "56.25%",
+    position: "relative",
   },
   cardContent: {
     flexGrow: 1,
@@ -60,10 +68,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function currencyFormat(num) {
-  return "$ " +
-  Number(num)
-    .toFixed()
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  return (
+    "$ " +
+    Number(num)
+      .toFixed()
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+  );
 }
 
 function CardProperty(props) {
@@ -115,10 +125,67 @@ function CardProperty(props) {
                   aria-label={"property"}
                 >
                   {detail.firstimg ? (
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image={detail.firstimg}
-                    />
+                    <div style={{ position: "relative" }}>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image={detail.firstimg}
+                      />
+                      <div
+                        style={{
+                          position: "absolute",
+                          color: "white",
+                          top: 10,
+                          left: "20%",
+                          transform: "translateX(-50%)",
+                        }}
+                      >
+                        <Grid item sm={4}>
+                          <ChipStatus status={detail.status} />
+                        </Grid>
+                      </div>
+                      <div
+                        style={{
+                          position: "absolute",
+                          color: "white",
+                          top: 10,
+                          right: "2%",
+                          transform: "translateX(-50%)",
+                        }}
+                      >
+                        <IconButton
+                          value={detail.id}
+                          aria-label="add to favorites"
+                          onClick={props.onhandleFavorite}
+                          disabled={currentUser ? false : true}
+                          size="small"
+                        >
+                          {currentUser && currentUser.favorite !== undefined ? (
+                            <Tooltip
+                              title={
+                                currentUser.favorite.find(
+                                  (element) => element === detail.id
+                                ) !== undefined
+                                  ? t("deletefavorite.label")
+                                  : t("addfavorite.label")
+                              }
+                              aria-label="add"
+                            >
+                              <FavoriteIcon
+                                color={
+                                  currentUser.favorite.find(
+                                    (element) => element === detail.id
+                                  ) !== undefined
+                                    ? "error"
+                                    : "disabled"
+                                }
+                              />
+                            </Tooltip>
+                          ) : (
+                            <FavoriteIcon />
+                          )}
+                        </IconButton>
+                      </div>
+                    </div>
                   ) : (
                     <Skeleton
                       animation="wave"
@@ -130,7 +197,11 @@ function CardProperty(props) {
                   <CardContent className={classes.cardContent}>
                     <Grid container spacing={1}>
                       <Grid item xs={12}>
-                        <Typography variant="h6" className={classes.bold} noWrap>
+                        <Typography
+                          variant="h6"
+                          className={classes.bold}
+                          noWrap
+                        >
                           {detail.name.replaceAll("-", " ")}
                         </Typography>
                       </Grid>
@@ -139,8 +210,8 @@ function CardProperty(props) {
                           {detail.idtype === 1
                             ? t("typeproperty1.label")
                             : detail.idtype === 2
-                              ? t("typeproperty2.label")
-                              : t("typeproperty3.label")}
+                            ? t("typeproperty2.label")
+                            : t("typeproperty3.label")}
                         </Typography>
                       </Grid>
                       <Grid item sm={12}>
@@ -153,21 +224,20 @@ function CardProperty(props) {
                             currency === "gb"
                               ? detail.price * 0.032
                               : currency === "th"
-                                ? detail.price
-                                : detail.price * 0.21
+                              ? detail.price
+                              : detail.price * 0.21
                           )}{" "}
                           {currency === "gb"
                             ? t("dollar.label")
                             : currency === "th"
-                              ? t("baht.label")
-                              : t("yuan.label")}
+                            ? t("baht.label")
+                            : t("yuan.label")}
                         </Typography>
                       </Grid>
                       <Grid item sm={12}>
                         <Typography variant="subtitle2" noWrap>
                           <BiMap className={classes.icon} />
-                          {
-                            detail.address +
+                          {detail.address +
                             " " +
                             detail.district +
                             " " +
@@ -175,8 +245,7 @@ function CardProperty(props) {
                             " " +
                             detail.province +
                             " " +
-                            detail.zipCode
-                          }
+                            detail.zipCode}
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
@@ -231,95 +300,56 @@ function CardProperty(props) {
                     </Grid>
                   </CardContent>
                 </CardActionArea>
-                <CardActions>
-                  <Grid item sm={4}>
-                    <ChipStatus status={detail.status} />
-                  </Grid>
-                  <div style={{ marginLeft: "auto" }}>
-                    {location.pathname !== "/my-property" ? (
-                      <IconButton
-                        value={detail.id}
-                        aria-label="add to favorites"
-                        onClick={props.onhandleFavorite}
-                        disabled={currentUser ? false : true}
-                        size="small"
+                {location.pathname === "/my-property" && (
+                  <CardActions>
+                    <React.Fragment>
+                      <Tooltip
+                        title={t("updatestausproperty.label")}
+                        aria-label="add"
                       >
-                        {currentUser && currentUser.favorite !== undefined ? (
-                          <Tooltip
-                            title={
-                              currentUser.favorite.find(
-                                (element) => element === detail.id
-                              ) !== undefined
-                                ? t("deletefavorite.label")
-                                : t("addfavorite.label")
-                            }
-                            aria-label="add"
-                          >
-                            <FavoriteIcon
-                              color={
-                                currentUser.favorite.find(
-                                  (element) => element === detail.id
-                                ) !== undefined
-                                  ? "error"
-                                  : "disabled"
-                              }
-                            />
-                          </Tooltip>
-                        ) : (
-                          <FavoriteIcon />
-                        )}
-                      </IconButton>
-                    ) : (
-                      <React.Fragment>
-                        
-                        <Tooltip
-                          title={t("updatestausproperty.label")}
-                          aria-label="add"
+                        <IconButton
+                          component={Link}
+                          to={{
+                            pathname: "/property-updatestatus",
+                            state: {
+                              id: detail.id,
+                              status: detail.status,
+                            },
+                          }}
+                          size="large"
                         >
-                          <IconButton
-                            component={Link}
-                            to={{
-                              pathname: "/property-updatestatus",
-                              state: {
-                                id: detail.id,
-                                status: detail.status,
-                              },
-                            }}
-                            size="large">
-                            <BiTimeFive />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip
-                          title={t("editproperty.label")}
-                          aria-label="add"
+                          <BiTimeFive />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title={t("editproperty.label")} aria-label="add">
+                        <IconButton
+                          component={Link}
+                          to={{
+                            pathname: "/property-edit",
+                            state: {
+                              id: detail.id,
+                            },
+                          }}
+                          size="large"
                         >
-                          <IconButton
-                            component={Link}
-                            to={{
-                              pathname: "/property-edit",
-                              state: {
-                                id: detail.id,
-                              },
-                            }}
-                            size="large">
-                            <BiEdit />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip
-                          title={t("deleteproperty.label")}
-                          aria-label="add"
+                          <BiEdit />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip
+                        title={t("deleteproperty.label")}
+                        aria-label="add"
+                      >
+                        <IconButton
+                          aria-label="detele to favorites"
+                          onClick={() => handleClickOpen(detail.id, index)}
+                          size="large"
                         >
-                          <IconButton
-                            aria-label="detele to favorites"
-                            onClick={() => handleClickOpen(detail.id, index)}
-                            size="large">
-                            <BiTrash />
-                          </IconButton>
-                        </Tooltip>
-                      </React.Fragment>
-                    )}
-                  </div>
-                </CardActions>
+                          <BiTrash />
+                        </IconButton>
+                      </Tooltip>
+                    </React.Fragment>
+                  </CardActions>
+                )}
               </LazyLoad>
             </Card>
             <Dialog

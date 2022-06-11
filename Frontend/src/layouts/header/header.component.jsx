@@ -95,6 +95,34 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.white,
   },
 }));
+function stringToColor(string) {
+  let hash = 0;
+  let i;
+
+  /* eslint-disable no-bitwise */
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = '#';
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.substr(-2);
+  }
+  /* eslint-enable no-bitwise */
+
+  return color;
+}
+
+function stringAvatar(name) {
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+    },
+    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+  };
+}
 /* TODO  CHAGNE UI NAVBAR MOBILE AND ADD BUTTON CHAGNE LANGUAGES SIDEBAR */
 function Header(props) {
   const { t, i18n } = useTranslation();
@@ -164,27 +192,27 @@ function Header(props) {
       status: true,
       link: "/",
       name: t("firstpage.name.label"),
-      icon: <AiOutlineHome className="text-white" className={classes.icon} />,
+      icon: <AiOutlineHome  className={classes.icon} />,
     },
     {
       status: props.currentUser ? true : false,
       link: "/profile",
       name: t("myaccount.name.label"),
-      icon: <AiOutlineUser className="text-white" className={classes.icon} />,
+      icon: <AiOutlineUser  className={classes.icon} />,
     },
     {
       status: true,
       link: "/add-listing",
       name: t("addinglist.name.label"),
       icon: (
-        <AiOutlineAppstoreAdd className="text-white" className={classes.icon} />
+        <AiOutlineAppstoreAdd className={classes.icon} />
       ),
     },
     {
       status: true,
       link: "/my-favorite",
       name: t("favoritebutton"),
-      icon: <AiOutlineHeart className="text-white" className={classes.icon} />,
+      icon: <AiOutlineHeart  className={classes.icon} />,
     },
     {
       status: props.currentUser ? true : false,
@@ -192,7 +220,6 @@ function Header(props) {
       name: t("myproperty.name.label"),
       icon: (
         <AiOutlineUnorderedList
-          className="text-white"
           className={classes.icon}
         />
       ),
@@ -201,13 +228,13 @@ function Header(props) {
       status: props.currentUser ? false : true,
       link: "/signin",
       name: t("login.label"),
-      icon: <AiOutlineLogout className="text-white" className={classes.icon} />,
+      icon: <AiOutlineLogout className={classes.icon} />,
     },
     {
       status: props.currentUser ? true : false,
       name: t("signout.name.label"),
       onClick: signout,
-      icon: <AiOutlineLogout className="text-white" className={classes.icon} />,
+      icon: <AiOutlineLogout  className={classes.icon} />,
     },
   ];
   return (
@@ -481,10 +508,6 @@ function Header(props) {
               <Menu
                 id="lang-menu"
                 anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "center",
-                }}
                 keepMounted
                 PaperProps={{
                   elevation: 0,

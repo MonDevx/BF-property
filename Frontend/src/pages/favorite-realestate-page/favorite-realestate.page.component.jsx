@@ -7,7 +7,7 @@ import { withAlert } from "react-alert";
 import Container from "@mui/material/Container";
 import { compose } from "redux";
 import { auth } from "../../firebase/firebase.utils";
-import { Redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 class FavoritePage extends React.Component {
   constructor(props) {
     super(props);
@@ -62,9 +62,10 @@ class FavoritePage extends React.Component {
   }
 
   render() {
+    let navigate = useNavigate();
     const { isLoading, property, redirect } = this.state;
     if (redirect) {
-      return <Redirect to={redirect} />;
+      navigate(redirect);
     }
     if (isLoading) {
       return (

@@ -17,10 +17,11 @@ const styles = (theme) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
     padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(10),
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(4),
+    },
+    [theme.breakpoints.up('lg')]: {
+      padding: theme.spacing(8),
     },
   },
   headertitle: {

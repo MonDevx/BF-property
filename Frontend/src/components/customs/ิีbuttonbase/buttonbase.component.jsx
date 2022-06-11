@@ -1,112 +1,87 @@
 import ButtonBase from "@mui/material/ButtonBase";
-import makeStyles from '@mui/styles/makeStyles';
-import withStyles from '@mui/styles/withStyles';
+import { styled } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { isWebpSupported } from "react-image-webp/dist/utils";
 import { Link } from "react-router-dom";
-import { useLocation } from 'react-router-dom'
-import qs from 'query-string';
-const useStyles = makeStyles((theme) => ({
-  image: {
-    position: "relative",
-
-    height: 200,
-    [theme.breakpoints.down('md')]: {
-      width: "100% !important", // Overrides inline-style
-      height: 100,
+import { useLocation } from "react-router-dom";
+import qs from "query-string";
+const ImageButton = styled(ButtonBase)(({ theme }) => ({
+  position: "relative",
+  height: 200,
+  [theme.breakpoints.down("sm")]: {
+    width: "100% !important", // Overrides inline-style
+    height: 100,
+  },
+  "&:hover, &.Mui-focusVisible": {
+    zIndex: 1,
+    "& .MuiImageBackdrop-root": {
+      opacity: 0.15,
     },
-    "&:hover, &$focusVisible": {
-      zIndex: 1,
-      "& $imageBackdrop": {
-        opacity: 0.15,
-      },
-      "& $imageMarked": {
-        opacity: 0,
-      },
-      "& $imageTitle": {
-        border: "4px solid currentColor",
-      },
+    "& .MuiImageMarked-root": {
+      opacity: 0,
     },
-  },
-
-  focusVisible: {},
-  imageButton: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: theme.palette.common.white,
-  },
-  imageSrc: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    backgroundSize: "cover",
-    backgroundPosition: "center 40%",
-  },
-  imageBackdrop: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    backgroundColor: theme.palette.common.black,
-    opacity: 0.4,
-    transition: theme.transitions.create("opacity"),
-  },
-  imageTitle: {
-    position: "relative",
-    padding: `calc(${theme.spacing(2)} ${theme.spacing(4)} ${theme.spacing(1)} + 6px)`,
-  },
-  imageMarked: {
-    height: 3,
-    width: 18,
-    backgroundColor: theme.palette.common.white,
-    position: "absolute",
-    bottom: -2,
-    left: "calc(50% - 9px)",
-    transition: theme.transitions.create("opacity"),
+    "& .MuiTypography-root": {
+      border: "4px solid currentColor",
+    },
   },
 }));
-const HtmlTooltip = withStyles((theme) => ({
-  tooltip: {
-    backgroundColor: "#f5f5f9",
-    color: "rgba(0, 0, 0, 0.87)",
-    maxWidth: 220,
-    fontSize: theme.typography.pxToRem(12),
-    border: "1px solid #dadde9",
-  },
-}))(Tooltip);
+
+const ImageSrc = styled("span")({
+  position: "absolute",
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  backgroundSize: "cover",
+  backgroundPosition: "center 40%",
+});
+
+const Image = styled("span")(({ theme }) => ({
+  position: "absolute",
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: theme.palette.common.white,
+}));
+
+const ImageBackdrop = styled("span")(({ theme }) => ({
+  position: "absolute",
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  backgroundColor: theme.palette.common.black,
+  opacity: 0.4,
+  transition: theme.transitions.create("opacity"),
+}));
+
+const ImageMarked = styled("span")(({ theme }) => ({
+  height: 3,
+  width: 18,
+  backgroundColor: theme.palette.common.white,
+  position: "absolute",
+  bottom: -2,
+  left: "calc(50% - 9px)",
+  transition: theme.transitions.create("opacity"),
+}));
+
 export default function Buttonbase(props) {
-  const classes = useStyles();
   const { handleNext } = props;
   const location = useLocation();
   return (
     <React.Fragment>
       {props.images.map((image, index) => (
-        <HtmlTooltip
-          title={
-            <React.Fragment>
-              <Typography color="inherit">Credit photo</Typography>
-              {image.credit}
-            </React.Fragment>
-          }
-          key={index}
-        >
+        <React.Fragment>
           {location.pathname === "/" ? (
-            <ButtonBase
+            <ImageButton
               focusRipple
               key={image.title}
-              className={classes.image}
-              focusVisibleClassName={classes.focusVisible}
               style={{
                 width: image.width,
                 height: image.height,
@@ -117,68 +92,74 @@ export default function Buttonbase(props) {
                 pathname: "/seach-result",
                 search: qs.stringify({
                   seachkey: image.value,
-
                 }),
               }}
             >
-              <span
-                className={classes.imageSrc}
+              <ImageSrc
                 style={{
-                  backgroundImage: `url(${isWebpSupported() ? image.urlwebp : image.urljpg
-                    })`,
+                  backgroundImage: `url(${
+                    isWebpSupported() ? image.urlwebp : image.urljpg
+                  })`,
                 }}
               />
-
-              <span className={classes.imageBackdrop} />
-              <span className={classes.imageButton}>
+              <ImageBackdrop className="MuiImageBackdrop-root" />
+              <Image>
                 <Typography
                   component="span"
                   variant="subtitle1"
                   color="inherit"
-                  className={classes.imageTitle}
+                  sx={{
+                    position: "relative",
+                    p: 4,
+                    pt: 2,
+                    pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
+                  }}
                 >
                   {image.title}
-                  <span className={classes.imageMarked} />
+                  <ImageMarked className="MuiImageMarked-root" />
                 </Typography>
-              </span>
-            </ButtonBase>
+              </Image>
+            </ImageButton>
           ) : (
-            <ButtonBase
+            <ImageButton
               focusRipple
               key={image.title}
-              className={classes.image}
-              focusVisibleClassName={classes.focusVisible}
+              // className={classes.image}
+              // focusVisibleClassName={classes.focusVisible}
               style={{
                 width: image.width,
                 margin: 5,
               }}
               onClick={() => handleNext(index + 1)}
             >
-              <span
-                className={classes.imageSrc}
+              <ImageSrc
                 style={{
-                  backgroundImage: `url(${isWebpSupported() ? image.urlwebp : image.urljpg
-                    })`,
+                  backgroundImage: `url(${
+                    isWebpSupported() ? image.urlwebp : image.urljpg
+                  })`,
                 }}
               />
-
-              <span className={classes.imageBackdrop} />
-              <span className={classes.imageButton}>
+              <ImageBackdrop className="MuiImageBackdrop-root" />
+              <Image>
                 <Typography
                   component="span"
                   variant="subtitle1"
                   color="inherit"
-                  className={classes.imageTitle}
+                  sx={{
+                    position: "relative",
+                    p: 4,
+                    pt: 2,
+                    pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
+                  }}
                 >
                   {image.title}
-                  <span className={classes.imageMarked} />
+                  <ImageMarked className="MuiImageMarked-root" />
                 </Typography>
-              </span>
-            </ButtonBase>
+              </Image>
+            </ImageButton>
           )}
-        </HtmlTooltip>
-      ))
-      }
-    </React.Fragment >
+        </React.Fragment>
+      ))}
+    </React.Fragment>
   );
 }

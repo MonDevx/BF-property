@@ -8,10 +8,10 @@ import React from "react";
 import { withTranslation } from "react-i18next";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
-import { Map, Marker, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import Leaflet from "leaflet";
-import Control from "react-leaflet-control";
+// import Control from "react-leaflet-control";
 import Chip from "@mui/material/Chip";
 import AutocompleteSeach from "../autocomplete-seach/autocomplete-seach.jsx";
 Leaflet.Icon.Default.imagePath = "../node_modules/leaflet";
@@ -131,7 +131,7 @@ class SimpleMap extends React.Component {
         )}
 
         <Grid item xs={12}>
-          <Map
+          <MapContainer
             center={position}
             zoom={19}
             doubleClickZoom={false}
@@ -159,7 +159,7 @@ class SimpleMap extends React.Component {
                 position={marker.position}
               />
             ))}
-            {this.state.draggable ? (
+            {/* {this.state.draggable ? (
               <React.Fragment>
                 <Control position="topleft">
                   <Button
@@ -199,8 +199,8 @@ class SimpleMap extends React.Component {
                   this.state.lng
                 }
               />
-            </Control>
-          </Map>
+            </Control> */}
+          </MapContainer>
         </Grid>
       </React.Fragment>
     );

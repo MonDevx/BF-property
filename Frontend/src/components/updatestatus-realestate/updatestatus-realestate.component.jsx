@@ -9,7 +9,6 @@ import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { withAlert } from "react-alert";
-import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import { firestore } from "../../firebase/firebase.utils";
 import { withTranslation } from "react-i18next";
@@ -145,7 +144,6 @@ class Updatestatusproperty extends React.Component {
 }
 
 export default compose(
-  withRouter,
   withAlert(),
   withStyles(styles),
   withTranslation()

@@ -15,8 +15,7 @@ import { useTranslation } from "react-i18next";
 const useStyles = makeStyles((theme) => ({
   layout: {
     width: "auto",
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
+    margin: theme.spacing(15),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: "75%",
       marginLeft: "auto",
@@ -24,9 +23,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
+    margin: theme.spacing(5),
+    padding: theme.spacing(5),
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
       marginTop: theme.spacing(6),
       marginBottom: theme.spacing(6),
@@ -196,7 +194,7 @@ export default function Addlisting(props) {
     <React.Fragment>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-          <Typography variant="h4" style={{ fontWeight: "bold" }}>
+          <Typography variant="h3" style={{ fontWeight: "bold" }}>
             {t("addlistingheader.label")}
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>

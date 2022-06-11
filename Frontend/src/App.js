@@ -4,7 +4,9 @@ import { Provider as AlertProvider } from "react-alert";
 import Announcement from "react-announcement";
 import { LiveChatLoaderProvider, Messenger } from "react-live-chat-loader";
 import { connect } from "react-redux";
-import Route from "react-router-dom/Route";
+import {
+  Route
+} from "react-router-dom";
 import "./App.css";
 import AlertTemplate from "./components/alert/alert.component.jsx";
 import Pace from "./components/customs/pace/pace.js";
@@ -14,6 +16,7 @@ import {
   createUserProfileDocument,
   databaserealtime,
 } from "./firebase/firebase.utils";
+import { Scrollbars } from 'react-custom-scrollbars';
 import { MaintancePage } from "./pages";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { setI18n } from "./redux/i18n/i18n.actions";
@@ -28,7 +31,7 @@ import { withTranslation } from "react-i18next";
 import loadable from "react-loadable";
 import { Footer, Header } from "./layouts";
 
-import Routes from "./Routes";
+import Router from "./Router";
 const options = {
   timeout: 3000,
 };
@@ -89,9 +92,11 @@ class App extends React.Component {
   }
   render() {
     return (
+
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
           <Pace color={theme.palette.primary.main} />
+
           <AlertProvider template={AlertTemplate} {...options}>
             {this.state.maintenancestatus === 1 ? (
               <Suspense
@@ -101,10 +106,13 @@ class App extends React.Component {
                   </div>
                 }
               >
+
                 <div id="back-to-top-anchor"></div>
+
                 <Header />
-                <Routes currentUser={this.props.currentUser} />
+                <Router currentUser={this.props.currentUser} />
                 <Footer />
+
                 <Announcement
                   title={
                     <Typography variant="h5" gutterBottom>
@@ -121,7 +129,7 @@ class App extends React.Component {
                   secondsBeforeBannerShows={3}
                   closeIconSize={10}
                 />
-                <ScrollTop>
+                {/* <ScrollTop>
                   <Fab
                     color="secondary"
                     size="small"
@@ -129,7 +137,7 @@ class App extends React.Component {
                   >
                     <KeyboardArrowUpIcon />
                   </Fab>
-                </ScrollTop>
+                </ScrollTop> */}
 
                 <LiveChatLoaderProvider
                   provider="messenger"
@@ -147,9 +155,11 @@ class App extends React.Component {
                 <LoaderSpinners />
               </div>
             )}
+
           </AlertProvider>
         </ThemeProvider>
       </StyledEngineProvider>
+
     );
   }
 }

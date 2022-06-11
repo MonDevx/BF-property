@@ -1,9 +1,11 @@
 import React from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import { Grid } from "@mui/material";
 const useStyles = makeStyles((theme) => ({
   number: {
     fontSize: 20,
@@ -13,15 +15,16 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightMedium,
   },
   image: {
-    height: 150,
-    margin: theme.spacing(4),
+    height: "100%",
+    width: "100%",
   },
   card: {
     padding: theme.spacing(3),
-    transition: "transform 0.15s ease-in-out",
-    "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
+    height: 300,
   },
-
+  content: {
+    justifyContent: "space-between",
+  },
 }));
 const defaultProps = {
   bgcolor: "primary.main",
@@ -35,26 +38,29 @@ export const HowItWorkCard = (props) => {
     <React.Fragment>
       <Card align="center" className={classes.card}>
         <Box borderRadius="50%" {...defaultProps}>
-          <Typography
-            variant="body2"
-            align="center"
-            className={classes.number}
-          >
+          <Typography variant="body2" align="center" className={classes.number}>
             {number}
           </Typography>
         </Box>
-        <LazyLoadImage
-          alt="img3"
-          src={image}
-          className={classes.image}
-          effect="blur"
-        />
-        <Typography variant="subtitle1" align="center">
-          {headline}
-        </Typography>
-        <Typography variant="subtitle2" align="center">
-          {text}
-        </Typography>
+
+        <CardContent>
+          <CardMedia
+            component="img"
+            className={classes.image}
+            image={image}
+            alt={text}
+          />
+          <Typography
+            variant="subtitle1"
+            fontWeight="fontWeightBold"
+            align="center"
+          >
+            {headline}
+          </Typography>
+          <Typography variant="subtitle2" align="center">
+            {text}
+          </Typography>
+        </CardContent>
       </Card>
     </React.Fragment>
   );

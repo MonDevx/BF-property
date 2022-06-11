@@ -9,7 +9,6 @@ import {
     Drawer,
     IconButton,
     Typography,
-    isWidthUp,
     Toolbar,
     Grid,
 } from "@mui/material";
@@ -78,13 +77,13 @@ function NavigationDrawer(props) {
         theme,
         currentuser,
     } = props;
-    useEffect(() => {
-        window.onresize = () => {
-            if (isWidthUp("sm", width) && open) {
-                onClose();
-            }
-        };
-    }, [width, open, onClose]);
+    // useEffect(() => {
+    //     window.onresize = () => {
+    //         if (isWidthUp("sm", width) && open) {
+    //             onClose();
+    //         }
+    //     };
+    // }, [width, open, onClose]);
 
     return (
         <Drawer variant="temporary" open={open} onClose={onClose} anchor={anchor}>

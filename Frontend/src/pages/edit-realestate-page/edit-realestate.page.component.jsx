@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { withRouter } from "react-router";
-import Redirect from "react-router-dom/Redirect";
+import { useNavigate } from "react-router-dom";
 import Editproperty from "../../components/edit-property/edit-property.component.jsx";
 import LoaderSpinners from "../../components/loader-spinners/loader-spinners.jsx";
 import { auth } from "../../firebase/firebase.utils";
@@ -60,9 +59,10 @@ class EditpropertyPage extends React.Component {
     }
   }
   render() {
+    let navigate = useNavigate();
     const { isLoading, realestate, redirect } = this.state;
     if (redirect) {
-      return <Redirect to={redirect} />;
+      navigate(redirect);
     }
     if (isLoading) {
       return (
@@ -75,4 +75,4 @@ class EditpropertyPage extends React.Component {
   }
 }
 
-export default compose(withRouter, withAlert())(EditpropertyPage);
+export default compose( withAlert())(EditpropertyPage);

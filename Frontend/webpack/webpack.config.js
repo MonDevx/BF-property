@@ -130,6 +130,10 @@ module.exports = {
         loader: "file-loader",
       },
       {
+        test: /\.(png|gif|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url-loader',
+      },
+      {
         test: /\.html$/i,
         use: [
           {

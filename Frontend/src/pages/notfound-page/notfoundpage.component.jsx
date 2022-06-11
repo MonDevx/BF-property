@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "react-router-dom/Link";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -36,7 +35,6 @@ class NotFoundPage extends React.Component {
               <Button
                 variant="contained"
                 color="primary"
-                component={Link}
                 to="/"
                 size="large"
               >
