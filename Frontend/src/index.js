@@ -6,6 +6,7 @@ import App from "./App";
 import "./index.css";
 import { store, persistor } from "./redux/store/store";
 import { PersistGate } from "redux-persist/integration/react";
+import './assets/fonts/LINESeedSansTH_W_Rg.woff'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render( <React.StrictMode>  <Provider store={store}>
   <BrowserRouter >

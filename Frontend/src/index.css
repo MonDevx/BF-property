@@ -4,3 +4,23 @@ body {
   margin: 0;
   padding: 0;
 }
+@font-face {
+  font-family: 'LINESeedSansTH_W_Rg';
+  src: local('LINESeedSansTH_W_Rg'), url(./assets/fonts/LINESeedSansTH_W_Rg.woff) format('woff');
+}
+@font-face {
+  font-family: 'LINESeedSansTH_W_Bd';
+  src: local('LINESeedSansTH_W_Bd'), url(./assets/fonts/LINESeedSansTH_W_Bd.woff) format('woff');
+}
+@font-face {
+  font-family: 'LINESeedSansTH_W_He';
+  src: local('LINESeedSansTH_W_He'), url(./assets/fonts/LINESeedSansTH_W_He.woff) format('woff');
+}
+@font-face {
+  font-family: 'LINESeedSansTH_W_Th';
+  src: local('LINESeedSansTH_W_Th'), url(./assets/fonts/LINESeedSansTH_W_Th.woff) format('woff');
+}
+@font-face {
+  font-family: 'LINESeedSansTH_W_XBd';
+  src: local('LINESeedSansTH_W_XBd'), url(./assets/fonts/LINESeedSansTH_W_XBd.woff) format('woff');
+}

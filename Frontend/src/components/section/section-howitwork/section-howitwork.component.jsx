@@ -9,6 +9,7 @@ import { compose } from "redux";
 import { HowItWorkCard } from "../../customs/howitworkcard/howitwork-card.jsx";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { howItWorkData } from "./constant/defaultValue.ts"
 
 // FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
 const withWidth = () => (WrappedComponent) => (props) =>
@@ -62,29 +63,7 @@ const styles = (theme) => ({
 function Sectionhowitwork(props) {
   const { classes, width } = props;
   const { t } = useTranslation();
-  const howItWork = [
-    {
-      headline: t("sectionhowitwork.headeritem1"),
-      image: "./assets/img/undraw_best_place_re_lne9.webp",
-      text: t("sectionhowitwork.sub1"),
-      mdDelay: "700",
-      smDelay: "700",
-    },
-    {
-      headline: t("sectionhowitwork.headeritem2"),
-      image: "./assets/img/undraw_personal_email_re_4lx7.webp",
-      text: t("sectionhowitwork.sub2"),
-      mdDelay: "300",
-      smDelay: "300",
-    },
-    {
-      headline: t("sectionhowitwork.headeritem3"),
-      image: "./assets/img/undraw_buy_house_-560-d.webp",
-      text: t("sectionhowitwork.sub3"),
-      mdDelay: "700",
-      smDelay: "700",
-    },
-  ];
+
 
   return (
     <div className={classes.content}>
@@ -149,7 +128,7 @@ function Sectionhowitwork(props) {
           slidesToSlide={1}
           swipeable
         >
-          {howItWork.map((element, index) => (
+          {howItWorkData.map((element, index) => (
             <Grid
               item
               xs={8}
@@ -158,8 +137,8 @@ function Sectionhowitwork(props) {
               <HowItWorkCard
                 number={index + 1}
                 image={element.image}
-                headline={element.headline}
-                text={element.text}
+                headline={t(element.headline)}
+                text={t(element.text)}
               />
             </Grid>
           ))}

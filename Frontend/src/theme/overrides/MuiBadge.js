@@ -2,6 +2,6 @@
 export default {
 
   badge: {
-      fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+      fontFamily: 'LINESeedSansTH_W_Rg',
     },
 };

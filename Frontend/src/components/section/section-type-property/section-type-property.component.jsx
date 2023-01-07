@@ -2,7 +2,7 @@ import Container from "@mui/material/Container";
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from "@mui/material/Typography";
 import React from "react";
-import Buttonbase from "../../customs/ิีbuttonbase/buttonbase.component.jsx";
+import Buttonbase from "../../customs/buttonbase/buttonbase.component.jsx";
 import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({

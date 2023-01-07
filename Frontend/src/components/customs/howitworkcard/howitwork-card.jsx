@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightMedium,
   },
   image: {
-    height: "100%",
-    width: "100%",
+    height: "11em",
+    width: "14em",
   },
   card: {
     padding: theme.spacing(3),
@@ -50,6 +50,7 @@ export const HowItWorkCard = (props) => {
             image={image}
             alt={text}
           />
+          <br/>
           <Typography
             variant="subtitle1"
             fontWeight="fontWeightBold"

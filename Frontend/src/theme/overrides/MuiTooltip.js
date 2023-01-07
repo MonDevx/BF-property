@@ -4,7 +4,7 @@ import { padding } from "@mui/system";
 export default {
   
   tooltip: {
-    fontFamily: ['Noto Sans Thai','Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Rg',
     borderRadius: '20px'
   }
 };

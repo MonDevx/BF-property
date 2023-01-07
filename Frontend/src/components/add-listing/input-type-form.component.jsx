@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 import React from "react";
-import Buttonbase from "../customs/ิีbuttonbase/buttonbase.component.jsx";
+import Buttonbase from "../customs/buttonbase/buttonbase.component.jsx";
 import { useTranslation } from "react-i18next";
 export default function PropertyTypeForm(props) {
   const { handleNext } = props;

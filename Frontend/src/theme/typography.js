@@ -8,7 +8,7 @@ export default {
     fontSize: '35px',
     letterSpacing: '-0.24px',
     lineHeight: '40px',
-    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Bd',
   },
   h2: {
     color: palette.text.primary,
@@ -16,7 +16,7 @@ export default {
     fontSize: '29px',
     letterSpacing: '-0.24px',
     lineHeight: '32px',
-    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Bd',
   },
   h3: {
     color: palette.text.primary,
@@ -24,7 +24,7 @@ export default {
     fontSize: '24px',
     letterSpacing: '-0.06px',
     lineHeight: '28px',
-    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Bd',
   },
   h4: {
     color: palette.text.primary,
@@ -32,7 +32,7 @@ export default {
     fontSize: '20px',
     letterSpacing: '-0.06px',
     lineHeight: '24px',
-    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Bd',
   },
   h5: {
     color: palette.text.primary,
@@ -40,7 +40,7 @@ export default {
     fontSize: '18px',
     letterSpacing: '-0.05px',
     lineHeight: '20px',
-    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Bd',
   },
   h6: {
     color: palette.text.primary,
@@ -48,14 +48,14 @@ export default {
     fontSize: '16px',
     letterSpacing: '-0.05px',
     lineHeight: '20px',
-    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Bd',
   },
   subtitle1: {
     color: palette.text.primary,
     fontSize: '16px',
     letterSpacing: '-0.05px',
     lineHeight: '25px',
-    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Rg',
   },
   subtitle2: {
     color: palette.text.secondary,
@@ -63,26 +63,26 @@ export default {
     fontSize: '14px',
     letterSpacing: '-0.05px',
     lineHeight: '21px',
-    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Rg',
   },
   body1: {
     color: palette.text.primary,
     fontSize: '14px',
     letterSpacing: '-0.05px',
     lineHeight: '21px',
-    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Rg',
   },
   body2: {
     color: palette.text.secondary,
     fontSize: '12px',
     letterSpacing: '-0.04px',
     lineHeight: '18px',
-    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Rg',
   },
   button: {
     color: palette.text.primary,
     fontSize: '14px',
-    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Rg',
   },
 
   caption: {
@@ -90,7 +90,7 @@ export default {
     fontSize: '11px',
     letterSpacing: '0.33px',
     lineHeight: '13px',
-    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Rg',
   },
   overline: {
     color: palette.text.secondary,
@@ -99,7 +99,7 @@ export default {
     letterSpacing: '0.33px',
     lineHeight: '13px',
     textTransform: 'uppercase',
-    fontFamily: ['Noto Sans Thai', 'Noto Sans'].join(','),
+    fontFamily: 'LINESeedSansTH_W_Rg',
   },
 
 };
