@@ -23,7 +23,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import "easymde/dist/easymde.min.css";
+// import "easymde/dist/easymde.min.css";
 const thai = require("thai-data");
 
 const AntTabs = withStyles({

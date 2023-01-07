@@ -2,9 +2,7 @@ import { colors } from '@mui/material';
 
 const white = '#FFFFFF';
 const black = '#000000';
-
-// eslint-disable-next-line import/no-anonymous-default-export
-export default {
+const styles =  {
   black,
   white,
   primary: {
@@ -56,3 +54,4 @@ export default {
   divider: colors.grey[200]
   
 };
+export default styles;

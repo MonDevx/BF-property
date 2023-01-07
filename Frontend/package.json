@@ -17,12 +17,16 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.0",
     "@mui/styles": "^5.11.0",
+    "@mui/system": "^5.11.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^13.3.0",
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.27.2",
+    "babel-eslint": "^10.1.0",
     "check-unused-dependencies": "^1.1.10",
+    "clsx": "^1.2.1",
     "copy-webpack-plugin": "^11.0.0",
+    "d": "^1.0.1",
     "date-fns": "^2.16.1",
     "firebase": "^9.8.4",
     "gatsby": "^4.25.0",
@@ -32,7 +36,9 @@
     "i18next-xhr-backend": "^3.2.2",
     "interpolate-html-plugin": "^4.0.0",
     "leaflet": "^1.8.0",
+    "lodash": "^4.17.21",
     "material-ui-dropzone": "^3.5.0",
+    "prop-types": "^15.8.1",
     "query-string": "^7.0.1",
     "react": "^18.2.0",
     "react-alert": "^7.0.2",
@@ -62,6 +68,7 @@
     "react-phone-input-2": "^2.13.9",
     "react-places-autocomplete": "^7.3.0",
     "react-redux": "^8.0.2",
+    "react-router": "^6.6.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
     "react-share": "^4.3.1",
@@ -110,6 +117,11 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0"
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-flowtype": "^8.0.3",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0"
   }
 }

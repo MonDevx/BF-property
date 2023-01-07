@@ -1,7 +1,6 @@
 import palette from './palette';
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default {
+const styles = {
   h1: {
     color: palette.text.primary,
     fontWeight: 500,
@@ -103,3 +102,4 @@ export default {
   },
 
 };
+export default styles;

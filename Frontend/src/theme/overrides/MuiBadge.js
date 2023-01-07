@@ -1,7 +1,8 @@
-// eslint-disable-next-line import/no-anonymous-default-export
-export default {
+const styles = {
 
   badge: {
       fontFamily: 'LINESeedSansTH_W_Rg',
     },
 };
+
+export default styles

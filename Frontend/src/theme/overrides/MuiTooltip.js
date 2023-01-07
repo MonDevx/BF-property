@@ -1,10 +1,11 @@
 import { padding } from "@mui/system";
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default {
+const styles = {
   
   tooltip: {
     fontFamily: 'LINESeedSansTH_W_Rg',
     borderRadius: '20px'
   }
 };
+
+export default styles;
