@@ -14,7 +14,6 @@ See the [**Documentation**](https://drive.google.com/drive/folders/1mr4bvcfw4UsJ
 <p align="center">
   <img height="45" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" />
    <img height="45" src="https://raw.githubusercontent.com/reduxjs/redux/master/logo/logo.png" />
-  <img height="45" src="https://material-ui.com/static/logo_raw.svg" />
     <img height="45" src="https://wptavern.com/wp-content/uploads/2017/10/Screen-Shot-2017-10-11-at-6.51.54-PM.png" />
   <img height="45" src="https://firebase.google.com/images/social.png" />
   
@@ -29,8 +28,8 @@ See the [**Documentation**](https://drive.google.com/drive/folders/1mr4bvcfw4UsJ
 ##  Project description :page_facing_up:
 
 This project is part of the subjects Siminar, Senior Project 1, Senior Project 2 is a project about a realestate website developed with React.js. link dowload 
-- :books: link download [Paper this project](https://drive.google.com/file/d/1L4_YtqCiAu2ZxXsy9IkE_alPGOaero5J/view?usp=sharing) 
-- :books: link download [Document this project](https://drive.google.com/file/d/1Swps36Kqd6znKaORxek5kqxjVn86tVSN/view?usp=sharing) 
+- :books: link download [Paper this project](https://drive.google.com/file/d/1FachuhCKTbf9LsrJXEH8Jg_ajbXc1cdu/view?usp=sharing) 
+- :books: link download [Document this project](https://drive.google.com/file/d/1YyfVfhNplMEPQ0nE6FDznKP77cC6mV5I/view?usp=sharing) 
 
 ## Quick start :rocket:
 
