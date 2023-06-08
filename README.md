@@ -7,7 +7,7 @@
 
 ## Installation & Usage :ledger:
 
-See the [**Documentation**](https://drive.google.com/drive/folders/1EHtYzhDxHSWohsr4XDDA9nve05ch3uw_?usp=sharing) for an introduction, usage information
+See the [**Documentation**](https://drive.google.com/drive/folders/1mr4bvcfw4UsJFQEw9-TRQX3lml1ShCXq) for an introduction, usage information
 
 ## Tech Stack :electric_plug:
 
