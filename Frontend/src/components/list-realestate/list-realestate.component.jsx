@@ -29,7 +29,7 @@ function Listproperty(props) {
   const [property, setProperty] = useState(
     location.pathname !== "/seach-result" ? (props.property || []) : []
   );
-  const [previousProperty, setPreviousProperty] = useState(
+  const [previousProperty] = useState(
     location.pathname !== "/seach-result" ? (props.property || []) : []
   );
   const [currentPage, setCurrentPage] = useState(1);

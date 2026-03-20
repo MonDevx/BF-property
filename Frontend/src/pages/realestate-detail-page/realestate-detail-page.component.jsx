@@ -8,7 +8,7 @@ import LoaderSpinners from "../../components/loader-spinners/loader-spinners.jsx
 import { getInitialProps } from "react-i18next";
 import { Helmet } from "react-helmet";
 
-function propertyDetailpage(props) {
+function PropertyDetailpage(props) {
   const alert = useAlert();
   const [property, setProperty] = useState([]);
   const [nearbyplacesapi, setNearbyplacesapi] = useState([]);
@@ -131,4 +131,4 @@ function propertyDetailpage(props) {
   );
 }
 
-export default propertyDetailpage;
+export default PropertyDetailpage;

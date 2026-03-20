@@ -14,8 +14,6 @@ function EditpropertyPage() {
   const [realestate, setRealestate] = useState([]);
   const [redirect, setRedirect] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [idToken, setIdToken] = useState(null);
-
   useEffect(() => {
     const fetchData = async () => {
       let token = null;
@@ -23,7 +21,6 @@ function EditpropertyPage() {
         .getIdToken(/* forceRefresh */ true)
         .then((fetchedToken) => {
           token = fetchedToken;
-          setIdToken(fetchedToken);
         })
         .catch((error) => {
           alert.error(error.toString());
