@@ -366,7 +366,7 @@ function Header(props) {
                 <Button
                   id="currency-menu"
                   aria-controls={
-                    Boolean(anchorE3) ? "menu-list-grow" : undefined
+                    Boolean(anchorE3) ? "currency-menu" : undefined
                   }
                   aria-haspopup="true"
                   onClick={handleClick}
@@ -415,7 +415,7 @@ function Header(props) {
                 <Button
                   id="lang-menu"
                   aria-controls={
-                    Boolean(anchorEl) ? "menu-list-grow" : undefined
+                    Boolean(anchorEl) ? "lang-menu" : undefined
                   }
                   aria-haspopup="true"
                   onClick={handleClick}
