@@ -86,8 +86,7 @@ class Footer extends React.Component {
         email: this.state.email,
       },
     })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         this.props.alert.success("การกดรับการแจ้งเตือนข่าวสารสำเร็จ");
       })
       .catch((err) => {
@@ -173,7 +172,6 @@ class Footer extends React.Component {
               >
                 {t("aboutdetail.label")}
               </Typography>
-              {/* TODO  FIX FACEBOOK PAGE NOT LOAD */}
               <div
                 className="fb-page"
                 data-href="https://www.facebook.com/BFproperty-103720534694768"

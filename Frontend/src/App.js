@@ -26,8 +26,6 @@ import ScrollTop from "./components/scroll-top/scroll-top.component.jsx";
 import LoaderSpinners from "./components/loader-spinners/loader-spinners.jsx";
 import { withTranslation } from "react-i18next";
 import loadable from "react-loadable";
-// const Footer = lazy(() => import("./layouts/footer/footer.component.jsx"));
-// const Header = lazy(() => import("./layouts/header/header.component.jsx"));
 const Footer = loadable({
   loader: () => import("./layouts/footer/footer.component.jsx"),
   loading: () => null,
@@ -41,8 +39,8 @@ const options = {
 };
 class App extends React.Component {
   unsubscribeFromAuth = null;
-  unsubscribeFromAnnounceText = null;
-  unsubscribeFromMaintenanceStatus = null;
+  announceRef = null;
+  maintenanceRef = null;
 
   constructor(props) {
     super(props);
@@ -52,9 +50,10 @@ class App extends React.Component {
       maintenancestatus: null,
     };
   }
+
   getAnnounceText() {
-    let announce = databaserealtime.ref("/announce/-M9xHq20T4kNe1dqJ9nC");
-    announce.on("value", (snapshot) => {
+    this.announceRef = databaserealtime.ref("/announce/-M9xHq20T4kNe1dqJ9nC");
+    this.announceRef.on("value", (snapshot) => {
       this.setState({
         announcementtext: snapshot.val().text,
         day: snapshot.val().day,
@@ -63,8 +62,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    let app = databaserealtime.ref("/maintenance/maintenancestatus");
-    app.on("value", (snapshot) => {
+    this.maintenanceRef = databaserealtime.ref("/maintenance/maintenancestatus");
+    this.maintenanceRef.on("value", (snapshot) => {
       this.setState({
         maintenancestatus: snapshot.val(),
       });
@@ -84,15 +83,13 @@ class App extends React.Component {
       }
     });
     this.props.i18n.changeLanguage(this.props.lang);
-
-    this.unsubscribeFromAnnounce = this.getAnnounceText();
+    this.getAnnounceText();
   }
 
   componentWillUnmount() {
     this.unsubscribeFromAuth && this.unsubscribeFromAuth();
-    this.unsubscribeFromAnnounce && this.unsubscribeFromMaintenanceStatus();
-    this.unsubscribeFromAnnounce && this.unsubscribeFromAnnounce();
-    this.unsubscribeFromAnnounce && this.getAnnounceText();
+    this.maintenanceRef && this.maintenanceRef.off();
+    this.announceRef && this.announceRef.off();
   }
   render() {
     return (
