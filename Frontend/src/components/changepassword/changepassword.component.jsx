@@ -62,7 +62,7 @@ function Changepassword() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    var currentUser = auth.currentUser;
+    const currentUser = auth.currentUser;
 
     currentUser
       .updatePassword(user.password)

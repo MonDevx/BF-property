@@ -63,16 +63,11 @@ function SignUp() {
   };
 
   const handleChange = (event) => {
-    const { name, value, checked } = event.target;
-    if (name === "emailcheck") {
-      if (name === "displayName") setDisplayName(checked);
-      else if (name === "email") setEmail(checked);
-    } else {
-      if (name === "displayName") setDisplayName(value);
-      else if (name === "email") setEmail(value);
-      else if (name === "password") setPassword(value);
-      else if (name === "confirmPassword") setConfirmPassword(value);
-    }
+    const { name, value } = event.target;
+    if (name === "displayName") setDisplayName(value);
+    else if (name === "email") setEmail(value);
+    else if (name === "password") setPassword(value);
+    else if (name === "confirmPassword") setConfirmPassword(value);
   };
 
   const onChange = (value) => {

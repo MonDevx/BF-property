@@ -41,8 +41,8 @@ function Listproperty(props) {
   };
 
   const seach = (seachkey, type, province, price, room, family, bath, car, size, check) => {
-    var ref;
-    var sizemin, sizemax;
+    let ref;
+    let sizemin, sizemax;
 
     try {
       if (size === 0) {
@@ -164,7 +164,7 @@ function Listproperty(props) {
       }
 
       ref.get().then((querySnapshot) => {
-        var propertyArr = [];
+        const propertyArr = [];
         querySnapshot.forEach((doc) => {
           if (doc.data().status !== 4) {
             let dict = { id: doc.id, ...doc.data() };
@@ -172,10 +172,10 @@ function Listproperty(props) {
           }
         });
 
-        var property2 = [];
+        const property2 = [];
 
         if (size !== 0 && size) {
-          for (var i in propertyArr) {
+          for (const i in propertyArr) {
             if (
               propertyArr[i].propertysize >= sizemin &&
               propertyArr[i].propertysize <= sizemax
@@ -218,9 +218,6 @@ function Listproperty(props) {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const valueKey = JSON.stringify(props.value);
-
   useEffect(() => {
     if (location.pathname === "/seach-result" && props.value) {
       const {
@@ -249,7 +246,7 @@ function Listproperty(props) {
       );
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [valueKey]);
+  }, [JSON.stringify(props.value)]);
 
   const indexOfLastTodo = currentPage * propertyPerPage;
   const indexOfFirstTodo = indexOfLastTodo - propertyPerPage;

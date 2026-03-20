@@ -59,10 +59,10 @@ function Profile() {
   const { t } = useTranslation();
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  const [User] = useState(currentUser);
+  const [user, setUser] = useState(currentUser);
   const [selectedFiles, setSelectedFiles] = useState(undefined);
 
-  let {
+  const {
     displayName,
     email,
     lastSignInTime,
@@ -70,7 +70,7 @@ function Profile() {
     birthday,
     gender,
     phone,
-  } = User;
+  } = user;
 
   const selectFile = (event) => {
     setSelectedFiles(event.target.files);
