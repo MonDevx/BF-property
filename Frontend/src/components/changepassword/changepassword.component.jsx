@@ -4,19 +4,18 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
-import React from "react";
-import { withAlert } from "react-alert";
+import React, { useState, useEffect } from "react";
+import { useAlert } from "react-alert";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import { connect } from "react-redux";
-import { compose } from "redux";
 import { auth } from "../../firebase/firebase.utils.js";
-import { withTranslation } from "react-i18next";
-import { withStyles } from "@material-ui/core/styles";
+import { useTranslation } from "react-i18next";
+import { makeStyles } from "@material-ui/core/styles";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Linkui from "@material-ui/core/Link";
 import { Link } from "react-router-dom";
-import {  AiOutlineLock,AiOutlineUser} from 'react-icons/ai';
-import {isMobile} from 'react-device-detect';
+import { AiOutlineLock, AiOutlineUser } from "react-icons/ai";
+import { isMobile } from "react-device-detect";
+
 const styles = (theme) => ({
   paper: {
     display: "flex",
@@ -39,146 +38,132 @@ const styles = (theme) => ({
     height: 20,
   },
 });
-class Changepassword extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: {
-        password: "",
-        repeatPassword: "",
-      },
-    };
-  }
-  componentDidMount() {
-    // custom rule will have name 'isPasswordMatch'
-    ValidatorForm.addValidationRule("isPasswordMatch", (value) => {
-      if (value !== this.state.user.password) {
-        return false;
-      }
-      return true;
-    });
-  }
-  componentWillUnmount() {
-    // remove rule when it is not needed
-    ValidatorForm.removeValidationRule("isPasswordMatch");
-  }
-  handleSubmit = async (event) => {
-    event.preventDefault();
-    const { t } = this.props;
-    var user = auth.currentUser;
 
-    user
-      .updatePassword(this.state.user.password)
+const useStyles = makeStyles(styles);
+
+function Changepassword() {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const alert = useAlert();
+
+  const [user, setUser] = useState({
+    password: "",
+    repeatPassword: "",
+  });
+
+  useEffect(() => {
+    ValidatorForm.addValidationRule("isPasswordMatch", (value) => {
+      return value === user.password;
+    });
+    return () => {
+      ValidatorForm.removeValidationRule("isPasswordMatch");
+    };
+  }, [user.password]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    var currentUser = auth.currentUser;
+
+    currentUser
+      .updatePassword(user.password)
       .then(() => {
-        this.props.alert.success(t('alertresetpasswordsuccess'));
+        alert.success(t('alertresetpasswordsuccess'));
       })
       .catch((error) => {
         if (error.code === "auth/weak-password") {
-          this.props.alert.error(t('alertresetpassworderror'));
+          alert.error(t('alertresetpassworderror'));
         } else {
-          this.props.alert.error(error);
+          alert.error(error);
         }
       });
   };
 
-  handleChange = (event) => {
-    const { user } = this.state;
-    user[event.target.name] = event.target.value;
-    this.setState({ user });
+  const handleChange = (event) => {
+    setUser((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
 
-  render() {
-    const { user } = this.state;
-    const { t } = this.props;
-    const { classes } = this.props;
-    return (
-      <Container
-        maxWidth="md"
-        style={{ paddingTop: "4%", paddingBottom: "4%" }}
+  return (
+    <Container
+      maxWidth="md"
+      style={{ paddingTop: "4%", paddingBottom: "4%" }}
+    >
+      <Paper
+       elevation={3}
+        className={classes.paper}
       >
-        <Paper
-         elevation={3}
-          className={classes.paper}
+        <ValidatorForm
+          onSubmit={handleSubmit}
+          onError={(errors) =>
+            alert.error(t("updateinfoerror2.label"))
+          }
         >
-          <ValidatorForm
-            ref="form"
-            onSubmit={this.handleSubmit}
-            onError={(errors) =>
-              this.props.alert.error(t("updateinfoerror2.label"))
-            }
-          >
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Breadcrumbs separator="›" aria-label="breadcrumb">
-                  <Linkui
-                    color="inherit"
-                    className={classes.link}
-                    to="/profile"
-                    component={Link}
-                  >
-                    <AiOutlineUser className={classes.icon} />
-                    {t("myacc.label")}
-                  </Linkui>
-
-                  <Typography color="textPrimary" className={classes.link}>
-                  <AiOutlineLock className={classes.icon} />
-                  {t("changepassword.label")}
-                  </Typography>
-                </Breadcrumbs>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h4" gutterBottom style={{ 'fontWeight': 'bold' }}>{t("resetpassword.label")}</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <TextValidator
-                  label={t("newpassword.label")}
-                  onChange={this.handleChange}
-                  name="password"
-                  type="password"
-                  variant="outlined"
-                  validators={["required"]}
-                  errorMessages={[t("confirmnewpassword.label")]}
-                  value={user.password}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextValidator
-                  label={t("renewpassword.label")}
-                  onChange={this.handleChange}
-                  name="repeatPassword"
-                  type="password"
-                  variant="outlined"
-                  validators={["isPasswordMatch", "required"]}
-                  errorMessages={[
-                    t("confirmnewpasswordisPasswordMatch.label"),
-                    t("confirmnewpasswordrequired.label"),
-                  ]}
-                  value={user.repeatPassword}
-                />
-              </Grid>
-              <Grid item xs={isMobile?8:4}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  size="medium"
-                  startIcon={<SystemUpdateAltIcon />}
-          
-                  disabled={user.password === "" || user.repeatPassword === ""}
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Breadcrumbs separator="›" aria-label="breadcrumb">
+                <Linkui
+                  color="inherit"
+                  className={classes.link}
+                  to="/profile"
+                  component={Link}
                 >
-                {t("resetpasswordbutton")}
-                </Button>
-              </Grid>
+                  <AiOutlineUser className={classes.icon} />
+                  {t("myacc.label")}
+                </Linkui>
+
+                <Typography color="textPrimary" className={classes.link}>
+                <AiOutlineLock className={classes.icon} />
+                {t("changepassword.label")}
+                </Typography>
+              </Breadcrumbs>
             </Grid>
-          </ValidatorForm>
-        </Paper>
-      </Container>
-    );
-  }
+            <Grid item xs={12}>
+              <Typography variant="h4" gutterBottom style={{ 'fontWeight': 'bold' }}>{t("resetpassword.label")}</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <TextValidator
+                label={t("newpassword.label")}
+                onChange={handleChange}
+                name="password"
+                type="password"
+                variant="outlined"
+                validators={["required"]}
+                errorMessages={[t("confirmnewpassword.label")]}
+                value={user.password}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextValidator
+                label={t("renewpassword.label")}
+                onChange={handleChange}
+                name="repeatPassword"
+                type="password"
+                variant="outlined"
+                validators={["isPasswordMatch", "required"]}
+                errorMessages={[
+                  t("confirmnewpasswordisPasswordMatch.label"),
+                  t("confirmnewpasswordrequired.label"),
+                ]}
+                value={user.repeatPassword}
+              />
+            </Grid>
+            <Grid item xs={isMobile?8:4}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+                size="medium"
+                startIcon={<SystemUpdateAltIcon />}
+                disabled={user.password === "" || user.repeatPassword === ""}
+              >
+              {t("resetpasswordbutton")}
+              </Button>
+            </Grid>
+          </Grid>
+        </ValidatorForm>
+      </Paper>
+    </Container>
+  );
 }
 
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-});
-export default compose(withTranslation(),withAlert(),withStyles(styles), connect(mapStateToProps))(Changepassword);
+export default Changepassword;
