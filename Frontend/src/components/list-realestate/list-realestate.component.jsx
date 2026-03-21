@@ -251,7 +251,6 @@ function Listproperty(props) {
   const indexOfLastTodo = currentPage * propertyPerPage;
   const indexOfFirstTodo = indexOfLastTodo - propertyPerPage;
   const currentProperty = property.slice(indexOfFirstTodo, indexOfLastTodo);
-  const { name } = "";
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(property.length / propertyPerPage); i++) {
     pageNumbers.push(i);
@@ -285,13 +284,13 @@ function Listproperty(props) {
       });
   };
 
-  const sortproperty = (event) => {
-    var sortProperty;
-    if (event.target.value === 1) {
+  const sortproperty = (option) => {
+    let sortProperty;
+    if (option === 1) {
       sortProperty = _.sortBy(property, "price");
-    } else if (event.target.value === 2) {
+    } else if (option === 2) {
       sortProperty = _.sortBy(property, "price").reverse();
-    } else if (event.target.value === 3) {
+    } else if (option === 3) {
       sortProperty = _.sortBy(property, "name");
     } else {
       sortProperty = _.sortBy(property, "name").reverse();
@@ -314,7 +313,7 @@ function Listproperty(props) {
   const handleFavorite = (event) => {
     event.persist();
     try {
-      var favorite = currentUser.favorite;
+      const favorite = [...currentUser.favorite];
       var check = false;
       if (favorite.length === 0) {
         favorite.push(event.currentTarget.value);
@@ -443,16 +442,16 @@ function Listproperty(props) {
                 anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                 transformOrigin={{ vertical: "top", horizontal: "center" }}
               >
-                <MenuItem value={1} onClick={sortproperty}>
+                <MenuItem value={1} onClick={() => sortproperty(1)}>
                   {t("sortmenu1.label")}
                 </MenuItem>
-                <MenuItem value={2} onClick={sortproperty}>
+                <MenuItem value={2} onClick={() => sortproperty(2)}>
                   {t("sortmenu2.label")}
                 </MenuItem>
-                <MenuItem value={3} onClick={sortproperty}>
+                <MenuItem value={3} onClick={() => sortproperty(3)}>
                   {t("sortmenu3.label")}
                 </MenuItem>
-                <MenuItem value={4} onClick={sortproperty}>
+                <MenuItem value={4} onClick={() => sortproperty(4)}>
                   {t("sortmenu4.label")}
                 </MenuItem>
               </Menu>

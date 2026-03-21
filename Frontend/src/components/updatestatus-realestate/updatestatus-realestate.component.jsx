@@ -64,7 +64,7 @@ function Updatestatusproperty() {
         alert.success(t("alertupdatestatuspropertysuccess.label"));
       })
       .catch((err) => {
-        alert.success(t("alertupdatestatuspropertyerror.label"));
+        alert.error(t("alertupdatestatuspropertyerror.label"));
       });
   };
 

@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 
 function MaintancePage() {
   return (
-    <div style={{ "text-align": "center", padding: "150px" }}>
+    <div style={{ textAlign: "center", padding: "150px" }}>
       <Typography variant="h2">พบกันเร็วๆนี้</Typography>
       <div>
         <Typography variant="subtitle1">

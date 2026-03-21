@@ -141,7 +141,7 @@ function Profile() {
                       color="primary"
                       component="span"
                       endIcon={<AiOutlineCamera />}
-                      size="'small'"
+                      size="small"
                     >
                       รูปภาพ
                     </Button>
