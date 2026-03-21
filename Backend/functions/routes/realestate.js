@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const admin = require("firebase-admin");
+const rateLimit = require("express-rate-limit");
 const authMiddleware = require("../middleware/auth");
 const propertyFields = require("../utils/propertyFields");
 
@@ -12,6 +13,13 @@ const corsOptions = {
 
 const db = admin.firestore();
 const realestateCollection = "property";
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 router.get("/realestatedetail/:realestatename", cors(corsOptions), async (req, res) => {
   const { realestatename } = req.params;
@@ -30,7 +38,7 @@ router.get("/realestatedetail/:realestatename", cors(corsOptions), async (req, r
     .catch((error) => res.status(500).send(error));
 });
 
-router.get("/editrealestatedetail/:realestateId", authMiddleware, cors(corsOptions), async (req, res) => {
+router.get("/editrealestatedetail/:realestateId", authLimiter, authMiddleware, cors(corsOptions), async (req, res) => {
   const { realestateId } = req.params;
   return db
     .collection(realestateCollection)
@@ -45,7 +53,7 @@ router.get("/editrealestatedetail/:realestateId", authMiddleware, cors(corsOptio
     .catch((error) => res.status(500).send(error));
 });
 
-router.get("/myrealestatelist", authMiddleware, cors(corsOptions), async (req, res) => {
+router.get("/myrealestatelist", authLimiter, authMiddleware, cors(corsOptions), async (req, res) => {
   const decodedToken = await admin.auth().verifyIdToken(req.token);
   return db
     .collection(realestateCollection)
@@ -61,7 +69,7 @@ router.get("/myrealestatelist", authMiddleware, cors(corsOptions), async (req, r
     .catch((error) => res.status(500).send(error));
 });
 
-router.get("/favoriterealestatelist", authMiddleware, cors(corsOptions), async (req, res) => {
+router.get("/favoriterealestatelist", authLimiter, authMiddleware, cors(corsOptions), async (req, res) => {
   const arr =
     typeof req.query.favoritelist === "string" ||
     req.query.favoritelist instanceof String
@@ -84,8 +92,8 @@ router.get("/favoriterealestatelist", authMiddleware, cors(corsOptions), async (
 router.get("/realestaterecommendlist", cors(corsOptions), async (req, res) => {
   return db
     .collection(realestateCollection)
-    .limit(4)
     .where("status", "!=", 4)
+    .limit(4)
     .get()
     .then((querySnapshot) => {
       if (querySnapshot.empty) throw new Error("Realestate not found");

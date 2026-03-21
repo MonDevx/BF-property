@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const admin = require("firebase-admin");
+const rateLimit = require("express-rate-limit");
 const authMiddleware = require("../middleware/auth");
 
 const router = express.Router();
@@ -12,7 +13,14 @@ const corsOptions = {
 const db = admin.firestore();
 const usersCollection = "users";
 
-router.put("/usersupdatefavorite", authMiddleware, cors(corsOptions), async (req, res) => {
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+router.put("/usersupdatefavorite", authLimiter, authMiddleware, cors(corsOptions), async (req, res) => {
   const decodedToken = await admin.auth().verifyIdToken(req.token);
   return db
     .collection(usersCollection)
