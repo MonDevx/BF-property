@@ -2,14 +2,16 @@ import React from "react";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Zoom from "@material-ui/core/Zoom";
 import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    position: 'fixed',
+    bottom: theme.spacing(12),
+    right: theme.spacing(4),
+  },
+}));
+
 export default function ScrollTop(props) {
-    const useStyles = makeStyles((theme) => ({
-      root: {
-        position: 'fixed',
-        bottom: theme.spacing(12),
-        right: theme.spacing(4),
-      },
-    }));
     const { children, window } = props;
     const classes = useStyles();
     const trigger = useScrollTrigger({

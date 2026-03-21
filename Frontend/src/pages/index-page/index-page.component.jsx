@@ -1,14 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import LoaderSpinners from "../../components/loader-spinners/loader-spinners.jsx";
-import { withAlert } from "react-alert";
-// const Sectioncontry = lazy(() => import("../../components/section/section-contry/section-contry.jsx"));
-// const Sectionhowitwork = lazy(() => import("../../components/section/section-howitwork/section-howitwork.component.jsx"));
-// const Sectiontypeproperty = lazy(() => import("../../components/section/section-type-property/section-type-property.component.jsx"));
-// const Sectionhowto = lazy(() => import("../../components/section/section-howto/section-howto.component.jsx"));
-// const Sectionmain = lazy(() => import("../../components/section/section-main/section-main.component.jsx"));
-// const Sectionrecommend = lazy(() => import("../../components/section/section-recommend/section-recommend.component.jsx"));
+import { useAlert } from "react-alert";
 import loadable from "react-loadable";
+
 const Sectioncontry = loadable({
   loader: () =>
     import("../../components/section/section-contry/section-contry.jsx"),
@@ -47,62 +42,54 @@ const Sectionrecommend = loadable({
     ),
   loading: () => null,
 });
-class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Property: [],
-      isLoading: true,
-    };
-  }
-  componentDidMount() {
+
+function HomePage() {
+  const alert = useAlert();
+  const [Property, setProperty] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
     axios
       .get(
         `https://us-central1-bfproperty.cloudfunctions.net/webApi/api/v1/realestaterecommendlist`
       )
       .then((result) => {
-        this.setState({
-          Property: result.data,
-          isLoading: false,
-        });
+        setProperty(result.data);
+        setIsLoading(false);
       })
       .catch((error) => {
-        this.props.alert.error(error.toString());
-        this.setState({
-          isLoading: false,
-        });
+        alert.error(error.toString());
+        setIsLoading(false);
       });
-  }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  render() {
-    const { isLoading, Property } = this.state;
-    if (isLoading) {
-      return (
-        <div>
-          <Sectionmain />
-          <main>
-            <LoaderSpinners />
-            <Sectionhowto />
-            <Sectiontypeproperty />
-            <Sectionhowitwork />
-            <Sectioncontry />
-          </main>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <Sectionmain />
-          <main>
-            <Sectionrecommend property={Property} />
-            <Sectionhowto />
-            <Sectiontypeproperty />
-            <Sectionhowitwork />
-            <Sectioncontry />
-          </main>
-        </div>
-      );
-    }
+  if (isLoading) {
+    return (
+      <div>
+        <Sectionmain />
+        <main>
+          <LoaderSpinners />
+          <Sectionhowto />
+          <Sectiontypeproperty />
+          <Sectionhowitwork />
+          <Sectioncontry />
+        </main>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <Sectionmain />
+        <main>
+          <Sectionrecommend property={Property} />
+          <Sectionhowto />
+          <Sectiontypeproperty />
+          <Sectionhowitwork />
+          <Sectioncontry />
+        </main>
+      </div>
+    );
   }
 }
-export default withAlert()(HomePage);
+
+export default HomePage;

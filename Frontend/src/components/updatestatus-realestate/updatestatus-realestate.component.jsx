@@ -7,18 +7,18 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
 import Select from "@material-ui/core/Select";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { withAlert } from "react-alert";
-import { withRouter } from "react-router-dom";
-import { compose } from "redux";
+import React, { useState } from "react";
+import { useAlert } from "react-alert";
+import { useLocation } from "react-router-dom";
 import { firestore } from "../../firebase/firebase.utils";
-import { withTranslation } from "react-i18next";
-import { withStyles } from "@material-ui/core/styles";
+import { useTranslation } from "react-i18next";
+import { makeStyles } from "@material-ui/core/styles";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import { Link } from "react-router-dom";
 import Linkmu from "@material-ui/core/Link";
 import { isMobile } from "react-device-detect";
 import { AiOutlineHome, AiOutlineFieldTime } from "react-icons/ai";
+
 const styles = (theme) => ({
   paper: {
     display: "flex",
@@ -41,112 +41,105 @@ const styles = (theme) => ({
     height: 20,
   },
 });
-class Updatestatusproperty extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: this.props.location.state.id,
-      status: this.props.location.state.status,
-    };
-  }
 
-  handleSubmit = async (event) => {
-    const { t } = this.props;
+const useStyles = makeStyles(styles);
+
+function Updatestatusproperty() {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const alert = useAlert();
+  const location = useLocation();
+
+  const [id] = useState(location.state.id);
+  const [status, setStatus] = useState(location.state.status);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     firestore
       .collection("property")
-      .doc(this.state.id)
-      .update({ status: this.state.status })
+      .doc(id)
+      .update({ status: status })
       .then(() => {
-        this.props.alert.success(t("alertupdatestatuspropertysuccess.label"));
+        alert.success(t("alertupdatestatuspropertysuccess.label"));
       })
       .catch((err) => {
-        this.props.alert.success(t("alertupdatestatuspropertyerror.label"));
+        alert.error(t("alertupdatestatuspropertyerror.label"));
       });
   };
 
-  handleChange = (event) => {
-    this.setState({ status: event.target.value });
+  const handleChange = (event) => {
+    setStatus(event.target.value);
   };
 
-  render() {
-    const { t } = this.props;
-    const { classes } = this.props;
-    return (
-      <Container
-        maxWidth="md"
-        style={{ paddingTop: "4%", paddingBottom: "4%" }}
-      >
-        <Paper elevation={3} className={classes.paper}>
-          <Grid container direction="row" alignItems="center" spacing={3}>
-            <Grid item xs={12}>
-              <Breadcrumbs separator="›" aria-label="breadcrumb">
-                <Linkmu
-                  color="inherit"
-                  component={Link}
-                  to="/my-property"
-                  className={classes.link}
-                >
-                  <AiOutlineHome className={classes.icon} />
-                  {t("myproperty.name.label")}
-                </Linkmu>
-
-                <Typography color="textPrimary" className={classes.link}>
-                  <AiOutlineFieldTime className={classes.icon} />
-                  {t("updatestatuspropertybutton.label")}
-                </Typography>
-              </Breadcrumbs>
-            </Grid>
-            <Grid item xs={isMobile ? 6 : 4}>
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel id="demo-simple-select-helper-label">
-                  {t("updatestatusproperty.label")}
-                </InputLabel>
-                <Select
-                  name="sizefamily"
-                  onChange={this.handleChange}
-                  value={this.state.status}
-                  label={t("updatestatusproperty.label")}
-                >
-                  <MenuItem value={1}>
-                    {t("statuspropertytype1.label")}
-                  </MenuItem>
-                  <MenuItem value={2}>
-                    {t("statuspropertytype2.label")}
-                  </MenuItem>
-                  <MenuItem value={3}>
-                    {t("statuspropertytype3.label")}
-                  </MenuItem>
-                  <MenuItem value={4}>
-                    {t("statuspropertytype4.label")}
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={isMobile ? 6 : 3}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-                size="large"
-                onClick={this.handleSubmit}
+  return (
+    <Container
+      maxWidth="md"
+      style={{ paddingTop: "4%", paddingBottom: "4%" }}
+    >
+      <Paper elevation={3} className={classes.paper}>
+        <Grid container direction="row" alignItems="center" spacing={3}>
+          <Grid item xs={12}>
+            <Breadcrumbs separator="›" aria-label="breadcrumb">
+              <Linkmu
+                color="inherit"
+                component={Link}
+                to="/my-property"
+                className={classes.link}
               >
+                <AiOutlineHome className={classes.icon} />
+                {t("myproperty.name.label")}
+              </Linkmu>
+
+              <Typography color="textPrimary" className={classes.link}>
+                <AiOutlineFieldTime className={classes.icon} />
                 {t("updatestatuspropertybutton.label")}
-              </Button>
-            </Grid>
+              </Typography>
+            </Breadcrumbs>
           </Grid>
-        </Paper>
-      </Container>
-    );
-  }
+          <Grid item xs={isMobile ? 6 : 4}>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel id="demo-simple-select-helper-label">
+                {t("updatestatusproperty.label")}
+              </InputLabel>
+              <Select
+                name="sizefamily"
+                onChange={handleChange}
+                value={status}
+                label={t("updatestatusproperty.label")}
+              >
+                <MenuItem value={1}>
+                  {t("statuspropertytype1.label")}
+                </MenuItem>
+                <MenuItem value={2}>
+                  {t("statuspropertytype2.label")}
+                </MenuItem>
+                <MenuItem value={3}>
+                  {t("statuspropertytype3.label")}
+                </MenuItem>
+                <MenuItem value={4}>
+                  {t("statuspropertytype4.label")}
+                </MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={isMobile ? 6 : 3}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              size="large"
+              onClick={handleSubmit}
+            >
+              {t("updatestatuspropertybutton.label")}
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Container>
+  );
 }
 
-export default compose(
-  withRouter,
-  withAlert(),
-  withStyles(styles),
-  withTranslation()
-)(Updatestatusproperty);
+export default Updatestatusproperty;

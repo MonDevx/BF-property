@@ -1,88 +1,68 @@
 import Container from "@material-ui/core/Container";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Listrealestate from "../../components/list-realestate/list-realestate.component.jsx";
-import { connect } from "react-redux";
 import axios from "axios";
 import LoaderSpinners from "../../components/loader-spinners/loader-spinners.jsx";
-import { withAlert } from "react-alert";
-import { compose } from "redux";
-import { auth } from "../../firebase/firebase.utils"
+import { useAlert } from "react-alert";
+import { Redirect } from "react-router-dom";
+import { auth } from "../../firebase/firebase.utils";
 
-class MyhousePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      property: [],
-      redirect: null,
-      isLoading: true,
-      idToken: null
-    };
-  }
-  async componentDidMount() {
-    const { alert } = this.props;
-    await auth.currentUser
+function MyhousePage() {
+  const alert = useAlert();
+  const [property, setProperty] = useState([]);
+  const [redirect, setRedirect] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    auth.currentUser
       .getIdToken(/* forceRefresh */ true)
       .then((idToken) => {
-        this.setState({
-          idToken: idToken,
-        });
+        if (cancelled) return;
+        axios({
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+          url: "https://us-central1-bfproperty.cloudfunctions.net/webApi/api/v1/myrealestatelist",
+          method: "GET",
+        })
+          .then((result) => {
+            if (!cancelled) {
+              setProperty(result.data);
+              setIsLoading(false);
+            }
+          })
+          .catch((error) => {
+            alert.error(error.toString());
+          });
       })
       .catch((error) => {
         alert.error(error.toString());
-        this.setState({
-          redirect:"/"
-        });
+        if (!cancelled) setRedirect("/");
       });
-    if (this.state.idToken) {
+    return () => {
+      cancelled = true;
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-      axios({
-        headers: {
-          Authorization: `Bearer ${this.state.idToken}`,
-        },
-        url: "https://us-central1-bfproperty.cloudfunctions.net/webApi/api/v1/myrealestatelist",
-        method: "GET",
-      })
-        .then((result) => {
-          this.setState({
-            property: result.data,
-            isLoading: false,
-          });
-        })
-        .catch((error) => {
-          alert.error(error.toString());
-        });
-    } else {
-      this.setState({
-        isLoading: false,
-        redirect:"/"
-      });
-    }
+  if (redirect) {
+    return <Redirect to={redirect} />;
   }
-
-  render() {
-    const { isLoading, property, redirect } = this.state;
-    if (redirect) {
-      return <Redirect to={redirect} />;
-    }
-    if (isLoading) {
-      return (
-        <div style={{ margin: "50%" }}>
-          <LoaderSpinners />
-        </div>
-      );
-    }
+  if (isLoading) {
     return (
-      <Container
-        maxWidth="lg"
-        style={{ paddingTop: "2%", paddingBottom: "2%" }}
-      >
-        <Listrealestate property={property} />
-      </Container>
+      <div style={{ margin: "50%" }}>
+        <LoaderSpinners />
+      </div>
     );
   }
+  return (
+    <Container
+      maxWidth="lg"
+      style={{ paddingTop: "2%", paddingBottom: "2%" }}
+    >
+      <Listrealestate property={property} />
+    </Container>
+  );
 }
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-});
-const enhance = compose(withAlert(), connect(mapStateToProps));
-export default enhance(MyhousePage);
+
+export default MyhousePage;

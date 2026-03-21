@@ -1,9 +1,9 @@
 import Typography from "@material-ui/core/Typography";
-import React, { Suspense } from "react";
+import React, { Suspense, useState, useEffect, useRef } from "react";
 import { Provider as AlertProvider } from "react-alert";
 import Announcement from "react-announcement";
 import { LiveChatLoaderProvider, Messenger } from "react-live-chat-loader";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Route from "react-router-dom/Route";
 import "./App.css";
 import AlertTemplate from "./components/alert/alert.component.jsx";
@@ -16,7 +16,6 @@ import {
 } from "./firebase/firebase.utils";
 import { Maintance as MaintancePage } from "./pages";
 import { setCurrentUser } from "./redux/user/user.actions";
-import { setI18n } from "./redux/i18n/i18n.actions";
 import Routes from "./Routes";
 import theme from "./theme";
 import { ThemeProvider } from "@material-ui/core/styles";
@@ -24,10 +23,9 @@ import Fab from "@material-ui/core/Fab";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import ScrollTop from "./components/scroll-top/scroll-top.component.jsx";
 import LoaderSpinners from "./components/loader-spinners/loader-spinners.jsx";
-import { withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import loadable from "react-loadable";
-// const Footer = lazy(() => import("./layouts/footer/footer.component.jsx"));
-// const Header = lazy(() => import("./layouts/header/header.component.jsx"));
+
 const Footer = loadable({
   loader: () => import("./layouts/footer/footer.component.jsx"),
   loading: () => null,
@@ -36,138 +34,124 @@ const Header = loadable({
   loader: () => import("./layouts/header/header.component.jsx"),
   loading: () => null,
 });
+
 const options = {
   timeout: 3000,
 };
-class App extends React.Component {
-  unsubscribeFromAuth = null;
-  unsubscribeFromAnnounceText = null;
-  unsubscribeFromMaintenanceStatus = null;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      day: 3,
-      announcementtext: "",
-      maintenancestatus: null,
-    };
-  }
-  getAnnounceText() {
-    let announce = databaserealtime.ref("/announce/-M9xHq20T4kNe1dqJ9nC");
-    announce.on("value", (snapshot) => {
-      this.setState({
-        announcementtext: snapshot.val().text,
-        day: snapshot.val().day,
-      });
-    });
-  }
+function App() {
+  const { i18n } = useTranslation();
+  const dispatch = useDispatch();
+  const currentUser = useSelector(({ user }) => user.currentUser);
+  const lang = useSelector(({ language }) => language.lang);
 
-  componentDidMount() {
-    let app = databaserealtime.ref("/maintenance/maintenancestatus");
-    app.on("value", (snapshot) => {
-      this.setState({
-        maintenancestatus: snapshot.val(),
-      });
-      if (snapshot.val() === 1) {
-        this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-          this.setState({ currentUser: userAuth });
+  const [day, setDay] = useState(3);
+  const [announcementtext, setAnnouncementtext] = useState("");
+  const [maintenancestatus, setMaintenancestatus] = useState(null);
+
+  const unsubscribeFromAuthRef = useRef(null);
+  const userSnapshotUnsubscribeRef = useRef(null);
+  const announceRef = useRef(null);
+  const maintenanceRef = useRef(null);
+
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [lang, i18n]);
+
+  useEffect(() => {
+    maintenanceRef.current = databaserealtime.ref("/maintenance/maintenancestatus");
+    maintenanceRef.current.on("value", (snapshot) => {
+      setMaintenancestatus(snapshot.val());
+      if (snapshot.val() === 1 && !unsubscribeFromAuthRef.current) {
+        unsubscribeFromAuthRef.current = auth.onAuthStateChanged(async (userAuth) => {
           if (userAuth) {
             const userRef = await createUserProfileDocument(userAuth);
-            userRef.onSnapshot((snapShot) => {
-              this.props.setCurrentUser({
+            userSnapshotUnsubscribeRef.current = userRef.onSnapshot((snapShot) => {
+              dispatch(setCurrentUser({
                 id: snapShot.id,
                 ...snapShot.data(),
-              });
+              }));
             });
           }
         });
       }
     });
-    this.props.i18n.changeLanguage(this.props.lang);
 
-    this.unsubscribeFromAnnounce = this.getAnnounceText();
-  }
+    announceRef.current = databaserealtime.ref("/announce/-M9xHq20T4kNe1dqJ9nC");
+    announceRef.current.on("value", (snapshot) => {
+      setAnnouncementtext(snapshot.val().text);
+      setDay(snapshot.val().day);
+    });
 
-  componentWillUnmount() {
-    this.unsubscribeFromAuth && this.unsubscribeFromAuth();
-    this.unsubscribeFromAnnounce && this.unsubscribeFromMaintenanceStatus();
-    this.unsubscribeFromAnnounce && this.unsubscribeFromAnnounce();
-    this.unsubscribeFromAnnounce && this.getAnnounceText();
-  }
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <Pace color={theme.palette.primary.main} />
-        <AlertProvider template={AlertTemplate} {...options}>
-          {this.state.maintenancestatus === 1 ? (
-            <Suspense
-              fallback={
-                <div align="center" style={{ margin: "21.80%" }}>
-                  <LoaderSpinners />
-                </div>
+    return () => {
+      unsubscribeFromAuthRef.current && unsubscribeFromAuthRef.current();
+      userSnapshotUnsubscribeRef.current && userSnapshotUnsubscribeRef.current();
+      maintenanceRef.current && maintenanceRef.current.off();
+      announceRef.current && announceRef.current.off();
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Pace color={theme.palette.primary.main} />
+      <AlertProvider template={AlertTemplate} {...options}>
+        {maintenancestatus === 1 ? (
+          <Suspense
+            fallback={
+              <div align="center" style={{ margin: "21.80%" }}>
+                <LoaderSpinners />
+              </div>
+            }
+          >
+            <div id="back-to-top-anchor"></div>
+            <Header />
+            <Routes currentUser={currentUser} />
+            <Footer />
+            <Announcement
+              title={
+                <Typography variant="h5" gutterBottom>
+                  {"ประกาศจากทางเว็ปไซต์"}
+                </Typography>
               }
-            >
-              <div id="back-to-top-anchor"></div>
-              <Header />
-              <Routes currentUser={this.props.currentUser} />
-              <Footer />
-              <Announcement
-                title={
-                  <Typography variant="h5" gutterBottom>
-                    {"ประกาศจากทางเว็ปไซต์"}
-                  </Typography>
-                }
-                subtitle={
-                  <Typography variant="subtitle2" gutterBottom>
-                    {this.state.announcementtext}
-                  </Typography>
-                }
-                imageSource="https://firebasestorage.googleapis.com/v0/b/bfproperty.appspot.com/o/logo-small.png?alt=media&token=df545452-df29-4696-b1ab-2df5c120eb36"
-                // daysToLive={this.state.day}
-                secondsBeforeBannerShows={3}
-                closeIconSize={10}
-              />
-              <ScrollTop>
-                <Fab
-                  color="secondary"
-                  size="small"
-                  aria-label="scroll back to top"
-                >
-                  <KeyboardArrowUpIcon />
-                </Fab>
-              </ScrollTop>
-
-              <LiveChatLoaderProvider
-                provider="messenger"
-                providerKey="103720534694768"
-                appID="232462984487271"
-                locale="th_TH"
+              subtitle={
+                <Typography variant="subtitle2" gutterBottom>
+                  {announcementtext}
+                </Typography>
+              }
+              imageSource="https://firebasestorage.googleapis.com/v0/b/bfproperty.appspot.com/o/logo-small.png?alt=media&token=df545452-df29-4696-b1ab-2df5c120eb36"
+              // daysToLive={day}
+              secondsBeforeBannerShows={3}
+              closeIconSize={10}
+            />
+            <ScrollTop>
+              <Fab
+                color="secondary"
+                size="small"
+                aria-label="scroll back to top"
               >
-                <Messenger />
-              </LiveChatLoaderProvider>
-            </Suspense>
-          ) : this.state.maintenancestatus === 0 ? (
-            <Route path="/*" component={MaintancePage} />
-          ) : (
-            <div align="center" style={{ margin: "21.80%" }}>
-              <LoaderSpinners />
-            </div>
-          )}
-        </AlertProvider>
-      </ThemeProvider>
-    );
-  }
+                <KeyboardArrowUpIcon />
+              </Fab>
+            </ScrollTop>
+
+            <LiveChatLoaderProvider
+              provider="messenger"
+              providerKey="103720534694768"
+              appID="232462984487271"
+              locale="th_TH"
+            >
+              <Messenger />
+            </LiveChatLoaderProvider>
+          </Suspense>
+        ) : maintenancestatus === 0 ? (
+          <Route path="/*" component={MaintancePage} />
+        ) : (
+          <div align="center" style={{ margin: "21.80%" }}>
+            <LoaderSpinners />
+          </div>
+        )}
+      </AlertProvider>
+    </ThemeProvider>
+  );
 }
 
-const mapStateToProps = ({ user, language }) => ({
-  currentUser: user.currentUser,
-  lang: language.lang,
-});
-const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-  setI18n: (lang) => dispatch(setI18n(lang)),
-});
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withTranslation()(App));
+export default App;

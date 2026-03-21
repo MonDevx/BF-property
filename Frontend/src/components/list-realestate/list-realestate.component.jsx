@@ -1,12 +1,11 @@
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Pagination from "@material-ui/lab/Pagination";
-import React from "react";
-import { withTranslation } from "react-i18next";
+import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { firestorage, firestore } from "../../firebase/firebase.utils";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import { withAlert } from "react-alert";
+import { useSelector } from "react-redux";
+import { useAlert } from "react-alert";
 import Cardproperty from "../card-realestate/card-realestate.component.jsx";
 import axios from "axios";
 import { auth } from "../../firebase/firebase.utils.js";
@@ -18,65 +17,33 @@ import Menu from "@material-ui/core/Menu";
 import SortIcon from "@material-ui/icons/Sort";
 import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import { withRouter } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Box from "@material-ui/core/Box";
-class Listproperty extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      property: [],
-      previousProperty: [],
-      currentPage: 1,
-      propertyPerPage: 8,
-      anchorEl: null,
-    };
-    this.handleClick = this.handleClick.bind(this);
-  }
-  handleClick(event, value) {
-    this.setState({
-      currentPage: Number(value),
-    });
-  }
-  componentWillMount() {
-    if (this.props.location.pathname !== "/seach-result") {
-      this.setState({
-        property: this.props.property,
-        previousProperty: this.props.property,
-      });
-    }
-  }
-  componentDidMount() {
-    if (this.props.location.pathname === "/seach-result") {
-      const {
-        seachkey,
-        type,
-        province,
-        price,
-        room,
-        family,
-        bath,
-        car,
-        size,
-        check,
-      } = this.props.value;
-      this.seach(
-        seachkey,
-        Number(type),
-        province,
-        Number(price),
-        Number(room),
-        Number(family),
-        Number(bath),
-        Number(car),
-        Number(size),
-        check
-      );
-    }
-  }
-  seach(seachkey, type, province, price, room, family, bath, car, size, check) {
-    const { t } = this.props;
-    var ref;
-    var sizemin, sizemax;
+
+function Listproperty(props) {
+  const { t } = useTranslation();
+  const alert = useAlert();
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const location = useLocation();
+
+  const [property, setProperty] = useState(
+    location.pathname !== "/seach-result" ? (props.property || []) : []
+  );
+  const [previousProperty] = useState(
+    location.pathname !== "/seach-result" ? (props.property || []) : []
+  );
+  const [currentPage, setCurrentPage] = useState(1);
+  const propertyPerPage = 8;
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleClick = (event, value) => {
+    setCurrentPage(Number(value));
+  };
+
+  const seach = (seachkey, type, province, price, room, family, bath, car, size, check) => {
+    let ref;
+    let sizemin, sizemax;
 
     try {
       if (size === 0) {
@@ -198,54 +165,62 @@ class Listproperty extends React.Component {
       }
 
       ref.get().then((querySnapshot) => {
-        var property = [];
+        const propertyArr = [];
         querySnapshot.forEach((doc) => {
           if (doc.data().status !== 4) {
             let dict = { id: doc.id, ...doc.data() };
-            property.push(dict);
+            propertyArr.push(dict);
           }
         });
 
-        var property2 = [];
+        const property2 = [];
 
         if (size !== 0 && size) {
-          for (var i in property) {
+          for (const i in propertyArr) {
             if (
-              property[i].propertysize >= sizemin &&
-              property[i].propertysize <= sizemax
+              propertyArr[i].propertysize >= sizemin &&
+              propertyArr[i].propertysize <= sizemax
             ) {
-              property2.push(property[i]);
+              property2.push(propertyArr[i]);
             }
           }
 
-          this.setState({
-            property: property2,
-          });
-        } else {
-          this.setState({
-            property: property,
-          });
-        }
+          setProperty(property2);
 
-        if (this.state.property.length === 0) {
-          this.props.alert.error(t("seach.error"));
+          if (property2.length === 0) {
+            alert.error(t("seach.error"));
+          } else {
+            alert.success(
+              t("seach.listtotal") +
+              " " +
+              property2.length +
+              " " +
+              t("list.label")
+            );
+          }
         } else {
-          this.props.alert.success(
-            t("seach.listtotal") +
-            " " +
-            this.state.property.length +
-            " " +
-            t("list.label")
-          );
+          setProperty(propertyArr);
+
+          if (propertyArr.length === 0) {
+            alert.error(t("seach.error"));
+          } else {
+            alert.success(
+              t("seach.listtotal") +
+              " " +
+              propertyArr.length +
+              " " +
+              t("list.label")
+            );
+          }
         }
       });
     } catch (error) {
-      this.props.alert.error(error.toString());
+      alert.error(error.toString());
     }
-  }
+  };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.location.pathname === "/seach-result") {
+  useEffect(() => {
+    if (location.pathname === "/seach-result" && props.value) {
       const {
         seachkey,
         type,
@@ -257,324 +232,301 @@ class Listproperty extends React.Component {
         car,
         size,
         check,
-      } = this.props.value;
-      if (
-        JSON.stringify(this.props.value) !== JSON.stringify(prevProps.value)
-      ) {
-        this.seach(
-          seachkey,
-          Number(type),
-          province,
-          Number(price),
-          Number(room),
-          Number(family),
-          Number(bath),
-          Number(car),
-          Number(size),
-          check
-        );
-      }
+      } = props.value;
+      seach(
+        seachkey,
+        Number(type),
+        province,
+        Number(price),
+        Number(room),
+        Number(family),
+        Number(bath),
+        Number(car),
+        Number(size),
+        check
+      );
     }
-  }
-  render() {
-    const { property, currentPage, propertyPerPage, anchorEl } = this.state;
-    const { currentUser, alert, location } = this.props;
-    const { name } = "";
-    const indexOfLastTodo = currentPage * propertyPerPage;
-    const indexOfFirstTodo = indexOfLastTodo - propertyPerPage;
-    const currentProperty = property.slice(indexOfFirstTodo, indexOfLastTodo);
-    const { t } = this.props;
-    const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(property.length / propertyPerPage); i++) {
-      pageNumbers.push(i);
-    }
-    const handleMenuClose = () => {
-      this.setState({
-        isMenuOpen: false,
-        anchorEl: null,
-      });
-    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(props.value)]);
 
-    const handleMenuOpen = (event) => {
-      this.setState({
-        isMenuOpen: true,
-        anchorEl: event.currentTarget,
-      });
-    };
-    const updateFavorites = (favorite, event) => {
-      auth.currentUser
-        .getIdToken(/* forceRefresh */ true)
-        .then(function (idToken) {
-          axios({
-            headers: {
-              Authorization: `Bearer ${idToken}`,
-            },
-            url: "https://us-central1-bfproperty.cloudfunctions.net/webApi/api/v1/usersupdatefavorite",
-            method: "PUT",
-            data: {
-              favorite: favorite,
-            },
-          });
-        })
-        .catch(function (error) {
-          alert.error(error);
+  const indexOfLastTodo = currentPage * propertyPerPage;
+  const indexOfFirstTodo = indexOfLastTodo - propertyPerPage;
+  const currentProperty = property.slice(indexOfFirstTodo, indexOfLastTodo);
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(property.length / propertyPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const updateFavorites = (favorite, event) => {
+    auth.currentUser
+      .getIdToken(/* forceRefresh */ true)
+      .then(function (idToken) {
+        axios({
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+          url: "https://us-central1-bfproperty.cloudfunctions.net/webApi/api/v1/usersupdatefavorite",
+          method: "PUT",
+          data: {
+            favorite: favorite,
+          },
         });
-    };
-    const sortproperty = (event) => {
-      var sortProperty;
-      if (event.target.value === 1) {
-        sortProperty = _.sortBy(property, "price");
-      } else if (event.target.value === 2) {
-        sortProperty = _.sortBy(property, "price").reverse();
-      } else if (event.target.value === 3) {
-        sortProperty = _.sortBy(property, "name");
-      } else {
-        sortProperty = _.sortBy(property, "name").reverse();
-      }
-      this.setState({
-        property: sortProperty,
+      })
+      .catch(function (error) {
+        alert.error(error);
       });
-      handleMenuClose();
-    };
-    const findproperty = (event) => {
-      event.persist();
-      if (event.target.value !== "") {
-        this.setState({
-          property: property.filter((item) =>
-            item.name.includes(event.target.value)
-          ),
-        });
+  };
+
+  const sortproperty = (option) => {
+    let sortProperty;
+    if (option === 1) {
+      sortProperty = _.sortBy(property, "price");
+    } else if (option === 2) {
+      sortProperty = _.sortBy(property, "price").reverse();
+    } else if (option === 3) {
+      sortProperty = _.sortBy(property, "name");
+    } else {
+      sortProperty = _.sortBy(property, "name").reverse();
+    }
+    setProperty(sortProperty);
+    handleMenuClose();
+  };
+
+  const findproperty = (event) => {
+    event.persist();
+    const value = event.target.value;
+    setSearchTerm(value);
+    if (value !== "") {
+      setProperty(
+        property.filter((item) => item.name.includes(value))
+      );
+    } else {
+      setProperty(previousProperty);
+    }
+  };
+
+  const handleFavorite = (event) => {
+    event.persist();
+    try {
+      const favorite = [...currentUser.favorite];
+      var check = false;
+      if (favorite.length === 0) {
+        favorite.push(event.currentTarget.value);
+        updateFavorites(favorite);
+        alert.success(t("alertaddfavoriteproperty"));
       } else {
-        this.setState((state) => ({
-          property: state.previousProperty,
-        }));
-      }
-    };
-    const handleFavorite = (event) => {
-      event.persist();
-      try {
-        var favorite = currentUser.favorite;
-        var check = false;
-        if (favorite.length === 0) {
+        favorite.forEach((element, index) => {
+          if (element === event.currentTarget.value) {
+            check = true;
+            favorite.splice(index, 1);
+          }
+        });
+        if (check === false) {
           favorite.push(event.currentTarget.value);
           updateFavorites(favorite);
           alert.success(t("alertaddfavoriteproperty"));
         } else {
-          favorite.forEach((element, index) => {
-            if (element === event.currentTarget.value) {
-              check = true;
-              favorite.splice(index, 1);
-            }
-          });
-          if (check === false) {
-            favorite.push(event.currentTarget.value);
-            updateFavorites(favorite);
-            alert.success(t("alertaddfavoriteproperty"));
-          } else {
-            updateFavorites(favorite, event);
-            if (this.props.location.pathname === "/my-favorite") {
-              this.setState({
-                property: property.filter(
-                  (e) => e.id !== event.currentTarget.value
-                ),
-              });
-            }
-            alert.success(t("alertdeletefavoriteproperty"));
+          updateFavorites(favorite, event);
+          if (location.pathname === "/my-favorite") {
+            setProperty(
+              property.filter((e) => e.id !== event.currentTarget.value)
+            );
           }
+          alert.success(t("alertdeletefavoriteproperty"));
         }
-      } catch (e) {
-        if (e) {
-          alert.error(t("alertaddfavoritepropertyerror"));
-        }
-        // if (e !== BreakException) throw e;
       }
-    };
-    const deleteproperty = (id, urlin, urlout) => {
-      // eslint-disable-next-line array-callback-return
-      Object.entries(urlin).map(([keyName, keyIndex]) => {
-        var delete_imgtRef = firestorage.refFromURL(urlin[keyName].original);
-        delete_imgtRef
-          .delete()
-          .then(function () { })
-          .catch(function (error) {
-            alert.error("delete error", error);
-          });
-      });
-      // eslint-disable-next-line array-callback-return
-      Object.entries(urlout).map(([keyName, keyIndex]) => {
-        var delete_imgtRef = firestorage.refFromURL(urlout[keyName].original);
+    } catch (e) {
+      if (e) {
+        alert.error(t("alertaddfavoritepropertyerror"));
+      }
+      // if (e !== BreakException) throw e;
+    }
+  };
 
-        delete_imgtRef
-          .delete()
-          .then(function () { })
-          .catch(function (error) {
-            alert.error("delete error", error);
-          });
-      });
-
-      var delete_inforef = firestore.collection("property").doc(id);
-      delete_inforef
+  const deleteproperty = (id, urlin, urlout) => {
+    // eslint-disable-next-line array-callback-return
+    Object.entries(urlin).map(([keyName, keyIndex]) => {
+      var delete_imgtRef = firestorage.refFromURL(urlin[keyName].original);
+      delete_imgtRef
         .delete()
         .then(function () { })
         .catch(function (error) {
-          console.log("delete error", error);
+          alert.error("delete error", error);
         });
-      this.setState({
-        property: property.filter((e) => e.id !== id),
+    });
+    // eslint-disable-next-line array-callback-return
+    Object.entries(urlout).map(([keyName, keyIndex]) => {
+      var delete_imgtRef = firestorage.refFromURL(urlout[keyName].original);
+
+      delete_imgtRef
+        .delete()
+        .then(function () { })
+        .catch(function (error) {
+          alert.error("delete error", error);
+        });
+    });
+
+    var delete_inforef = firestore.collection("property").doc(id);
+    delete_inforef
+      .delete()
+      .then(function () { })
+      .catch(function (error) {
+        alert.error("delete error", error);
       });
-      alert.success(t("alertdeleteproperty"));
-    };
-    return (
-      <Grid
-        container
-        justify="space-between"
-        alignItems="center"
-        style={{ paddingTop: "2%", paddingBottom: "2%" }}
-      >
-        <Grid item xs={6} sm={3}>
-          {(() => {
-            <React.Fragment></React.Fragment>;
-            if (location.pathname === "/my-property") {
-              return (
-                <Typography variant="h5">
-                  {t("myproperty.label")} {property.length} {t("list.label")}
-                </Typography>
-              );
-            } else if (location.pathname === "/my-favorite") {
-              return (
-                <Typography variant="h5">
-                  {t("myfavorite.label")} {property.length} {t("list.label")}
-                </Typography>
-              );
-            } else if (location.pathname === "/seach-result") {
-              return (
-                <Typography variant="h5">
-                  {t("seachresult.label")} {property.length} {t("list.label")}
-                </Typography>
-              );
-            }
-          })()}
-          {property.length > 0 && this.props.location.pathname !== "/" ? (
-            <Typography variant="subtitle1">
-              {t("page.label")} {currentPage} / {pageNumbers.length}
-            </Typography>
-          ) : null}
-        </Grid>
+    setProperty(property.filter((e) => e.id !== id));
+    alert.success(t("alertdeleteproperty"));
+  };
 
-        <Box display="flex" flexDirection="row-reverse" alignItems="center">
-          {location.pathname !== "/" ? (
-            <Box p={2}>
-              <div>
-                <Button
-                  onClick={handleMenuOpen}
-                  aria-controls="simple-menu"
-                  aria-haspopup="true"
-                  startIcon={<SortIcon />}
-                >
-                  {t("sort.label")}
-                </Button>
-
-                <Menu
-                  id="simple-menu"
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleMenuClose}
-                  anchorEl={anchorEl}
-                  getContentAnchorEl={null}
-                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                  transformOrigin={{ vertical: "top", horizontal: "center" }}
-                >
-                  <MenuItem value={1} onClick={sortproperty}>
-                    {t("sortmenu1.label")}
-                  </MenuItem>
-                  <MenuItem value={2} onClick={sortproperty}>
-                    {t("sortmenu2.label")}
-                  </MenuItem>
-                  <MenuItem value={3} onClick={sortproperty}>
-                    {t("sortmenu3.label")}
-                  </MenuItem>
-                  <MenuItem value={4} onClick={sortproperty}>
-                    {t("sortmenu4.label")}
-                  </MenuItem>
-                </Menu>
-              </div>
-            </Box>
-          ) : null}
-          {location.pathname === "/my-property" ? (
-            <Box p={3}>
-              <TextField
-                id="outlined-basic"
-                label={t("seachinput.label")}
-                variant="outlined"
-                onChange={findproperty}
-                value={name}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Box>
-          ) : null}
-        </Box>
-        {property.length > 0 ? (
-          <React.Fragment>
-            <Cardproperty
-              currentProperty={currentProperty}
-              onhandleFavorite={handleFavorite}
-              deleteproperty={deleteproperty}
-            />
-          </React.Fragment>
-        ) : (
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
-            style={{
-              padding: location.pathname === "/" ? "10%" : "15%",
-            }}
-          >
-            <Typography variant="h5">
-              {t(
-                location.pathname === "/my-property"
-                  ? "mypropertyempty.label"
-                  : location.pathname === "/seach-result"
-                    ? "seachresultemty.label"
-                    : location.pathname === "/"
-                      ? "ไม่มีรายการบ้านแนะนำ"
-                      : "myfavoriteempty.label"
-              )}
-            </Typography>
-          </Grid>
-        )}
-        {location.pathname !== "/" ? (
-          <Pagination
-            count={pageNumbers.length}
-            page={currentPage}
-            size="large"
-            id={currentPage}
-            onChange={this.handleClick}
-            showFirstButton={property.length > 0}
-            showLastButton={property.length > 0}
-            style={{ paddingTop: "2%" }}
-            hideNextButton={property.length === 0}
-            hidePrevButton={property.length === 0}
-          />
+  return (
+    <Grid
+      container
+      justify="space-between"
+      alignItems="center"
+      style={{ paddingTop: "2%", paddingBottom: "2%" }}
+    >
+      <Grid item xs={6} sm={3}>
+        {(() => {
+          <React.Fragment></React.Fragment>;
+          if (location.pathname === "/my-property") {
+            return (
+              <Typography variant="h5">
+                {t("myproperty.label")} {property.length} {t("list.label")}
+              </Typography>
+            );
+          } else if (location.pathname === "/my-favorite") {
+            return (
+              <Typography variant="h5">
+                {t("myfavorite.label")} {property.length} {t("list.label")}
+              </Typography>
+            );
+          } else if (location.pathname === "/seach-result") {
+            return (
+              <Typography variant="h5">
+                {t("seachresult.label")} {property.length} {t("list.label")}
+              </Typography>
+            );
+          }
+        })()}
+        {property.length > 0 && location.pathname !== "/" ? (
+          <Typography variant="subtitle1">
+            {t("page.label")} {currentPage} / {pageNumbers.length}
+          </Typography>
         ) : null}
       </Grid>
-    );
-  }
-}
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-});
 
-export default compose(
-  connect(mapStateToProps),
-  withTranslation(),
-  withRouter,
-  withAlert()
-)(Listproperty);
+      <Box display="flex" flexDirection="row-reverse" alignItems="center">
+        {location.pathname !== "/" ? (
+          <Box p={2}>
+            <div>
+              <Button
+                onClick={handleMenuOpen}
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                startIcon={<SortIcon />}
+              >
+                {t("sort.label")}
+              </Button>
+
+              <Menu
+                id="simple-menu"
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+                anchorEl={anchorEl}
+                getContentAnchorEl={null}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                transformOrigin={{ vertical: "top", horizontal: "center" }}
+              >
+                <MenuItem value={1} onClick={() => sortproperty(1)}>
+                  {t("sortmenu1.label")}
+                </MenuItem>
+                <MenuItem value={2} onClick={() => sortproperty(2)}>
+                  {t("sortmenu2.label")}
+                </MenuItem>
+                <MenuItem value={3} onClick={() => sortproperty(3)}>
+                  {t("sortmenu3.label")}
+                </MenuItem>
+                <MenuItem value={4} onClick={() => sortproperty(4)}>
+                  {t("sortmenu4.label")}
+                </MenuItem>
+              </Menu>
+            </div>
+          </Box>
+        ) : null}
+        {location.pathname === "/my-property" ? (
+          <Box p={3}>
+            <TextField
+              id="outlined-basic"
+              label={t("seachinput.label")}
+              variant="outlined"
+              onChange={findproperty}
+              value={searchTerm}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+        ) : null}
+      </Box>
+      {property.length > 0 ? (
+        <React.Fragment>
+          <Cardproperty
+            currentProperty={currentProperty}
+            onhandleFavorite={handleFavorite}
+            deleteproperty={deleteproperty}
+          />
+        </React.Fragment>
+      ) : (
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+          style={{
+            padding: location.pathname === "/" ? "10%" : "15%",
+          }}
+        >
+          <Typography variant="h5">
+            {t(
+              location.pathname === "/my-property"
+                ? "mypropertyempty.label"
+                : location.pathname === "/seach-result"
+                  ? "seachresultemty.label"
+                  : location.pathname === "/"
+                    ? "ไม่มีรายการบ้านแนะนำ"
+                    : "myfavoriteempty.label"
+            )}
+          </Typography>
+        </Grid>
+      )}
+      {location.pathname !== "/" ? (
+        <Pagination
+          count={pageNumbers.length}
+          page={currentPage}
+          size="large"
+          id={currentPage}
+          onChange={handleClick}
+          showFirstButton={property.length > 0}
+          showLastButton={property.length > 0}
+          style={{ paddingTop: "2%" }}
+          hideNextButton={property.length === 0}
+          hidePrevButton={property.length === 0}
+        />
+      ) : null}
+    </Grid>
+  );
+}
+
+export default Listproperty;

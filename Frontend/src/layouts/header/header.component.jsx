@@ -95,7 +95,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.white,
   },
 }));
-/* TODO  CHAGNE UI NAVBAR MOBILE AND ADD BUTTON CHAGNE LANGUAGES SIDEBAR */
 function Header(props) {
   const { t, i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState(false);
@@ -164,27 +163,27 @@ function Header(props) {
       status: true,
       link: "/",
       name: t("firstpage.name.label"),
-      icon: <AiOutlineHome className="text-white" className={classes.icon} />,
+      icon: <AiOutlineHome className={classes.icon} />,
     },
     {
       status: props.currentUser ? true : false,
       link: "/profile",
       name: t("myaccount.name.label"),
-      icon: <AiOutlineUser className="text-white" className={classes.icon} />,
+      icon: <AiOutlineUser className={classes.icon} />,
     },
     {
       status: true,
       link: "/add-listing",
       name: t("addinglist.name.label"),
       icon: (
-        <AiOutlineAppstoreAdd className="text-white" className={classes.icon} />
+        <AiOutlineAppstoreAdd className={classes.icon} />
       ),
     },
     {
       status: true,
       link: "/my-favorite",
       name: t("favoritebutton"),
-      icon: <AiOutlineHeart className="text-white" className={classes.icon} />,
+      icon: <AiOutlineHeart className={classes.icon} />,
     },
     {
       status: props.currentUser ? true : false,
@@ -192,7 +191,6 @@ function Header(props) {
       name: t("myproperty.name.label"),
       icon: (
         <AiOutlineUnorderedList
-          className="text-white"
           className={classes.icon}
         />
       ),
@@ -201,13 +199,13 @@ function Header(props) {
       status: props.currentUser ? false : true,
       link: "/signin",
       name: t("login.label"),
-      icon: <AiOutlineLogout className="text-white" className={classes.icon} />,
+      icon: <AiOutlineLogout className={classes.icon} />,
     },
     {
       status: props.currentUser ? true : false,
       name: t("signout.name.label"),
       onClick: signout,
-      icon: <AiOutlineLogout className="text-white" className={classes.icon} />,
+      icon: <AiOutlineLogout className={classes.icon} />,
     },
   ];
   return (
@@ -368,7 +366,7 @@ function Header(props) {
                 <Button
                   id="currency-menu"
                   aria-controls={
-                    Boolean(anchorE3) ? "menu-list-grow" : undefined
+                    Boolean(anchorE3) ? "currency-menu" : undefined
                   }
                   aria-haspopup="true"
                   onClick={handleClick}
@@ -417,7 +415,7 @@ function Header(props) {
                 <Button
                   id="lang-menu"
                   aria-controls={
-                    Boolean(anchorE3) ? "menu-list-grow" : undefined
+                    Boolean(anchorEl) ? "lang-menu" : undefined
                   }
                   aria-haspopup="true"
                   onClick={handleClick}
