@@ -211,7 +211,7 @@ function Footer() {
 
             <ValidatorForm
               onSubmit={handleSubmit}
-              onError={(errors) => console.log(errors)}
+              onError={() => {}}
             >
               <CssTextField
                 id="email"
@@ -241,7 +241,7 @@ function Footer() {
                 variant="contained"
                 fullWidth
                 size="large"
-                color=""
+                color="inherit"
                 style={{ marginTop: 10 }}
                 type="submit"
                 disabled={disable}

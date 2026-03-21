@@ -35,6 +35,7 @@ function Listproperty(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const propertyPerPage = 8;
   const [anchorEl, setAnchorEl] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleClick = (event, value) => {
     setCurrentPage(Number(value));
@@ -301,9 +302,11 @@ function Listproperty(props) {
 
   const findproperty = (event) => {
     event.persist();
-    if (event.target.value !== "") {
+    const value = event.target.value;
+    setSearchTerm(value);
+    if (value !== "") {
       setProperty(
-        property.filter((item) => item.name.includes(event.target.value))
+        property.filter((item) => item.name.includes(value))
       );
     } else {
       setProperty(previousProperty);
@@ -376,7 +379,7 @@ function Listproperty(props) {
       .delete()
       .then(function () { })
       .catch(function (error) {
-        console.log("delete error", error);
+        alert.error("delete error", error);
       });
     setProperty(property.filter((e) => e.id !== id));
     alert.success(t("alertdeleteproperty"));
@@ -465,7 +468,7 @@ function Listproperty(props) {
               label={t("seachinput.label")}
               variant="outlined"
               onChange={findproperty}
-              value={name}
+              value={searchTerm}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

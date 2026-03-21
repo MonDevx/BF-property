@@ -21,13 +21,19 @@ const authLimiter = rateLimit({
 });
 
 router.put("/usersupdatefavorite", authLimiter, authMiddleware, cors(corsOptions), async (req, res) => {
-  const decodedToken = await admin.auth().verifyIdToken(req.token);
-  return db
-    .collection(usersCollection)
-    .doc(decodedToken.uid)
-    .update({ favorite: req.body.favorite })
-    .then(() => res.status(200).send("Update OK"))
-    .catch((error) => res.status(500).send(error));
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(req.token);
+    await db
+      .collection(usersCollection)
+      .doc(decodedToken.uid)
+      .update({ favorite: req.body.favorite });
+    return res.status(200).send("Update OK");
+  } catch (error) {
+    if (error && typeof error.code === "string" && error.code.startsWith("auth/")) {
+      return res.status(401).send("Invalid or expired token");
+    }
+    return res.status(500).send(error);
+  }
 });
 
 module.exports = router;

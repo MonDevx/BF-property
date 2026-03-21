@@ -27,12 +27,14 @@ transporter.use(
   })
 );
 
-transporter.verify((error) => {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log("API WORK");
-  }
-});
+if (process.env.MAILER_VERIFY_ON_STARTUP === "true") {
+  transporter.verify((error) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("API WORK");
+    }
+  });
+}
 
 module.exports = transporter;

@@ -50,6 +50,7 @@ function App() {
   const [maintenancestatus, setMaintenancestatus] = useState(null);
 
   const unsubscribeFromAuthRef = useRef(null);
+  const userSnapshotUnsubscribeRef = useRef(null);
   const announceRef = useRef(null);
   const maintenanceRef = useRef(null);
 
@@ -61,11 +62,11 @@ function App() {
     maintenanceRef.current = databaserealtime.ref("/maintenance/maintenancestatus");
     maintenanceRef.current.on("value", (snapshot) => {
       setMaintenancestatus(snapshot.val());
-      if (snapshot.val() === 1) {
+      if (snapshot.val() === 1 && !unsubscribeFromAuthRef.current) {
         unsubscribeFromAuthRef.current = auth.onAuthStateChanged(async (userAuth) => {
           if (userAuth) {
             const userRef = await createUserProfileDocument(userAuth);
-            userRef.onSnapshot((snapShot) => {
+            userSnapshotUnsubscribeRef.current = userRef.onSnapshot((snapShot) => {
               dispatch(setCurrentUser({
                 id: snapShot.id,
                 ...snapShot.data(),
@@ -84,6 +85,7 @@ function App() {
 
     return () => {
       unsubscribeFromAuthRef.current && unsubscribeFromAuthRef.current();
+      userSnapshotUnsubscribeRef.current && userSnapshotUnsubscribeRef.current();
       maintenanceRef.current && maintenanceRef.current.off();
       announceRef.current && announceRef.current.off();
     };
